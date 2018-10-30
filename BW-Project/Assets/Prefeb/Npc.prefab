@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 8397417784006630735}
   - component: {fileID: 8252885648935314609}
   - component: {fileID: 2050062084471703422}
-  m_Layer: 0
-  m_Name: Cube
+  - component: {fileID: 3124886911384289261}
+  m_Layer: 10
+  m_Name: Npc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,3 +121,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61ffd1605143d54e923bf4bb2a4b842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &3124886911384289261
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971496216838371313}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

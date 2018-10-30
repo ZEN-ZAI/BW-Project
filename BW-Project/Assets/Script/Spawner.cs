@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
     #region Random Spawn
     public void SpawnNPC()
     {
-        if (Map.allCharacter < Map.maxCharacter)
+        if (Map.allCharacter >= Map.maxCharacter)
         {
             Debug.Log("Error: Map is full");
             return;
@@ -30,13 +30,15 @@ public class Spawner : MonoBehaviour
         }
 
         GameObject tempCharacter = Instantiate(GameData.instance.npc, Map.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+        tempCharacter.GetComponent<Character>().x = spawn_x;
+        tempCharacter.GetComponent<Character>().y = spawn_y;
         Map.allCharacter++;
 
         Debug.Log("NPC spawn On :" + Map.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
     }
     public void SpawnMyCharacter()
     {
-        if (Map.allCharacter < Map.maxCharacter)
+        if (Map.allCharacter >= Map.maxCharacter)
         {
             Debug.Log("Error: Map is full");
             return;
@@ -53,13 +55,16 @@ public class Spawner : MonoBehaviour
         }
 
         GameObject tempCharacter = Instantiate(GameData.instance.characterPlayer, Map.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+        tempCharacter.GetComponent<Character>().x = spawn_x;
+        tempCharacter.GetComponent<Character>().y = spawn_y;
+        tempCharacter.GetComponent<Character>().group = GameData.instance.playerName;
         Map.allCharacter++;
 
         Debug.Log("My Character spawn On :" + Map.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
     }
     public void SpawnEnemy()
     {
-        if (Map.allCharacter < Map.maxCharacter)
+        if (Map.allCharacter >= Map.maxCharacter)
         {
             Debug.Log("Error: Map is full");
             return;
@@ -76,6 +81,9 @@ public class Spawner : MonoBehaviour
         }
 
         GameObject tempCharacter = Instantiate(GameData.instance.characterEnemy, Map.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+        tempCharacter.GetComponent<Character>().x = spawn_x;
+        tempCharacter.GetComponent<Character>().y = spawn_y;
+        tempCharacter.GetComponent<Character>().group = GameData.instance.enemyName;
         Map.allCharacter++;
 
         Debug.Log("Character Enemy spawn On :" + Map.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
@@ -86,6 +94,8 @@ public class Spawner : MonoBehaviour
     public void SpawnNPC(int x,int y)
     {
         GameObject tempCharacter = Instantiate(GameData.instance.npc, Map.map[y, x].transform.position, Quaternion.identity);
+        tempCharacter.GetComponent<Character>().x = x;
+        tempCharacter.GetComponent<Character>().y = y;
         Map.allCharacter++;
 
         Debug.Log("NPC spawn On :" + Map.map[y, x].name + " <X:" + x + " Y:" + y + ">");
@@ -93,6 +103,9 @@ public class Spawner : MonoBehaviour
     public void SpawnMyCharacter(int x, int y)
     {
         GameObject tempCharacter = Instantiate(GameData.instance.characterPlayer, Map.map[y, x].transform.position, Quaternion.identity);
+        tempCharacter.GetComponent<Character>().x = x;
+        tempCharacter.GetComponent<Character>().y = y;
+        tempCharacter.GetComponent<Character>().group = GameData.instance.playerName;
         Map.allCharacter++;
 
         Debug.Log("Character Player spawn On :" + Map.map[y, x].name + " <X:" + x + " Y:" + y + ">");
@@ -100,23 +113,13 @@ public class Spawner : MonoBehaviour
     public void SpawnEnemy(int x, int y)
     {
         GameObject tempCharacter = Instantiate(GameData.instance.characterEnemy, Map.map[y, x].transform.position, Quaternion.identity);
+        tempCharacter.GetComponent<Character>().x = x;
+        tempCharacter.GetComponent<Character>().y = y;
+        tempCharacter.GetComponent<Character>().group = GameData.instance.enemyName;
         Map.allCharacter++;
 
         Debug.Log("Character Enemy spawn On :" + Map.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
     #endregion
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        GameData.instance.characterPlayer.GetComponent<Character>().group = GameData.instance.playerName;
-        GameData.instance.characterEnemy.GetComponent<Character>().group = GameData.instance.enemyName;
-        GameData.instance.npc.GetComponent<Character>().group = "Npc";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

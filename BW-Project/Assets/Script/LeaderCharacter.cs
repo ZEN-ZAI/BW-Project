@@ -5,4 +5,8 @@ using UnityEngine;
 public class LeaderCharacter : Character
 {
 
+    public void UseSkill()
+    {
+
+    }
 }

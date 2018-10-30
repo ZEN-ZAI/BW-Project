@@ -7,6 +7,7 @@ public class GameData : MonoBehaviour
     public string roomID;
     public int K;
     public int energy;
+    public bool myTurn;
 
     public string playerName;
     public string characterPlayerName;
@@ -15,6 +16,8 @@ public class GameData : MonoBehaviour
     public string characterEnemyName;
 
     public bool firstPlayer;
+
+    public GameObject leaderCharacter;
 
     public GameObject npc;
     public GameObject characterPlayer;
