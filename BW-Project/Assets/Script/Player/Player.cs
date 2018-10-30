@@ -30,9 +30,18 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
 
-    void SetFrist()
+    public void SetFrist()
     {
+        myTurn = true;
+        energy = 5;
         active = (state)(Playing);
+        active();
+    }
+
+    public void SetSecond()
+    {
+        energy = 6;
+        active = (state)(Waiting);
         active();
     }
 
@@ -44,32 +53,22 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
-        else if (active == Playing && !myTurn) // Playing to KNN
-        {
-            active = (state)(KNN);
-            active();
-        }
         else if (active == Waiting && !myTurn) // to self
         {
             active = (state)(Waiting);
             active();
         }
-        else if (active == Waiting && myTurn) // Waiting to KNN
+        else if (active == Waiting && myTurn) // Waiting to Playing
         {
             active = (state)(Playing);
             active();
         }
-        else if (active == KNN && GameSystem.instance.KNN_finish) // KNN to Waiting
-        {
-            active = (state)(Waiting);
-            active();
-        }
-        else if (active == KNN &&  myPeople >= (Map.instance.maxCharacter/ 5)*4) // 4/5  KNN to Win
+        else if (active == Waiting && myPeople >= (Map.instance.maxCharacter / 5) * 4) // 4/5  KNN to Win
         {
             active = (state)(Win);
             active();
         }
-        else if (active == KNN &&  myPeople <= (Map.instance.maxCharacter / 5)) // 1/5 KNN to Lose
+        else if (active == Waiting && myPeople <= (Map.instance.maxCharacter / 5)) // 1/5 KNN to Lose
         {
             active = (state)(Lose);
             active();
@@ -84,41 +83,31 @@ public class Player : MonoBehaviour
 
     private void Playing()
     {
-        if (myTurn)
-        {
-            if (!selectCharecter)
-            {
-                MouseOver();
-                SelectCharecter();
-            }
-            else if (selectCharecter)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.tag == "Path" && energy > 0)
-                {
-                    MoveCharecter();
-
-                }
-                else
-                {
-                    SelectCharecter();
-                }
-            }
-        }
-        else
+        if (!selectCharecter)
         {
             MouseOver();
+            SelectCharecter();
         }
+        else if (selectCharecter)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.tag == "Path" && energy > 0)
+            {
+                MoveCharecter();
+
+            }
+            else
+            {
+                SelectCharecter();
+            }
+        }
+
     }
 
     private void Waiting()
-    {
-
-    }
-
-    private void KNN()
     {
 
     }
@@ -133,9 +122,9 @@ public class Player : MonoBehaviour
 
     }
 
-    public void SetTurn(bool turn)
+    public void SetTurn()
     {
-        myTurn = turn;
+        myTurn = true;
     }
 
     public void UesSkill()
@@ -146,6 +135,7 @@ public class Player : MonoBehaviour
     public void EndTurn()
     {
         myTurn = false;
+        GameSystem.instance.NextQueue();
     }
 
     private void MouseOver()

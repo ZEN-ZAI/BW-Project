@@ -2595,7 +2595,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 207462415}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 970216968}
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &207462415
@@ -13885,8 +13896,8 @@ MonoBehaviour:
   player:
   - {fileID: 970216968}
   - {fileID: 1335254904}
-  playerNow: {fileID: 0}
   spawner: {fileID: 2006055453}
+  KNN_finish: 0
 --- !u!1 &925231433
 GameObject:
   m_ObjectHideFlags: 0
@@ -15062,6 +15073,7 @@ MonoBehaviour:
   playerName: P1
   characterPlayerName: Prayut
   leaderCharacter: {fileID: 0}
+  myPeople: 0
   energy: 0
   myTurn: 0
   selectCharecter: 0
@@ -19000,6 +19012,7 @@ MonoBehaviour:
   playerName: P2
   characterPlayerName: Prayut
   leaderCharacter: {fileID: 0}
+  myPeople: 0
   energy: 0
   myTurn: 0
   selectCharecter: 0
@@ -27604,7 +27617,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1907633298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1335254904}
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1907633298

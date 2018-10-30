@@ -10,7 +10,7 @@ public class GameSystem : MonoBehaviour
 
     public Spawner spawner;
 
-    public bool KNN_finish;
+    public bool KNN_finish = true;
 
     public static GameSystem instance;
 
@@ -37,8 +37,11 @@ public class GameSystem : MonoBehaviour
 
     public void NextQueue()
     {
-        q.Peek().SetTurn(true);
-        q.Enqueue(q.Dequeue());
+        Player tempPlayer = q.Peek();
+        tempPlayer.SetTurn();
+
+        q.Enqueue(tempPlayer);
+        q.Dequeue();
     }
 
     public void GameSetUp()
@@ -60,17 +63,21 @@ public class GameSystem : MonoBehaviour
     {
         foreach (var item in player)
         {
-            spawner.SpawnCharacter(item);
+            for (int i = 0; i < 3; i++)
+            {
+                spawner.SpawnCharacter(item);
+            }
         }
     }
 
     public void EnqueuePlayer()
     {
-        player[0].SetTurn(true);
+        player[0].SetFrist();
+        player[1].SetSecond();
 
-        for (int i = 0; i < 2; i++)
+        foreach (var item in player)
         {
-            q.Enqueue(player[i]);
+            q.Enqueue(item);
         }
     }
 }
