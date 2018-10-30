@@ -12,14 +12,12 @@ public class Map : MonoBehaviour
     public int maxCharacter;
 
     public Tile[,] map;
-    public Transform[,] mapTranform;
 
     public GameObject mapRoot;
 
     void Awake()
     {
         map = new Tile[row,col];
-        mapTranform = new Transform[row, col];
         maxCharacter = row * col;
         int num = 0;
 
@@ -27,7 +25,6 @@ public class Map : MonoBehaviour
         {
             for (int j = 0; j < col; j++)
             {
-                mapTranform[i, j] = mapRoot.transform.GetChild(num);
                 map[i, j] = mapRoot.transform.GetChild(num).GetComponent<Tile>();
                 map[i, j].row = i;
                 map[i, j].col = j;
@@ -35,6 +32,7 @@ public class Map : MonoBehaviour
             }
         }
     }
+
 
     public void MoveCharacter(int origin_x,int origin_y, int moveto_x,int moveto_y)
     {

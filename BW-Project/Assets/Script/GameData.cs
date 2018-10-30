@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
+    public string roomID;
     public int K;
     public int energy;
 
@@ -13,6 +14,7 @@ public class GameData : MonoBehaviour
     public string enemyName;
     public string characterEnemyName;
 
+    public bool firstPlayer;
 
     public GameObject npc;
     public GameObject characterPlayer;

@@ -29,10 +29,10 @@ public class Spawner : MonoBehaviour
             spawn_y = Random.Range(0, Map.row);
         }
 
-        GameObject tempCharacter = Instantiate(GameData.instance.npc, Map.mapTranform[spawn_y, spawn_x].position, Quaternion.identity);
+        GameObject tempCharacter = Instantiate(GameData.instance.npc, Map.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
         Map.allCharacter++;
 
-        Debug.Log("NPC spawn On :" + Map.mapTranform[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
+        Debug.Log("NPC spawn On :" + Map.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
     }
     public void SpawnMyCharacter()
     {
@@ -52,10 +52,10 @@ public class Spawner : MonoBehaviour
             spawn_y = Random.Range(0, Map.row);
         }
 
-        GameObject tempCharacter = Instantiate(GameData.instance.characterPlayer, Map.mapTranform[spawn_y, spawn_x].position, Quaternion.identity);
+        GameObject tempCharacter = Instantiate(GameData.instance.characterPlayer, Map.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
         Map.allCharacter++;
 
-        Debug.Log("My Character spawn On :" + Map.mapTranform[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
+        Debug.Log("My Character spawn On :" + Map.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
     }
     public void SpawnEnemy()
     {
@@ -75,34 +75,34 @@ public class Spawner : MonoBehaviour
             spawn_y = Random.Range(0, Map.row);
         }
 
-        GameObject tempCharacter = Instantiate(GameData.instance.characterEnemy, Map.mapTranform[spawn_y, spawn_x].position, Quaternion.identity);
+        GameObject tempCharacter = Instantiate(GameData.instance.characterEnemy, Map.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
         Map.allCharacter++;
 
-        Debug.Log("Character Enemy spawn On :" + Map.mapTranform[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
+        Debug.Log("Character Enemy spawn On :" + Map.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
     }
     #endregion
 
     #region Position Spawn
     public void SpawnNPC(int x,int y)
     {
-        GameObject tempCharacter = Instantiate(GameData.instance.npc, Map.mapTranform[y, x].position, Quaternion.identity);
+        GameObject tempCharacter = Instantiate(GameData.instance.npc, Map.map[y, x].transform.position, Quaternion.identity);
         Map.allCharacter++;
 
-        Debug.Log("NPC spawn On :" + Map.mapTranform[y, x].name + " <X:" + x + " Y:" + y + ">");
+        Debug.Log("NPC spawn On :" + Map.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
     public void SpawnMyCharacter(int x, int y)
     {
-        GameObject tempCharacter = Instantiate(GameData.instance.characterPlayer, Map.mapTranform[y, x].position, Quaternion.identity);
+        GameObject tempCharacter = Instantiate(GameData.instance.characterPlayer, Map.map[y, x].transform.position, Quaternion.identity);
         Map.allCharacter++;
 
-        Debug.Log("Character Player spawn On :" + Map.mapTranform[y, x].name + " <X:" + x + " Y:" + y + ">");
+        Debug.Log("Character Player spawn On :" + Map.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
     public void SpawnEnemy(int x, int y)
     {
-        GameObject tempCharacter = Instantiate(GameData.instance.characterEnemy, Map.mapTranform[y, x].position, Quaternion.identity);
+        GameObject tempCharacter = Instantiate(GameData.instance.characterEnemy, Map.map[y, x].transform.position, Quaternion.identity);
         Map.allCharacter++;
 
-        Debug.Log("Character Enemy spawn On :" + Map.mapTranform[y, x].name + " <X:" + x + " Y:" + y + ">");
+        Debug.Log("Character Enemy spawn On :" + Map.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
     #endregion
 

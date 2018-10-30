@@ -20,7 +20,7 @@ public class MouseScript : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Block")) && hit.collider.GetComponent<Tile>() != null
+            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null
                 && hit.collider.GetComponent<Tile>().pathLevel > 0)
             {
 
@@ -84,7 +84,7 @@ public class MouseScript : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) || Physics.Raycast(ray, out hit, LayerMask.GetMask("Block")))
+        if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) || Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")))
         {
 
             if (tempObjMouseOverObj != null)

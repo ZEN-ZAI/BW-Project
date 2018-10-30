@@ -2,6 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Node
+{
+    public string position;
+    public string parent;
+
+    public Transform transformPosition;
+
+    public Node(string position, string parent, Transform tempTranform)
+    {
+        this.position = position;
+        this.parent = parent;
+        transformPosition = tempTranform;
+    }
+}
+
 public class PathFinder : MonoBehaviour
 {
     public Material[] aPathMaterial; // level search
@@ -32,19 +47,77 @@ public class PathFinder : MonoBehaviour
     void Start()
     {
         aTableControl = FindObjectOfType<Map>();
-
+        Debug.Log(aTableControl.map[10,10].transform.name);
     }
 
     void Update()
     {
-        maxLevelFind = GameData.instance.energy;
+        //maxLevelFind = GameData.instance.energy;
     }
 
     public void PathFinding(int index_x, int index_y)
     {
         //DepthFirstSearch(index_y, index_x);
-        BreadthFirstSearch(index_x, index_y);
+        //BreadthFirstSearch(index_x, index_y);
+
+        DFS(index_x,index_y);
     }
+
+    public Stack<Transform> stack = new Stack<Transform>();
+    public List<Node> upTree = new List<Node>();
+    public Transform tempParent;
+    public bool findGoal;
+
+    public void DFS(int x, int y)
+    {
+        upTree.Add(new Node(aTableControl.map[y, x].name,"-", aTableControl.map[y, x].transform));
+        tempParent = aTableControl.map[y, x].transform;
+        while (!findGoal)
+        {
+            if (y < aTableControl.row && x < aTableControl.col && y >= 0 && x >= 0)
+            {
+
+                BackTack(x, y - 1); //Top
+                BackTack(x + 1, y - 1); //Top Right
+                BackTack(x + 1, y); //Right
+                BackTack(x + 1, y + 1); //Under Right
+                BackTack(x, y + 1); //Under
+                BackTack(x - 1, y + 1); //Under Left
+                BackTack(x - 1, y);    //Left
+                BackTack(x - 1, y - 1); //Top Left
+
+                Transform tempTranform = stack.Pop();
+                upTree.Add(new Node(tempTranform.name, tempParent.name, tempTranform));
+                tempParent = tempTranform;
+
+            }
+        }
+    }
+
+    public void BackTack(int x, int y)
+    {
+        if (y < aTableControl.row && x < aTableControl.col && y >= 0 && x >= 0)
+        {
+            stack.Push(aTableControl.map[y, x].transform);
+        }
+    }            /*int tempindex;
+            tempindex = upTree.FindIndex(e => e.position == aTableControl.map[y, x].name);
+
+            if (upTree[tempindex].parent == null)
+            {
+                upTree[tempindex].parent = tempParent;
+            }*/
+    /*
+    BackTack(x, y - 1); //Top
+    BackTack(x + 1, y - 1); //Top Right
+    BackTack(x + 1, y); //Right
+    BackTack(x + 1, y + 1); //Under Right
+    BackTack(x, y + 1); //Under
+    BackTack(x - 1, y + 1); //Under Left
+    BackTack(x - 1, y);    //Left
+    BackTack(x - 1, y - 1); //Top Left
+    */
+
 
     #region Breadth first search
 
@@ -207,11 +280,7 @@ public class PathFinder : MonoBehaviour
     }
 
     void TopPath(int index_y, int index_x)
-    {
-        //top
-        try
-        {
-            if (aTableControl.map[index_y - 1, index_x] != null && c_topLevelfind < maxLevelFind)
+    {if (aTableControl.map[index_y - 1, index_x] != null && c_topLevelfind < maxLevelFind)
             {
                 paths[0].Add(aTableControl.map[index_y - 1, index_x].GetComponent<Transform>());
                 aTableControl.map[index_y - 1, index_x].GetComponent<Tile>().pathLevel = c_topLevelfind + 1;
@@ -221,6 +290,10 @@ public class PathFinder : MonoBehaviour
                 c_topLevelfind++;
                 TopPath((index_y - 1), index_x);
             }
+        //top
+        try
+        {
+            
         }
         catch (System.Exception)
         {
