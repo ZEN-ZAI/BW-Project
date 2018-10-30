@@ -54,11 +54,21 @@ public class Player : MonoBehaviour
         {
             MouseOver();
         }
+
+        if (energy == 0)
+        {
+            EndTurn();
+        }
     }
 
     public void UesSkill()
     {
+        leaderCharacter.GetComponent<LeaderCharacter>().UseSkill();
+    }
 
+    public void EndTurn()
+    {
+        myTurn = false;
     }
 
     private void MouseOver()
