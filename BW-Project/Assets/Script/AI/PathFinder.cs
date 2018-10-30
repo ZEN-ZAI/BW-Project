@@ -46,23 +46,23 @@ public class PathFinder : MonoBehaviour
 
     void Start()
     {
-        Map = FindObjectOfType<Map>();
-        Debug.Log(Map.map[10,10].transform.name);
+        Debug.Log("Test -> "+Map.instance.map[10,10].transform.name);
     }
 
     void Update()
     {
-        maxLevelFind = GameData.instance.energy;
+        //maxLevelFind = GameData.instance.energy;
     }
 
     public void PathFinding(int index_x, int index_y)
     {
         //DepthFirstSearch(index_y, index_x);
+        maxLevelFind = GameSystem.instance.playerNow.energy;
         BreadthFirstSearch(index_x, index_y);
-
-        //DFS(index_x,index_y);
     }
 
+    #region wait for connect
+    /*
     public Stack<Transform> stack = new Stack<Transform>();
     public List<Node> upTree = new List<Node>();
     public Transform tempParent;
@@ -70,11 +70,11 @@ public class PathFinder : MonoBehaviour
 
     public void DFS(int x, int y)
     {
-        upTree.Add(new Node(Map.map[y, x].name,"-", Map.map[y, x].transform));
-        tempParent = Map.map[y, x].transform;
+        upTree.Add(new Node(Map.instance.map[y, x].name,"-", Map.instance.map[y, x].transform));
+        tempParent = Map.instance.map[y, x].transform;
         while (!findGoal)
         {
-            if (y < Map.row && x < Map.col && y >= 0 && x >= 0)
+            if (y < Map.instance.row && x < Map.instance.col && y >= 0 && x >= 0)
             {
 
 
@@ -98,12 +98,12 @@ public class PathFinder : MonoBehaviour
 
     public void BackTack(int x, int y)
     {
-        if (y < Map.row && x < Map.col && y >= 0 && x >= 0)
+        if (y < Map.instance.row && x < Map.instance.col && y >= 0 && x >= 0)
         {
-            stack.Push(Map.map[y, x].transform);
+            stack.Push(Map.instance.map[y, x].transform);
         }
     }            /*int tempindex;
-            tempindex = upTree.FindIndex(e => e.position == Map.map[y, x].name);
+            tempindex = upTree.FindIndex(e => e.position == Map.instance.map[y, x].name);
 
             if (upTree[tempindex].parent == null)
             {
@@ -119,7 +119,7 @@ public class PathFinder : MonoBehaviour
     BackTack(x - 1, y);    //Left
     BackTack(x - 1, y - 1); //Top Left
     */
-
+    #endregion
 
     #region Breadth first search
 
@@ -127,8 +127,8 @@ public class PathFinder : MonoBehaviour
     {
         if (q.Count == 0)
         {
-            listQ.Add(Map.map[index_y, index_x].transform);
-            q.Enqueue(Map.map[index_y, index_x].transform);
+            listQ.Add(Map.instance.map[index_y, index_x].transform);
+            q.Enqueue(Map.instance.map[index_y, index_x].transform);
             SetVisited(index_x, index_y);
         }
         BFS();
@@ -178,38 +178,38 @@ public class PathFinder : MonoBehaviour
     }
     void HighlightPath(int index_x, int index_y)
     {
-        if (Map.map[index_y, index_x].HaveCharacter())
+        if (Map.instance.map[index_y, index_x].HaveCharacter())
         {
-            Map.map[index_y, index_x].pathLevel = 0; //AddlevelPath
+            Map.instance.map[index_y, index_x].pathLevel = 0; //AddlevelPath
         }
         else
         {
-            Map.map[index_y, index_x].pathLevel = bfsLevel; //AddlevelPath
-            Map.map[index_y, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[bfsLevel - 1];
+            Map.instance.map[index_y, index_x].pathLevel = bfsLevel; //AddlevelPath
+            Map.instance.map[index_y, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[bfsLevel - 1];
         }
     }
 
     bool Visited(int index_x, int index_y)
     {
-        return Map.map[index_y, index_x].visited;
+        return Map.instance.map[index_y, index_x].visited;
     }
     void SetVisited(int index_x, int index_y)
     {
-        Map.map[index_y, index_x].visited = true;
+        Map.instance.map[index_y, index_x].visited = true;
     }
     void CheckAndAddPath(int index_x, int index_y)
     {
-        if (index_y < Map.row && index_x < Map.col && index_y >= 0 && index_x >= 0)
+        if (index_y < Map.instance.row && index_x < Map.instance.col && index_y >= 0 && index_x >= 0)
         {
 
             if (!Visited(index_x, index_y))
             {
-                listQ.Add(Map.map[index_y, index_x].transform);
+                listQ.Add(Map.instance.map[index_y, index_x].transform);
                 SetVisited(index_x, index_y);
 
                 HighlightPath(index_x, index_y);
 
-                q.Enqueue(Map.map[index_y, index_x].transform);
+                q.Enqueue(Map.instance.map[index_y, index_x].transform);
             }
 
 
@@ -282,11 +282,11 @@ public class PathFinder : MonoBehaviour
     }
 
     void TopPath(int index_y, int index_x)
-    {if (Map.map[index_y - 1, index_x] != null && c_topLevelfind < maxLevelFind)
+    {if (Map.instance.map[index_y - 1, index_x] != null && c_topLevelfind < maxLevelFind)
             {
-                paths[0].Add(Map.map[index_y - 1, index_x].GetComponent<Transform>());
-                Map.map[index_y - 1, index_x].GetComponent<Tile>().pathLevel = c_topLevelfind + 1;
-                Map.map[index_y - 1, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_topLevelfind];
+                paths[0].Add(Map.instance.map[index_y - 1, index_x].GetComponent<Transform>());
+                Map.instance.map[index_y - 1, index_x].GetComponent<Tile>().pathLevel = c_topLevelfind + 1;
+                Map.instance.map[index_y - 1, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_topLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: top");
 
                 c_topLevelfind++;
@@ -307,10 +307,10 @@ public class PathFinder : MonoBehaviour
         //right
         try
         {
-            if (Map.map[index_y, index_x + 1] != null && c_rightLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y, index_x + 1] != null && c_rightLevelfind < maxLevelFind)
             {
-                paths[1].Add(Map.map[index_y, index_x + 1].GetComponent<Transform>());
-                Map.map[index_y, index_x + 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_rightLevelfind];
+                paths[1].Add(Map.instance.map[index_y, index_x + 1].GetComponent<Transform>());
+                Map.instance.map[index_y, index_x + 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_rightLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: right");
                 c_rightLevelfind++;
                 RightPath(index_y, (index_x + 1));
@@ -326,10 +326,10 @@ public class PathFinder : MonoBehaviour
         //under
         try
         {
-            if (Map.map[index_y + 1, index_x] != null && c_underLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y + 1, index_x] != null && c_underLevelfind < maxLevelFind)
             {
-                paths[2].Add(Map.map[index_y + 1, index_x].GetComponent<Transform>());
-                Map.map[index_y + 1, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_underLevelfind];
+                paths[2].Add(Map.instance.map[index_y + 1, index_x].GetComponent<Transform>());
+                Map.instance.map[index_y + 1, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_underLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: under");
 
                 c_underLevelfind++;
@@ -346,10 +346,10 @@ public class PathFinder : MonoBehaviour
         //left
         try
         {
-            if (Map.map[index_y, index_x - 1] != null && c_leftLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y, index_x - 1] != null && c_leftLevelfind < maxLevelFind)
             {
-                paths[3].Add(Map.map[index_y, index_x - 1].GetComponent<Transform>());
-                Map.map[index_y, index_x - 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_leftLevelfind];
+                paths[3].Add(Map.instance.map[index_y, index_x - 1].GetComponent<Transform>());
+                Map.instance.map[index_y, index_x - 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_leftLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: left");
                 c_leftLevelfind++;
                 LeftPath(index_y, (index_x - 1));
@@ -365,9 +365,9 @@ public class PathFinder : MonoBehaviour
         //under & right
         try
         {
-            if (Map.map[index_y + 1, index_x + 1] != null && c_URLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y + 1, index_x + 1] != null && c_URLevelfind < maxLevelFind)
             {
-                Map.map[index_y + 1, index_x + 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_URLevelfind];
+                Map.instance.map[index_y + 1, index_x + 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_URLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: under & right");
                 c_URLevelfind++;
                 URPath((index_y + 1), (index_x + 1));
@@ -383,9 +383,9 @@ public class PathFinder : MonoBehaviour
         //under & left
         try
         {
-            if (Map.map[index_y + 1, index_x - 1] != null && c_ULLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y + 1, index_x - 1] != null && c_ULLevelfind < maxLevelFind)
             {
-                Map.map[index_y + 1, index_x - 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_ULLevelfind];
+                Map.instance.map[index_y + 1, index_x - 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_ULLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: under & left");
                 c_ULLevelfind++;
                 ULPath((index_y + 1), (index_x - 1));
@@ -401,9 +401,9 @@ public class PathFinder : MonoBehaviour
         //top & right
         try
         {
-            if (Map.map[index_y - 1, index_x + 1] != null && c_TRLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y - 1, index_x + 1] != null && c_TRLevelfind < maxLevelFind)
             {
-                Map.map[index_y - 1, index_x + 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_TRLevelfind];
+                Map.instance.map[index_y - 1, index_x + 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_TRLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: top & right");
                 c_TRLevelfind++;
                 TRPath((index_y - 1), (index_x + 1));
@@ -419,9 +419,9 @@ public class PathFinder : MonoBehaviour
         //top & left
         try
         {
-            if (Map.map[index_y - 1, index_x - 1] != null && c_TLLevelfind < maxLevelFind)
+            if (Map.instance.map[index_y - 1, index_x - 1] != null && c_TLLevelfind < maxLevelFind)
             {
-                Map.map[index_y - 1, index_x - 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_TLLevelfind];
+                Map.instance.map[index_y - 1, index_x - 1].GetComponent<Renderer>().sharedMaterial = aPathMaterial[c_TLLevelfind];
                 Debug.Log("Open path[Level " + maxLevelFind + "]: top & left");
                 c_TLLevelfind++;
                 TLPath((index_y - 1), (index_x - 1));

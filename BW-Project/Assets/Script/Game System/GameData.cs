@@ -49,6 +49,5 @@ public class GameData : MonoBehaviour
 
         }
         DontDestroyOnLoad(gameObject);
-
     }
 }

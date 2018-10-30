@@ -15,9 +15,39 @@ public class Map : MonoBehaviour
 
     public GameObject mapRoot;
 
+    public static Map instance;
+
     void Awake()
     {
-        map = new Tile[row,col];
+
+        if (instance == null)
+        {
+            instance = this;
+            map = new Tile[row, col];
+            maxCharacter = row * col;
+            int num = 0;
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    map[i, j] = mapRoot.transform.GetChild(num).GetComponent<Tile>();
+                    map[i, j].row = i;
+                    map[i, j].col = j;
+                    num++;
+                }
+            }
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
+    /*void Start()
+    {
+        map = new Tile[row, col];
         maxCharacter = row * col;
         int num = 0;
 
@@ -31,7 +61,7 @@ public class Map : MonoBehaviour
                 num++;
             }
         }
-    }
+    }*/
 
 
     public void MoveCharacter(int origin_x,int origin_y, int moveto_x,int moveto_y)
