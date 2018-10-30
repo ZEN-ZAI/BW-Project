@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public string characterPlayerName;
     public GameObject leaderCharacter;
 
-    public int myPeople;
+    public int myAllPeople;
     public int energy;
     public bool myTurn;
 
@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
 
     public void SetFrist()
     {
-        myTurn = true;
         energy = 5;
         active = (state)(Playing);
         active();
@@ -53,6 +52,11 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
+        else if (active == Playing && !myTurn) // Playing to Waiting
+        {
+            active = (state)(Waiting);
+            active();
+        }
         else if (active == Waiting && !myTurn) // to self
         {
             active = (state)(Waiting);
@@ -63,12 +67,12 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
-        else if (active == Waiting && myPeople >= (Map.instance.maxCharacter / 5) * 4) // 4/5  KNN to Win
+        else if (active == Waiting && myAllPeople >= (Map.instance.maxCharacter / 5) * 4) // 4/5  KNN to Win
         {
             active = (state)(Win);
             active();
         }
-        else if (active == Waiting && myPeople <= (Map.instance.maxCharacter / 5)) // 1/5 KNN to Lose
+        else if (active == Waiting && myAllPeople <= (Map.instance.maxCharacter / 5)) // 1/5 KNN to Lose
         {
             active = (state)(Lose);
             active();
@@ -124,6 +128,7 @@ public class Player : MonoBehaviour
 
     public void SetTurn()
     {
+        energy = 5;
         myTurn = true;
     }
 
@@ -134,8 +139,11 @@ public class Player : MonoBehaviour
 
     public void EndTurn()
     {
-        myTurn = false;
-        GameSystem.instance.NextQueue();
+        if (myTurn)
+        {
+            myTurn = false;
+            GameSystem.instance.NextQueue();
+        }
     }
 
     private void MouseOver()

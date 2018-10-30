@@ -2,28 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UserInterfaceLink : MonoBehaviour
 {
     #region System Attribute
-    public Text textTime;
+    public TextMeshProUGUI textTime;
     #endregion
 
     #region Player Attribute
-    public Text textPlayerName;
-    public Text textEnergyPlayer;
-    public Text textHowManyCharacterPlayer;
-    public Text textTurnPlayer;
+    public GameObject[] rootUI;
+    public TextMeshProUGUI[] textPlayerName = new TextMeshProUGUI[2];
+    public TextMeshProUGUI[] textEnergyPlayer = new TextMeshProUGUI[2];
+    public TextMeshProUGUI[] textHowManyCharacterPlayer = new TextMeshProUGUI[2];
+    public TextMeshProUGUI[] textTurnPlayer = new TextMeshProUGUI[2];
     #endregion
 
-    #region Enemy Attribute
-    public Text textEnemyName;
-    public Text textEnergyEnemy;
-    public Text textHowManyCharacterEnemy;
-    public Text textTurnEnemy;
-    #endregion
+    void Start()
+    {
+        int num = 0;
+        foreach (var item in rootUI)
+        {
 
-    // Update is called once per frame
+            textPlayerName[num] = item.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            textEnergyPlayer[num] = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            textHowManyCharacterPlayer[num] = item.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            textTurnPlayer[num] = item.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+
+            num++;
+        }
+    }
+
     void Update()
     {
         UIUpdate();
@@ -31,19 +40,15 @@ public class UserInterfaceLink : MonoBehaviour
 
     private void UIUpdate()
     {
-
+        UpdatePlayer(0);
+        UpdatePlayer(1);
     }
 
-    private void UIUpdatePlayer()
+    private void UpdatePlayer(int index)
     {
-        /*textPlayerName = GameSystem.instance;
-        textEnergyPlayer;
-        textHowManyCharacterPlayer;
-        textTurnPlayer;*/
-    }
-
-    private void UIUpdateEnemy()
-    {
-
+        textPlayerName[index].text = "Player 1: "+GameSystem.instance.player[index].playerName;
+        textEnergyPlayer[index].text = ""+GameSystem.instance.player[index].energy;
+        textHowManyCharacterPlayer[index].text = "My all people: "+GameSystem.instance.player[index].myAllPeople;
+        textTurnPlayer[index].text = ""+GameSystem.instance.player[index].myTurn.ToString();
     }
 }

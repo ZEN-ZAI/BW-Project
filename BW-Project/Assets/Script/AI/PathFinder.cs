@@ -46,7 +46,7 @@ public class PathFinder : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Test -> "+Map.instance.map[10,10].transform.name);
+        //Debug.Log("Test -> "+Map.instance.map[0,0].transform.name);
     }
 
     void Update()

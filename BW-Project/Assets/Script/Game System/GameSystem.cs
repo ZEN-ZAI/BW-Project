@@ -49,6 +49,7 @@ public class GameSystem : MonoBehaviour
         SetSpawnNpc();
         SetSpawnCharacterPlayer();
         EnqueuePlayer();
+        NextQueue();
     }
 
     public void SetSpawnNpc()
