@@ -168,7 +168,7 @@ public class MatchMakingSystem : MonoBehaviour {
 
     string GetDataValue(string data, string index)
     {
-        string value = data.Substring(data.IndexOf(index)+1 + index.Length);
+        string value = data.Substring(data.IndexOf(index) + index.Length);
         if (value.Contains(",")) value = value.Remove(value.IndexOf(","));
         return value;
     }

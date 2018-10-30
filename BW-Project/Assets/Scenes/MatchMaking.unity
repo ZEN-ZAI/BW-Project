@@ -1332,7 +1332,7 @@ PrefabInstance:
     - target: {fileID: 224769139512322710, guid: c3b6fd8529ed55c47892babc89cfdf93,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224769139512322710, guid: c3b6fd8529ed55c47892babc89cfdf93,
         type: 3}
@@ -2094,7 +2094,7 @@ MonoBehaviour:
   enemyName: 
   characterEnemyName: 
   firstPlayer: 0
-  npc: {fileID: 0}
+  npc: {fileID: 1971496216838371313, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
   characterPlayer: {fileID: 0}
   characterEnemy: {fileID: 0}
 --- !u!4 &1734439967
@@ -2109,5 +2109,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
