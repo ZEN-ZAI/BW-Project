@@ -8,13 +8,18 @@ public class Player : MonoBehaviour
     public string characterPlayerName;
     public GameObject leaderCharacter;
 
+    public int myPeople;
     public int energy;
     public bool myTurn;
+
 
     private MouseScript mouseScript;
     private PathFinder pathFinder;
 
     public bool selectCharecter;
+
+    public delegate void state();
+    public state active;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +29,63 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    void SetFrist()
+    {
+        active = (state)(Playing);
+        active();
+    }
+
     void Update()
+    {
+
+        if (active == Playing && myTurn) //  to self
+        {
+            active = (state)(Playing);
+            active();
+        }
+        else if (active == Playing && !myTurn) // Playing to KNN
+        {
+            active = (state)(KNN);
+            active();
+        }
+        else if (active == Waiting && !myTurn) // to self
+        {
+            active = (state)(Waiting);
+            active();
+        }
+        else if (active == Waiting && myTurn) // Waiting to KNN
+        {
+            active = (state)(Playing);
+            active();
+        }
+        else if (active == KNN && GameSystem.instance.KNN_finish) // KNN to Waiting
+        {
+            active = (state)(Waiting);
+            active();
+        }
+        else if (active == KNN &&  myPeople >= (Map.instance.maxCharacter/ 5)*4) // 4/5  KNN to Win
+        {
+            active = (state)(Win);
+            active();
+        }
+        else if (active == KNN &&  myPeople <= (Map.instance.maxCharacter / 5)) // 1/5 KNN to Lose
+        {
+            active = (state)(Lose);
+            active();
+        }
+
+
+        if (energy == 0)
+        {
+            EndTurn();
+        }
+    }
+
+    private void Playing()
     {
         if (myTurn)
         {
-
             if (!selectCharecter)
             {
                 MouseOver();
@@ -54,11 +111,31 @@ public class Player : MonoBehaviour
         {
             MouseOver();
         }
+    }
 
-        if (energy == 0)
-        {
-            EndTurn();
-        }
+    private void Waiting()
+    {
+
+    }
+
+    private void KNN()
+    {
+
+    }
+
+    private void Lose()
+    {
+
+    }
+
+    private void Win()
+    {
+
+    }
+
+    public void SetTurn(bool turn)
+    {
+        myTurn = turn;
     }
 
     public void UesSkill()
@@ -78,7 +155,7 @@ public class Player : MonoBehaviour
 
     private void SelectCharecter()
     {
-        mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder, playerName);
+        mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder, this);
 
     }
     private void MoveCharecter()

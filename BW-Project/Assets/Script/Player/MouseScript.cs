@@ -34,7 +34,7 @@ public class MouseScript : MonoBehaviour
         }
     }
 
-    public void MouseSelectCharacter(ref bool select, PathFinder pathFinder, string group)
+    public void MouseSelectCharacter(ref bool select, PathFinder pathFinder, Player player)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -43,7 +43,7 @@ public class MouseScript : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
-                hit.collider.gameObject.GetComponent<Character>().group == group)
+                hit.collider.gameObject.GetComponent<Character>().group == player.playerName)
             {
 
                 if (tempObjSelectCharacter != null)
@@ -74,7 +74,8 @@ public class MouseScript : MonoBehaviour
             {
                 pathFinder.ResetPathBFS();
                 pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
-                                   tempObjSelectCharacter.GetComponent<Character>().y);
+                                   tempObjSelectCharacter.GetComponent<Character>().y,
+                                   player.energy);
             }
         }
     }

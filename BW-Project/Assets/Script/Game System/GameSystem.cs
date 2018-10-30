@@ -6,10 +6,11 @@ public class GameSystem : MonoBehaviour
 {
     public Player[] player;
 
-    public Player playerNow;
     Queue<Player> q = new Queue<Player>();
 
     public Spawner spawner;
+
+    public bool KNN_finish;
 
     public static GameSystem instance;
 
@@ -34,11 +35,10 @@ public class GameSystem : MonoBehaviour
         GameSetUp();
     }
 
-
-    // Update is called once per frame
-    void Update()
+    public void NextQueue()
     {
-        
+        q.Peek().SetTurn(true);
+        q.Enqueue(q.Dequeue());
     }
 
     public void GameSetUp()
@@ -66,9 +66,11 @@ public class GameSystem : MonoBehaviour
 
     public void EnqueuePlayer()
     {
-        foreach (var item in player)
+        player[0].SetTurn(true);
+
+        for (int i = 0; i < 2; i++)
         {
-            q.Enqueue(item);
+            q.Enqueue(player[i]);
         }
     }
 }

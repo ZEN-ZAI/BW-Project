@@ -54,10 +54,10 @@ public class PathFinder : MonoBehaviour
         //maxLevelFind = GameData.instance.energy;
     }
 
-    public void PathFinding(int index_x, int index_y)
+    public void PathFinding(int index_x, int index_y,int energy)
     {
         //DepthFirstSearch(index_y, index_x);
-        maxLevelFind = GameSystem.instance.playerNow.energy;
+        maxLevelFind = energy;
         BreadthFirstSearch(index_x, index_y);
     }
 

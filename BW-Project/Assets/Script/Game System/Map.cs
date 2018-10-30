@@ -63,7 +63,6 @@ public class Map : MonoBehaviour
         }
     }*/
 
-
     public void MoveCharacter(int origin_x,int origin_y, int moveto_x,int moveto_y)
     {
         map[moveto_y, moveto_x].LinkCharacter(map[origin_y, origin_x].character);
