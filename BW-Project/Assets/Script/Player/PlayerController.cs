@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    /*
     public bool selectCharecter;
 
     private MouseScript mouseScript;
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
 
     }
-
+    
     private void MouseOver()
     {
         mouseScript.ShowMouseOverObject();
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     private void SelectCharecter()
     {
-        //mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder, GameData.instance.playerName);
+        mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder, GameData.instance.playerName);
 
     }
     private void MoveCharecter()
@@ -70,4 +71,5 @@ public class PlayerController : MonoBehaviour
         mouseScript.SelectToMove(ref selectCharecter, ref GameData.instance.energy, pathFinder);
 
     }
+    */
 }

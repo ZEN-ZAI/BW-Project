@@ -11,7 +11,19 @@ public class Tile : MonoBehaviour
 
     public bool visited;
 
-    public Character character;
+    public GameObject character;
+
+    void Update()
+    {
+        if (visited)
+        {
+            tag = "Path";
+        }
+        else
+        {
+            tag = "Untagged";
+        }
+    }
 
     public bool HaveCharacter()
     {
@@ -25,10 +37,8 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void LinkCharacter(Character character)
+    public void LinkCharacter(GameObject character)
     {
-        character.x = col;
-        character.y = row;
         this.character = character;
     }
 

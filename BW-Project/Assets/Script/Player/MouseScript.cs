@@ -27,6 +27,13 @@ public class MouseScript : MonoBehaviour
                 int tempChar_x = tempObjSelectCharacter.GetComponent<Character>().x; int target_x = hit.collider.GetComponent<Tile>().col;
                 int tempChar_y = tempObjSelectCharacter.GetComponent<Character>().y; int target_y = hit.collider.GetComponent<Tile>().row;
 
+                tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
+                tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+
+
+                Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
+                enegy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
+
                 tempObjSelectCharacter = null;
                 select = false;
                 pathFinder.ResetPathBFS();
@@ -48,12 +55,12 @@ public class MouseScript : MonoBehaviour
 
                 if (tempObjSelectCharacter != null)
                 {
-                    tempObjSelectCharacter.GetComponent<DefaultMaterial>().SetDefaultMaterial();
+                    tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
                     Debug.Log("Set Default Material to tempCharacter");
                 }
 
                 select = true;
-                hit.collider.GetComponent<DefaultMaterial>().ChangeShader(aMouseSelectMaterial);
+                hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
                 tempObjSelectCharacter = hit.collider.gameObject;
 
                 Debug.Log("Select: " + hit.collider.gameObject.name);
@@ -64,7 +71,7 @@ public class MouseScript : MonoBehaviour
                 {
                     select = false;
                     pathFinder.ResetPathBFS();
-                    tempObjSelectCharacter.GetComponent<DefaultMaterial>().SetDefaultMaterial();
+                    tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
                     tempObjSelectCharacter = null;
                     Debug.Log("select is false");
                 }
@@ -90,7 +97,7 @@ public class MouseScript : MonoBehaviour
 
             if (tempObjMouseOverObj != null)
             {
-                tempObjMouseOverObj.GetComponent<DefaultMaterial>().SetDefaultMaterial();
+                tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
             }
 
             tempObjMouseOverObj = hit.collider.gameObject;
@@ -102,7 +109,7 @@ public class MouseScript : MonoBehaviour
         {
             if (tempObjMouseOverObj != null)
             {
-                tempObjMouseOverObj.GetComponent<DefaultMaterial>().SetDefaultMaterial();
+                tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
             }
         }
     }

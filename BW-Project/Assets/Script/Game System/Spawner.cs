@@ -9,6 +9,21 @@ public class Spawner : MonoBehaviour
     public GameObject CharacterTrump;
     public GameObject CharacterKim;
 
+    public static Spawner instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+
+        }
+    }
+
     #region Random Spawn
     public void SpawnNPC()
     {
@@ -29,6 +44,7 @@ public class Spawner : MonoBehaviour
         }
 
         GameObject tempCharacter = Instantiate(CharacterNpc, Map.instance.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+        Map.instance.map[spawn_y, spawn_x].LinkCharacter(tempCharacter);
         tempCharacter.GetComponent<Character>().x = spawn_x;
         tempCharacter.GetComponent<Character>().y = spawn_y;
         Map.instance.allCharacter++;
@@ -72,6 +88,7 @@ public class Spawner : MonoBehaviour
             Debug.Log("Error : characterPlayerName in Spawner Player<"+ player.playerName+ ">");
         }
 
+        Map.instance.map[spawn_y, spawn_x].LinkCharacter(tempCharacter);
         tempCharacter.GetComponent<Character>().x = spawn_x;
         tempCharacter.GetComponent<Character>().y = spawn_y;
         tempCharacter.GetComponent<Character>().group = player.playerName;
@@ -85,6 +102,7 @@ public class Spawner : MonoBehaviour
     public void SpawnNPC(int x,int y)
     {
         GameObject tempCharacter = Instantiate(CharacterNpc, Map.instance.map[y, x].transform.position, Quaternion.identity);
+        Map.instance.map[y, x].LinkCharacter(tempCharacter);
         tempCharacter.GetComponent<Character>().x = x;
         tempCharacter.GetComponent<Character>().y = y;
         Map.instance.allCharacter++;
@@ -112,6 +130,7 @@ public class Spawner : MonoBehaviour
             Debug.Log("Error : characterPlayerName in Spawner");
         }
 
+        Map.instance.map[y, x].LinkCharacter(tempCharacter);
         tempCharacter.GetComponent<Character>().x = x;
         tempCharacter.GetComponent<Character>().y = y;
         tempCharacter.GetComponent<Character>().group = player.playerName;

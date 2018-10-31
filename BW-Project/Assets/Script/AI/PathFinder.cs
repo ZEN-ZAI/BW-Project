@@ -224,7 +224,7 @@ public class PathFinder : MonoBehaviour
         {
             item.GetComponent<Tile>().pathLevel = 0;
             item.GetComponent<Tile>().visited = false;
-            item.GetComponent<DefaultMaterial>().SetDefaultMaterial();
+            item.GetComponent<SetMaterial>().SetDefaultMaterial();
         }
         listQ.Clear();
         Debug.Log("ResetPathBFS");
@@ -275,7 +275,7 @@ public class PathFinder : MonoBehaviour
         {
             foreach (var ele in item)
             {
-                ele.GetComponent<DefaultMaterial>().SetDefaultMaterial();
+                ele.GetComponent<SetMaterial>().SetDefaultMaterial();
                 ele.GetComponent<Tile>().pathLevel = 0;
             }
         }

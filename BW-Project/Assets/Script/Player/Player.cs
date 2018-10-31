@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public bool myTurn;
 
 
-    private MouseScript mouseScript;
+    public MouseScript mouseScript;
     private PathFinder pathFinder;
 
     public bool selectCharecter;
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mouseScript = FindObjectOfType<MouseScript>();
+        //mouseScript = FindObjectOfType<MouseScript>();
         pathFinder = FindObjectOfType<PathFinder>();
     }
 
@@ -67,19 +67,14 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
-        else if (active == Waiting && myAllPeople >= (Map.instance.maxCharacter / 5) * 4) // 4/5  KNN to Win
+        else if (active == Waiting && GameSystem.instance.End ) // Waiting to end
         {
-            active = (state)(Win);
-            active();
-        }
-        else if (active == Waiting && myAllPeople <= (Map.instance.maxCharacter / 5)) // 1/5 KNN to Lose
-        {
-            active = (state)(Lose);
+            active = (state)(Waiting);
             active();
         }
 
 
-        if (energy == 0)
+        if (active == Playing && energy == 0)
         {
             EndTurn();
         }
@@ -98,7 +93,7 @@ public class Player : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.tag == "Path" && energy > 0)
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.tag == "Path")
             {
                 MoveCharecter();
 
@@ -116,17 +111,7 @@ public class Player : MonoBehaviour
 
     }
 
-    private void Lose()
-    {
-
-    }
-
-    private void Win()
-    {
-
-    }
-
-    public void SetTurn()
+    public void StartTurn()
     {
         energy = 5;
         myTurn = true;
@@ -137,16 +122,20 @@ public class Player : MonoBehaviour
         leaderCharacter.GetComponent<LeaderCharacter>().UseSkill();
     }
 
+
+
     public void EndTurn()
     {
         if (myTurn)
         {
             myTurn = false;
+            KNN.instance.StartKNN();
+            myAllPeople =  GameSystem.instance.HowManyMyPeople(playerName);
             GameSystem.instance.NextQueue();
         }
     }
 
-    private void MouseOver()
+    public void MouseOver()
     {
         mouseScript.ShowMouseOverObject();
     }

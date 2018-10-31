@@ -7,6 +7,7 @@ using TMPro;
 public class UserInterfaceLink : MonoBehaviour
 {
     #region System Attribute
+    public TextMeshProUGUI textKNN;
     public TextMeshProUGUI textTime;
     #endregion
 
@@ -40,6 +41,7 @@ public class UserInterfaceLink : MonoBehaviour
 
     private void UIUpdate()
     {
+        textKNN.text = ""+KNN.instance.K;
         UpdatePlayer(0);
         UpdatePlayer(1);
     }

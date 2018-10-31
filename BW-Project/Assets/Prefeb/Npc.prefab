@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  group: 
+  group: Npc
 --- !u!114 &2050062084471703422
 MonoBehaviour:
   m_ObjectHideFlags: 0

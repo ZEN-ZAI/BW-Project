@@ -28,7 +28,7 @@ public class Map : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -47,6 +47,11 @@ public class Map : MonoBehaviour
                 num++;
             }
         }
+    }
+
+    public Vector3 GetBlockPosition(int index_x, int index_y)
+    {
+        return map[index_y, index_x].transform.position;
     }
 
     public void MoveCharacter(int origin_x,int origin_y, int moveto_x,int moveto_y)

@@ -10,9 +10,11 @@ public class GameSystem : MonoBehaviour
 
     public Spawner spawner;
 
-    public bool KNN_finish = true;
+    public bool KNN_finish;
 
     public static GameSystem instance;
+
+    public bool End;
 
     void Awake()
     {
@@ -25,7 +27,7 @@ public class GameSystem : MonoBehaviour
             Destroy(gameObject);
 
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
@@ -35,10 +37,84 @@ public class GameSystem : MonoBehaviour
         GameSetUp();
     }
 
+    void Update()
+    {
+        if (!End)
+        {
+            CheckEndGame();
+        }
+        else
+        {
+            foreach (var item in player)
+            {
+                item.myTurn = false;
+            }
+
+            if (player[0].myAllPeople > player[1].myAllPeople)
+            {
+                Debug.Log("Player<" + player[0].playerName + ">   WIN");
+            }
+            else if (player[1].myAllPeople > player[0].myAllPeople)
+            {
+                Debug.Log("Player<" + player[1].playerName + ">   WIN");
+            }
+            else
+            {
+                Debug.Log(" - Draw -");
+            }
+        }
+    }
+
+    public void CheckEndGame()
+    {
+        int num = 0;
+
+        for (int i = 0; i < Map.instance.row; i++)
+        {
+            for (int j = 0; j < Map.instance.col; j++)
+            {
+                if (Map.instance.map[i, j].HaveCharacter())
+                {
+                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == "Npc")
+                    {
+                        num++;
+                    }
+                }
+            }
+        }
+
+        if (num == 0)
+        {
+            End = true;
+        }
+
+    }
+
+    public int HowManyMyPeople(string group)
+    {
+        int num = 0;
+
+        for (int i = 0; i < Map.instance.row; i++)
+        {
+            for (int j = 0; j < Map.instance.col; j++)
+            {
+                if (Map.instance.map[i, j].HaveCharacter())
+                {
+                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == group)
+                    {
+                        num++;
+                    }
+                }
+            }
+        }
+        return num;
+
+    }
+
     public void NextQueue()
     {
         Player tempPlayer = q.Peek();
-        tempPlayer.SetTurn();
+        tempPlayer.StartTurn();
 
         q.Enqueue(tempPlayer);
         q.Dequeue();
@@ -54,7 +130,7 @@ public class GameSystem : MonoBehaviour
 
     public void SetSpawnNpc()
     {
-        for (int i = 0; i < (Map.instance.row* Map.instance.col)/10 ; i++)
+        for (int i = 0; i < (Map.instance.row * Map.instance.col) / 10; i++)
         {
             spawner.SpawnNPC();
         }
