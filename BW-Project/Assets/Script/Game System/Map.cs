@@ -12,7 +12,7 @@ public class Map : MonoBehaviour
 
     public Tile[,] map;
 
-    public GameObject mapRoot;
+    //public GameObject mapRoot;
 
     public static Map instance;
 
@@ -32,9 +32,9 @@ public class Map : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    /*void Start()
     {
-        /*map = new Tile[row, col];
+        map = new Tile[row, col];
         maxCharacter = row * col;
         int num = 0;
 
@@ -47,8 +47,8 @@ public class Map : MonoBehaviour
                 map[i, j].col = j;
                 num++;
             }
-        }*/
-    }
+        }
+    }*/
 
     public Vector3 GetBlockPosition(int index_x, int index_y)
     {
