@@ -8,7 +8,6 @@ public class Map : MonoBehaviour
     public int col;
 
     public int allCharacter;
-
     public int maxCharacter;
 
     public Tile[,] map;
@@ -23,6 +22,8 @@ public class Map : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            map = new Tile[row, col];
+            maxCharacter = row * col;
         }
         else if (instance != this)
         {
@@ -33,7 +34,7 @@ public class Map : MonoBehaviour
 
     void Start()
     {
-        map = new Tile[row, col];
+        /*map = new Tile[row, col];
         maxCharacter = row * col;
         int num = 0;
 
@@ -46,7 +47,7 @@ public class Map : MonoBehaviour
                 map[i, j].col = j;
                 num++;
             }
-        }
+        }*/
     }
 
     public Vector3 GetBlockPosition(int index_x, int index_y)
