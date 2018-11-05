@@ -43,26 +43,6 @@ public class GameSystem : MonoBehaviour
         {
             CheckEndGame();
         }
-        else
-        {
-            foreach (var item in player)
-            {
-                item.myTurn = false;
-            }
-
-            if (player[0].myAllPeople > player[1].myAllPeople)
-            {
-                Debug.Log("Player<" + player[0].playerName + "> : WIN");
-            }
-            else if (player[1].myAllPeople > player[0].myAllPeople)
-            {
-                Debug.Log("Player<" + player[1].playerName + "> : WIN");
-            }
-            else
-            {
-                Debug.Log(" - Draw -");
-            }
-        }
     }
 
     public void CheckEndGame()
@@ -86,6 +66,23 @@ public class GameSystem : MonoBehaviour
         if (num == 0)
         {
             End = true;
+            foreach (var item in player)
+            {
+                item.myTurn = false;
+            }
+
+            if (player[0].myAllPeople > player[1].myAllPeople)
+            {
+                Debug.Log("Player<" + player[0].playerName + "> : WIN");
+            }
+            else if (player[1].myAllPeople > player[0].myAllPeople)
+            {
+                Debug.Log("Player<" + player[1].playerName + "> : WIN");
+            }
+            else
+            {
+                Debug.Log(" - Draw -");
+            }
         }
 
     }
@@ -122,6 +119,7 @@ public class GameSystem : MonoBehaviour
 
     public void GameSetUp()
     {
+        GenerateMap.instance.Generate();
         SetSpawnNpc();
         SetSpawnCharacterPlayer();
         EnqueuePlayer();

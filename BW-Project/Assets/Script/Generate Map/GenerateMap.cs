@@ -11,19 +11,26 @@ public class GenerateMap : MonoBehaviour
     private int positionY;
     private int positionZ;
 
+    public static GenerateMap instance;
 
-    void Start()
+    public bool End;
+    public bool Setup;
+
+    void Awake()
     {
-        Generate();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+
+        }
+        //DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Generate()
+    public void Generate()
     {
         for (int i = 0; i < Map.instance.row; i++)
         {
@@ -37,7 +44,7 @@ public class GenerateMap : MonoBehaviour
         }
     }
 
-    void GenerateBlock(Vector3 position,int row,int col)
+    private void GenerateBlock(Vector3 position,int row,int col)
     {
         GameObject blockTemp = Instantiate(block, gameObject.transform);
         blockTemp.GetComponent<Tile>().row = row;
