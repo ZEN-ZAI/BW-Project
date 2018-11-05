@@ -24,6 +24,15 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    void Spawn(GameObject character,int x,int y)
+    {
+        GameObject tempCharacter = Instantiate(character, Map.instance.GetBlockPosition(x,y), Quaternion.identity);
+        Map.instance.map[y, x].LinkCharacter(tempCharacter);
+        tempCharacter.GetComponent<Character>().x = x;
+        tempCharacter.GetComponent<Character>().y = y;
+        Map.instance.allCharacter++;
+    }
+
     #region Random Spawn
     public void SpawnNPC()
     {
@@ -33,23 +42,19 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        int spawn_x = Random.Range(0, Map.instance.col);
-        int spawn_y = Random.Range(0, Map.instance.row);
+        int x = Random.Range(0, Map.instance.col);
+        int y = Random.Range(0, Map.instance.row);
 
-        while (Map.instance.map[spawn_y, spawn_x].GetComponent<Tile>().HaveCharacter())
+        while (Map.instance.map[y, x].GetComponent<Tile>().HaveCharacter())
         {
             Debug.Log("Error: Spawn Repeated");
-            spawn_x = Random.Range(0, Map.instance.col);
-            spawn_y = Random.Range(0, Map.instance.row);
+            x = Random.Range(0, Map.instance.col);
+            y = Random.Range(0, Map.instance.row);
         }
 
-        GameObject tempCharacter = Instantiate(CharacterNpc, Map.instance.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
-        Map.instance.map[spawn_y, spawn_x].LinkCharacter(tempCharacter);
-        tempCharacter.GetComponent<Character>().x = spawn_x;
-        tempCharacter.GetComponent<Character>().y = spawn_y;
-        Map.instance.allCharacter++;
+        Spawn(CharacterNpc, x,y);
 
-        Debug.Log("NPC spawn On :" + Map.instance.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
+        Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
     public void SpawnCharacter(Player player)
     {
@@ -59,53 +64,49 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        int spawn_x = Random.Range(0, Map.instance.col);
-        int spawn_y = Random.Range(0, Map.instance.row);
+        int x = Random.Range(0, Map.instance.col);
+        int y = Random.Range(0, Map.instance.row);
 
-        while (Map.instance.map[spawn_y, spawn_x].GetComponent<Tile>().HaveCharacter())
+        while (Map.instance.map[y, x].GetComponent<Tile>().HaveCharacter())
         {
             Debug.Log("Error: Spawn Repeated");
-            spawn_x = Random.Range(0, Map.instance.col);
-            spawn_y = Random.Range(0, Map.instance.row);
+            x = Random.Range(0, Map.instance.col);
+            y = Random.Range(0, Map.instance.row);
         }
 
         GameObject tempCharacter = new GameObject();
 
         if (player.characterPlayerName == "Prayut")
         {
-            tempCharacter = Instantiate(CharacterPrayut, Map.instance.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+            tempCharacter = Instantiate(CharacterPrayut, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
         }
         else if (player.characterPlayerName == "Trump")
         {
-            tempCharacter = Instantiate(CharacterTrump, Map.instance.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+            tempCharacter = Instantiate(CharacterTrump, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
         }
         else if (player.characterPlayerName == "Kim")
         {
-            tempCharacter = Instantiate(CharacterKim, Map.instance.map[spawn_y, spawn_x].transform.position, Quaternion.identity);
+            tempCharacter = Instantiate(CharacterKim, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
         }
         else
         {
             Debug.Log("Error : characterPlayerName in Spawner Player<"+ player.playerName+ ">");
         }
 
-        Map.instance.map[spawn_y, spawn_x].LinkCharacter(tempCharacter);
-        tempCharacter.GetComponent<Character>().x = spawn_x;
-        tempCharacter.GetComponent<Character>().y = spawn_y;
+        Map.instance.map[y, x].LinkCharacter(tempCharacter);
+        tempCharacter.GetComponent<Character>().x = x;
+        tempCharacter.GetComponent<Character>().y = y;
         tempCharacter.GetComponent<Character>().group = player.playerName;
         Map.instance.allCharacter++;
 
-        Debug.Log("Character<"+ player.playerName + "> spawn On :" + Map.instance.map[spawn_y, spawn_x].name + " <X:" + spawn_x + " Y:" + spawn_y + ">");
+        Debug.Log("Character<"+ player.playerName + "> spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
     #endregion
 
     #region Position Spawn
     public void SpawnNPC(int x,int y)
     {
-        GameObject tempCharacter = Instantiate(CharacterNpc, Map.instance.map[y, x].transform.position, Quaternion.identity);
-        Map.instance.map[y, x].LinkCharacter(tempCharacter);
-        tempCharacter.GetComponent<Character>().x = x;
-        tempCharacter.GetComponent<Character>().y = y;
-        Map.instance.allCharacter++;
+        Spawn(CharacterNpc, x, y);
 
         Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
@@ -115,15 +116,15 @@ public class Spawner : MonoBehaviour
 
         if (player.characterPlayerName == "Prayut")
         {
-            tempCharacter = Instantiate(CharacterPrayut, Map.instance.map[y, x].transform.position, Quaternion.identity);
+            tempCharacter = Instantiate(CharacterPrayut, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
         }
         else if (player.characterPlayerName == "Trump")
         {
-            tempCharacter = Instantiate(CharacterTrump, Map.instance.map[y, x].transform.position, Quaternion.identity);
+            tempCharacter = Instantiate(CharacterTrump, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
         }
         else if (player.characterPlayerName == "Kim")
         {
-            tempCharacter = Instantiate(CharacterKim, Map.instance.map[y, x].transform.position, Quaternion.identity);
+            tempCharacter = Instantiate(CharacterKim, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
         }
         else
         {

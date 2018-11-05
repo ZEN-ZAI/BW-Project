@@ -52,11 +52,11 @@ public class GameSystem : MonoBehaviour
 
             if (player[0].myAllPeople > player[1].myAllPeople)
             {
-                Debug.Log("Player<" + player[0].playerName + ">   WIN");
+                Debug.Log("Player<" + player[0].playerName + "> : WIN");
             }
             else if (player[1].myAllPeople > player[0].myAllPeople)
             {
-                Debug.Log("Player<" + player[1].playerName + ">   WIN");
+                Debug.Log("Player<" + player[1].playerName + "> : WIN");
             }
             else
             {
