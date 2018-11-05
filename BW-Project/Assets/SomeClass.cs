@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SomeClass : MonoBehaviour
-{
+{/*
     public List<zen> playerScore = new List<zen>();
 
     // Use this for initialization
@@ -28,8 +28,23 @@ public class SomeClass : MonoBehaviour
             Debug.Log(item.name +" | "+item.score);
         }
     }
+    */
+    /*
+    private int noiseValues;
+    void Start()
+    {
+        Random.seed = Random.seed = (int)System.DateTime.Now.Ticks;
+        noiseValues = 10;
+        int i = 0;
+        while (i < noiseValues)
+        {
+            noiseValues = Random.seed;
+            print(noiseValues);
+            i++;
+        }
+    }*/
 
-    
+
 }
 public class zen
 {
@@ -41,4 +56,6 @@ public class zen
         this.score = score;
         this.name = name;
     }
+
+
 }

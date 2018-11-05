@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class MatchMakingSystem : MonoBehaviour {
 
@@ -16,6 +17,11 @@ public class MatchMakingSystem : MonoBehaviour {
 
     public InputField inputField_PlayerName;
     //public GameObject guestPanel;
+
+    void Start()
+    {
+        GameData.instance.playerID = Random.seed = (int)System.DateTime.Now.Ticks;
+    }
 
     void Update()
     {
@@ -66,9 +72,10 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("playername", GameData.instance.playerName);
         form.AddField("select_character", GameData.instance.characterPlayerName);
 
-        WWW dataReturn = new WWW(url, form);
-        yield return dataReturn;
-        if (dataReturn.text == "")
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+
+        yield return www.SendWebRequest();
+        if (www.isNetworkError)
         {
             Debug.Log("Connecting Error.");
             //guestPanel.SetActive(true);
@@ -78,10 +85,9 @@ public class MatchMakingSystem : MonoBehaviour {
             Debug.Log("Connecting Succeeded.");
         }
 
-        string tempStr = dataReturn.text;
-
+        string tempStr = www.downloadHandler.text;
         Debug.Log(tempStr);
-
+        
         if (tempStr.Contains("Room is fully"))
         {
             GameData.instance.firstPlayer = true;
@@ -126,10 +132,10 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
 
-        WWW dataReturn = new WWW(url, form);
-        yield return dataReturn;
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.SendWebRequest();
 
-        string tempStr = dataReturn.text;
+        string tempStr = www.downloadHandler.text;
 
         //Debug.Log(tempStr);
 
@@ -154,15 +160,15 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
 
-        WWW dataReturn = new WWW(url, form);
-        yield return dataReturn;
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.SendWebRequest();
 
-        if (dataReturn.text == "")
+        if (www.downloadHandler.text == "")
         {
             Debug.Log("Connecting Error, Not create room.");
         }
 
-        Debug.Log(dataReturn.text);
+        Debug.Log(www.downloadHandler.text);
 
     }
 

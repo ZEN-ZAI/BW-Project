@@ -9,9 +9,11 @@ public class GameData : MonoBehaviour
     public int energy;
     public bool myTurn;
 
+    public int playerID;
     public string playerName;
     public string characterPlayerName;
 
+    public int enemyID;
     public string enemyName;
     public string characterEnemyName;
 
@@ -24,18 +26,6 @@ public class GameData : MonoBehaviour
     public GameObject characterEnemy;
 
     public static GameData instance;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void Awake()
     {
