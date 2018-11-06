@@ -25,10 +25,10 @@ public class Character : MonoBehaviour
         this.y = newIndex_y;
     }
 
-    public void ChangeGroup(Player player)
+    public void ChangeGroup(string playerName,string skinName)
     {
-        this.group = player.playerName;
-        gameObject.GetComponent<SetMaterial>().SetNewMaterial(player.characterPlayerName);
+        this.group = playerName;
+        gameObject.GetComponent<SetMaterial>().SetNewMaterial(skinName);
     }
 
 }

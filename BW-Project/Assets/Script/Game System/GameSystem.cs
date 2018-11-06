@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class GameSystem : MonoBehaviour
 {
-    public Player[] player;
+    public Player player;
 
-    Queue<Player> q = new Queue<Player>();
-
-    public Spawner spawner;
-
-    public bool KNN_finish;
+    public string q;
 
     public static GameSystem instance;
 
@@ -33,7 +29,6 @@ public class GameSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawner = FindObjectOfType<Spawner>();
         GameSetUp();
     }
 
@@ -41,7 +36,54 @@ public class GameSystem : MonoBehaviour
     {
         if (!End)
         {
+            CheckMyTurn();
             CheckEndGame();
+        }
+    }
+
+    public void GameSetUp()
+    {
+        GenerateMap.instance.Generate();
+        SetUpNpc();
+        SetupMyCharacterPlayer();
+        SetupEnemyCharacterPlayer();
+    }
+
+    public void SetUpNpc()
+    {
+        for (int i = 0; i < (Map.instance.row * Map.instance.col) / 10; i++)
+        {
+            Spawner.instance.SpawnNPC();
+        }
+    }
+
+    public void SetupMyCharacterPlayer()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName);
+        }
+    }
+
+    public void SetupEnemyCharacterPlayer()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Spawner.instance.SpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName);
+        }
+
+    }
+    public void NextQueue()
+    {
+        // อัพ queue ขึ้น room
+        GameData.instance.q = GameData.instance.enemyName;
+    }
+
+    public void CheckMyTurn()
+    {
+        if (GameData.instance.myName == GameData.instance.q)
+        {
+            player.StartTurn();
         }
     }
 
@@ -66,18 +108,15 @@ public class GameSystem : MonoBehaviour
         if (num == 0)
         {
             End = true;
-            foreach (var item in player)
-            {
-                item.myTurn = false;
-            }
+            player.myTurn = false;
 
-            if (player[0].myAllPeople > player[1].myAllPeople)
+            if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
-                Debug.Log("Player<" + player[0].playerName + "> : WIN");
+                Debug.Log("Player<" + GameData.instance.myName + "> : WIN");
             }
-            else if (player[1].myAllPeople > player[0].myAllPeople)
+            else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
             {
-                Debug.Log("Player<" + player[1].playerName + "> : WIN");
+                Debug.Log("Player<" + GameData.instance.enemyName + "> : WIN");
             }
             else
             {
@@ -108,51 +147,6 @@ public class GameSystem : MonoBehaviour
 
     }
 
-    public void NextQueue()
-    {
-        Player tempPlayer = q.Peek();
-        tempPlayer.StartTurn();
 
-        q.Enqueue(tempPlayer);
-        q.Dequeue();
-    }
 
-    public void GameSetUp()
-    {
-        GenerateMap.instance.Generate();
-        SetSpawnNpc();
-        SetSpawnCharacterPlayer();
-        EnqueuePlayer();
-        NextQueue();
-    }
-
-    public void SetSpawnNpc()
-    {
-        for (int i = 0; i < (Map.instance.row * Map.instance.col) / 10; i++)
-        {
-            spawner.SpawnNPC();
-        }
-    }
-
-    public void SetSpawnCharacterPlayer()
-    {
-        foreach (var item in player)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                spawner.SpawnCharacter(item);
-            }
-        }
-    }
-
-    public void EnqueuePlayer()
-    {
-        player[0].SetFrist();
-        player[1].SetSecond();
-
-        foreach (var item in player)
-        {
-            q.Enqueue(item);
-        }
-    }
 }

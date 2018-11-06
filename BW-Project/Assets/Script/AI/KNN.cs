@@ -9,7 +9,7 @@ public class KNN : MonoBehaviour
 
     private List<NewData> newData = new List<NewData>();
 
-    public int K;
+    public bool KNN_finish;
     public int[] randomSet = new int[] { 3, 5, 7 };
 
     public static KNN instance;
@@ -29,7 +29,7 @@ public class KNN : MonoBehaviour
 
     public void StartKNN()
     {
-        GameSystem.instance.KNN_finish = false;
+        KNN_finish = false;
         Random_K();
         NewDataSet();
         SetCompareDataset();
@@ -38,7 +38,7 @@ public class KNN : MonoBehaviour
     public void Random_K()
     {
         int ran = Random.Range(0,2);
-        K = randomSet[ran];
+        GameData.instance.K = randomSet[ran];
     }
 
     public void NewDataSet()
@@ -63,9 +63,9 @@ public class KNN : MonoBehaviour
         foreach (var item in newData)
         {
             item.SetCompareDataset();
-            item.VoteAndNewGroup(K);
+            item.VoteAndNewGroup(GameData.instance.K);
         }
-        GameSystem.instance.KNN_finish = true;
+        KNN_finish = true;
         newData.Clear();
     }
 
@@ -96,15 +96,15 @@ public class NewData
             {
                 if (Map.instance.map[i, j].HaveCharacter())
                 {
-                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameSystem.instance.player[0].playerName)
+                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.myName)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, GameSystem.instance.player[0].playerName));
+                        CompareDataset.Add(new DataSet(result, GameData.instance.myName));
                     }
-                    else if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameSystem.instance.player[1].playerName)
+                    else if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.enemyName)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, GameSystem.instance.player[1].playerName));
+                        CompareDataset.Add(new DataSet(result, GameData.instance.enemyName));
                     }
                     else if (Map.instance.map[i, j].character.GetComponent<Character>().group == "Npc")
                     {
@@ -131,11 +131,11 @@ public class NewData
 
         for (int i = 0; i < k; i++)
         {
-            if (CompareDataset[k].group == GameSystem.instance.player[0].playerName)
+            if (CompareDataset[k].group == GameData.instance.myName)
             {
                 tempVoteP1++;
             }
-            else if (CompareDataset[k].group == GameSystem.instance.player[1].playerName)
+            else if (CompareDataset[k].group == GameData.instance.enemyName)
             {
                 tempVoteP2++;
             }
@@ -147,11 +147,11 @@ public class NewData
 
         if (tempVoteP1 > tempVoteP2 && tempVoteP1 > tempVoteNpc)
         {
-            character.ChangeGroup(GameSystem.instance.player[0]);
+            character.ChangeGroup(GameData.instance.myName, GameData.instance.myCharacterName);
         }
         else if (tempVoteP2 > tempVoteP1 && tempVoteP2 > tempVoteNpc)
         {
-            character.ChangeGroup(GameSystem.instance.player[1]);
+            character.ChangeGroup(GameData.instance.enemyName, GameData.instance.enemyCharacterName);
         }
         else if (tempVoteNpc > tempVoteP1 && tempVoteNpc > tempVoteP2)
         {

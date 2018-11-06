@@ -22,7 +22,7 @@ public class MouseQuickPlay : MonoBehaviour, IPointerEnterHandler, IPointerClick
 
     void Update()
     {
-        if (gameObject.name == GameData.instance.characterPlayerName)
+        if (gameObject.name == GameData.instance.myCharacterName)
         {
             ExtendedScale(gameObject);
             //gameObject.GetComponent<Outline>().enabled = true;
@@ -48,7 +48,7 @@ public class MouseQuickPlay : MonoBehaviour, IPointerEnterHandler, IPointerClick
     {
         audioSource.PlayOneShot(button);
         Debug.Log("Select " + gameObject.name);
-        GameData.instance.characterPlayerName = gameObject.name;
+        GameData.instance.myCharacterName = gameObject.name;
         CameraControl.instance.MoveToShowRoom();
 
     }

@@ -5,17 +5,22 @@ using UnityEngine;
 public class GameData : MonoBehaviour
 {
     public string roomID;
+    public string q;
     public int K;
-    public int energy;
+    public bool firstPlayer;
+
+    public string myName;
+    public string myCharacterName;
+    public int myAllPeople;
+    public int myEnergy;
     public bool myTurn;
 
-    public string playerName;
-    public string characterPlayerName;
 
     public string enemyName;
-    public string characterEnemyName;
-
-    public bool firstPlayer;
+    public string enemyCharacterName;
+    public int enemyAllPeople;
+    public int enemyEnergy;
+    public bool enemyTurn;
 
     public GameObject leaderCharacter;
 
@@ -24,18 +29,6 @@ public class GameData : MonoBehaviour
     public GameObject characterEnemy;
 
     public static GameData instance;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void Awake()
     {

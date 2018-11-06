@@ -6,14 +6,13 @@ public class Player : MonoBehaviour
 {
     public string playerName;
     public string characterPlayerName;
-    public GameObject leaderCharacter;
-
     public int myAllPeople;
     public int energy;
     public bool myTurn;
 
+    public GameObject leaderCharacter;
 
-    public MouseScript mouseScript;
+    private MouseScript mouseScript;
     private PathFinder pathFinder;
 
     public bool selectCharecter;
@@ -21,11 +20,25 @@ public class Player : MonoBehaviour
     public delegate void state();
     public state active;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //mouseScript = FindObjectOfType<MouseScript>();
+        mouseScript = FindObjectOfType<MouseScript>();
         pathFinder = FindObjectOfType<PathFinder>();
+
+        playerName = GameData.instance.myName;
+        characterPlayerName = GameData.instance.myCharacterName;
+        myAllPeople = GameData.instance.myAllPeople;
+        energy = GameData.instance.myEnergy;
+        myTurn = GameData.instance.myTurn;
+
+        if (GameData.instance.firstPlayer)
+        {
+            SetFrist();
+        }
+        else if (GameData.instance.firstPlayer)
+        {
+            SetSecond();
+        }
     }
 
     // Update is called once per frame
@@ -44,8 +57,16 @@ public class Player : MonoBehaviour
         active();
     }
 
+    public void updateVariable()
+    {
+        GameData.instance.myAllPeople = myAllPeople;
+        GameData.instance.myEnergy = energy;
+        GameData.instance.myTurn = myTurn;
+    }
+
     void Update()
     {
+        updateVariable();
 
         if (active == Playing && myTurn) //  to self
         {
@@ -67,7 +88,7 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
-        else if (active == Waiting && GameSystem.instance.End ) // Waiting to end
+        else if (active == Waiting && GameSystem.instance.End) // Waiting to end
         {
             active = (state)(Waiting);
             active();
@@ -130,7 +151,7 @@ public class Player : MonoBehaviour
         {
             myTurn = false;
             KNN.instance.StartKNN();
-            myAllPeople =  GameSystem.instance.HowManyMyPeople(playerName);
+            myAllPeople = GameSystem.instance.HowManyMyPeople(playerName);
             GameSystem.instance.NextQueue();
         }
     }

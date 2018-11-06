@@ -41,16 +41,17 @@ public class UserInterfaceLink : MonoBehaviour
 
     private void UIUpdate()
     {
-        textKNN.text = ""+KNN.instance.K;
-        UpdatePlayer(0);
-        UpdatePlayer(1);
-    }
+        textKNN.text = "" + GameData.instance.K;
+        textPlayerName[0].text = "Player 1: " + GameData.instance.myName;
+        textEnergyPlayer[0].text = "" + GameData.instance.myEnergy;
+        textHowManyCharacterPlayer[0].text = "My all people: " + GameData.instance.myAllPeople;
+        textTurnPlayer[0].text = "" + GameData.instance.myTurn.ToString();
 
-    private void UpdatePlayer(int index)
-    {
-        textPlayerName[index].text = "Player 1: "+GameSystem.instance.player[index].playerName;
-        textEnergyPlayer[index].text = ""+GameSystem.instance.player[index].energy;
-        textHowManyCharacterPlayer[index].text = "My all people: "+GameSystem.instance.player[index].myAllPeople;
-        textTurnPlayer[index].text = ""+GameSystem.instance.player[index].myTurn.ToString();
+        textPlayerName[1].text = "Player 2: " + GameData.instance.enemyName;
+        textEnergyPlayer[1].text = "" + GameData.instance.enemyEnergy;
+        textHowManyCharacterPlayer[1].text = "My all people: " + GameData.instance.enemyAllPeople;
+        textTurnPlayer[1].text = "" + GameData.instance.enemyTurn.ToString();
+
+
     }
 }

@@ -8,7 +8,7 @@ public class GenerateMap : MonoBehaviour
     public GameObject block;
 
     private int positionX;
-    private int positionY;
+    //private int positionY;
     private int positionZ;
 
     public static GenerateMap instance;
@@ -36,7 +36,7 @@ public class GenerateMap : MonoBehaviour
         {
             for (int j = 0; j < Map.instance.col; j++)
             {
-                GenerateBlock(new Vector3(positionX, positionY, positionZ),i,j);
+                GenerateBlock(new Vector3(positionX, 0, positionZ),i,j);
                 positionZ++;
             }
             positionX++;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class MatchMakingSystem : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class MatchMakingSystem : MonoBehaviour {
 
     void Update()
     {
-        GameData.instance.playerName = inputField_PlayerName.text;
+        GameData.instance.myName = inputField_PlayerName.text;
 
         if (GameData.instance.roomID != "" && !delay)
         {
@@ -30,19 +31,19 @@ public class MatchMakingSystem : MonoBehaviour {
     public void MatchMaking()
     {
 
-        if (GameData.instance.characterPlayerName == "")
+        if (GameData.instance.myCharacterName == "")
         {
             Debug.Log("Please select character.");
             return;
         }
 
-        if (GameData.instance.playerName == "null" || GameData.instance.playerName == "npc")
+        if (GameData.instance.myName == "null" || GameData.instance.myName == "npc")
         {
             Debug.Log("You can't use name 'null', Please enter new name.");
             return;
         }
 
-        if (GameData.instance.playerName == "")
+        if (GameData.instance.myName == "")
         {
             Debug.Log("Please enter name.");
             return;
@@ -50,7 +51,7 @@ public class MatchMakingSystem : MonoBehaviour {
 
         //guestPanel.SetActive(false);
 
-        Debug.Log("Player: "+GameData.instance.playerName+" Select: "+ GameData.instance.characterPlayerName);
+        Debug.Log("Player: "+GameData.instance.myName+" Select: "+ GameData.instance.myCharacterName);
         StartCoroutine(AskRoom(database_IP+matchMaking));
         if(GameData.instance.roomID == "")
         {
@@ -63,12 +64,12 @@ public class MatchMakingSystem : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("playername", GameData.instance.playerName);
-        form.AddField("select_character", GameData.instance.characterPlayerName);
+        form.AddField("playername", GameData.instance.myName);
+        form.AddField("select_character", GameData.instance.myCharacterName);
 
-        WWW dataReturn = new WWW(url, form);
-        yield return dataReturn;
-        if (dataReturn.text == "")
+        UnityWebRequest www = UnityWebRequest.Post(url,form);
+        yield return www.downloadHandler.text;
+        if (www.downloadHandler.text == "")
         {
             Debug.Log("Connecting Error.");
             //guestPanel.SetActive(true);
@@ -78,24 +79,19 @@ public class MatchMakingSystem : MonoBehaviour {
             Debug.Log("Connecting Succeeded.");
         }
 
-        string tempStr = dataReturn.text;
-
+        string tempStr = www.downloadHandler.text;
         Debug.Log(tempStr);
+
+        addRoom(tempStr);
 
         if (tempStr.Contains("Room is fully"))
         {
             GameData.instance.firstPlayer = true;
+            StartCoroutine(CreateRoom(database_IP + createRoom));
         }
         else
         {
             GameData.instance.firstPlayer = false;
-        }
-
-        addRoom(tempStr);
-
-        if (GameData.instance.firstPlayer == true)
-        {
-            StartCoroutine(CreateRoom(database_IP + createRoom));
         }
 
     }
@@ -126,10 +122,10 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
 
-        WWW dataReturn = new WWW(url, form);
-        yield return dataReturn;
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.downloadHandler.text;
 
-        string tempStr = dataReturn.text;
+        string tempStr = www.downloadHandler.text;
 
         //Debug.Log(tempStr);
 
@@ -137,12 +133,12 @@ public class MatchMakingSystem : MonoBehaviour {
         {
             Debug.Log("Wait player2.");
             GameData.instance.enemyName = GetDataValue(tempStr, "player2_name:");
-            GameData.instance.characterEnemyName = GetDataValue(tempStr, "player2_character:");
+            GameData.instance.myCharacterName = GetDataValue(tempStr, "player2_character:");
         }
         else
         {
             GameData.instance.enemyName = GetDataValue(tempStr, "player1_name:");
-            GameData.instance.characterEnemyName = GetDataValue(tempStr, "player1_character:");
+            GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player1_character:");
         }
 
     }
@@ -154,15 +150,15 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
 
-        WWW dataReturn = new WWW(url, form);
-        yield return dataReturn;
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.downloadHandler.text;
 
-        if (dataReturn.text == "")
+        if (www.downloadHandler.text == "")
         {
             Debug.Log("Connecting Error, Not create room.");
         }
 
-        Debug.Log(dataReturn.text);
+        Debug.Log(www.downloadHandler.text);
 
     }
 
