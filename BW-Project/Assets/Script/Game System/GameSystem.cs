@@ -44,11 +44,11 @@ public class GameSystem : MonoBehaviour
     public void GameSetUp()
     {
         GenerateMap.instance.Generate();
-        SetUpNpc();
-        SetupMyCharacterPlayer();
-        SetupEnemyCharacterPlayer();
         if (GameData.instance.firstPlayer)
         {
+            SetUpNpc();
+            SetupMyCharacterPlayer();
+            SetupEnemyCharacterPlayer();
             NetworkSystem.instance.UpdateMap(Map.instance);
         }
         else
