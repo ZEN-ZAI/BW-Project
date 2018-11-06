@@ -18,6 +18,22 @@ public class NetworkSystem : MonoBehaviour {
     public bool loadMap_isRuning;
     public bool updateMap_isRuning;
 
+    public static NetworkSystem instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+
+        }
+        //DontDestroyOnLoad(gameObject);
+    }
+
     public IEnumerator LoadMap(Map map)
     {
         string[,] tempMap = new string[map.row, map.col];

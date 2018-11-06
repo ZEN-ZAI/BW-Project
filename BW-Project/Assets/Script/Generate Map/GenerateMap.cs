@@ -14,7 +14,6 @@ public class GenerateMap : MonoBehaviour
     public static GenerateMap instance;
 
     public bool End;
-    public bool Setup;
 
     void Awake()
     {

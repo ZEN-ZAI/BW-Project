@@ -47,6 +47,14 @@ public class GameSystem : MonoBehaviour
         SetUpNpc();
         SetupMyCharacterPlayer();
         SetupEnemyCharacterPlayer();
+        if (GameData.instance.firstPlayer)
+        {
+            NetworkSystem.instance.UpdateMap(Map.instance);
+        }
+        else
+        {
+            NetworkSystem.instance.LoadMap(Map.instance);
+        }
     }
 
     public void SetUpNpc()
