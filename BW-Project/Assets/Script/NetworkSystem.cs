@@ -11,6 +11,7 @@ public class NetworkSystem : MonoBehaviour {
     private string getData = "/GetData.php";
     private string updateMap = "/UpdateMap.php";
     private string loadMap = "/LoadMap.php";
+    private string enqueue = "/EnQueue.php";
 
     private string[] tempData;
 
@@ -122,21 +123,39 @@ public class NetworkSystem : MonoBehaviour {
         updateMap_isRuning = false;
     }
 
-    IEnumerator Connecting()
+    public IEnumerator GetData()
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
 
-        WWW dataReturn = new WWW(database_IP+ getData, form);
-        yield return dataReturn;
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + getData, form);
+        yield return www.SendWebRequest();
 
-        string itemsDataString = dataReturn.text;
+        string itemsDataString = www.downloadHandler.text;
         Debug.Log(itemsDataString);
+
+
 
         //GameData.instance.enemyName = GetDataValue(itemsDataString, "player1_name:");
         //GameData.instance.enemyCharacter = GetDataValue(itemsDataString, "player1_character:");
+
+    }
+
+    public IEnumerator Enqueue(string playerName)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", GameData.instance.roomID);
+        form.AddField("playername", playerName);
+
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + enqueue, form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+        Debug.Log(itemsDataString);
 
     }
 

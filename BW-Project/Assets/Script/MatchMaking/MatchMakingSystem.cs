@@ -133,10 +133,10 @@ public class MatchMakingSystem : MonoBehaviour {
         delay = true;
         yield return new WaitForSeconds(1);
         delay = false;
-        StartCoroutine(Connecting(database_IP + getData));
+        StartCoroutine(GetData(database_IP + getData));
     }
 
-    IEnumerator Connecting(string url)
+    IEnumerator GetData(string url)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -155,6 +155,7 @@ public class MatchMakingSystem : MonoBehaviour {
             Debug.Log("Wait player2.");
             GameData.instance.enemyName = GetDataValue(tempStr, "player2_name:");
             GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player2_character:");
+
         }
         else if (!GameData.instance.firstPlayer)
         {
