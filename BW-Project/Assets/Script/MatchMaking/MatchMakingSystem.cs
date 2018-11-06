@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class MatchMakingSystem : MonoBehaviour {
@@ -12,20 +11,25 @@ public class MatchMakingSystem : MonoBehaviour {
     private string matchMaking = "/Matchmaking.php";
     private string getData = "/GetData.php";
     private string createRoom = "/CreateRoom.php";
+    private string deleteRoom = "/DeleteRoom.php";
+
 
     private bool delay;
 
-    public InputField inputField_PlayerName;
-    //public GameObject guestPanel;
-
     void Update()
     {
-        GameData.instance.myName = inputField_PlayerName.text;
 
         if (GameData.instance.roomID != "" && !delay)
         {
             StartCoroutine(TimeDelayConnect());
         }
+    }
+
+    public void StopMatchMaking()
+    {
+        GameData.instance.waitingPlayer = false;
+        StopAllCoroutines();
+        StartCoroutine(DeleteRoom(database_IP + deleteRoom));
     }
 
     public void MatchMaking()
@@ -49,39 +53,36 @@ public class MatchMakingSystem : MonoBehaviour {
             return;
         }
 
-        //guestPanel.SetActive(false);
+        GameData.instance.waitingPlayer = true;
 
         Debug.Log("Player: "+GameData.instance.myName+" Select: "+ GameData.instance.myCharacterName);
-        StartCoroutine(AskRoom(database_IP+matchMaking));
-        if(GameData.instance.roomID == "")
-        {
-            Debug.Log("wait...");
-        }
+
+        StartCoroutine(MatchMaking(database_IP+matchMaking));
     }
 
-    IEnumerator AskRoom(string url)
+    IEnumerator MatchMaking(string url)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("playername", GameData.instance.myName);
         form.AddField("select_character", GameData.instance.myCharacterName);
+        form.AddField("map_size", GameData.instance.mapSize);
 
         UnityWebRequest www = UnityWebRequest.Post(url,form);
-        yield return www.downloadHandler.text;
+        yield return www.SendWebRequest();
         if (www.downloadHandler.text == "")
         {
             Debug.Log("Connecting Error.");
-            //guestPanel.SetActive(true);
+            GameData.instance.waitingPlayer = false;
         }
         else
         {
-            Debug.Log("Connecting Succeeded.");
+            Debug.Log("Connecting Succeeded, "+ www.downloadHandler.text);
         }
 
         string tempStr = www.downloadHandler.text;
-        Debug.Log(tempStr);
-
+        
         addRoom(tempStr);
 
         if (tempStr.Contains("Room is fully"))
@@ -96,9 +97,29 @@ public class MatchMakingSystem : MonoBehaviour {
 
     }
 
+    IEnumerator CreateRoom(string url)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", GameData.instance.roomID);
+        form.AddField("mapSize", GameData.instance.mapSize);
+
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.SendWebRequest();
+
+        if (www.downloadHandler.text == "")
+        {
+            Debug.Log("Connecting Error, Not create room.");
+            GameData.instance.waitingPlayer = false;
+        }
+        else
+        {
+            Debug.Log(www.downloadHandler.text);
+        }
+    }
     void addRoom(string tempStr)
     {
-        Debug.Log(tempStr);
 
         if (tempStr.Contains("["))
         {
@@ -123,27 +144,26 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("room_id", GameData.instance.roomID);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
-        yield return www.downloadHandler.text;
+        yield return www.SendWebRequest();
 
         string tempStr = www.downloadHandler.text;
 
-        //Debug.Log(tempStr);
+        Debug.Log(tempStr);
 
         if (GameData.instance.firstPlayer)
         {
             Debug.Log("Wait player2.");
             GameData.instance.enemyName = GetDataValue(tempStr, "player2_name:");
-            GameData.instance.myCharacterName = GetDataValue(tempStr, "player2_character:");
+            GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player2_character:");
         }
-        else
+        else if (!GameData.instance.firstPlayer)
         {
             GameData.instance.enemyName = GetDataValue(tempStr, "player1_name:");
             GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player1_character:");
         }
-
     }
 
-    IEnumerator CreateRoom(string url)
+    IEnumerator DeleteRoom(string url)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -151,14 +171,18 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("room_id", GameData.instance.roomID);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
-        yield return www.downloadHandler.text;
+        yield return www.SendWebRequest();
 
         if (www.downloadHandler.text == "")
         {
-            Debug.Log("Connecting Error, Not create room.");
+            Debug.Log("Connecting Error.");
         }
-
-        Debug.Log(www.downloadHandler.text);
+        else
+        {
+            Debug.Log("Connecting Succeeded, "+ www.downloadHandler.text);
+            delay = false;
+            GameData.instance.roomID = "";
+        }
 
     }
 

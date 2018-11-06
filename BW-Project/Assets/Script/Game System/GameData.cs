@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
+    public bool waitingPlayer;
+    public int mapSize;
+
     public string roomID;
     public string q;
     public int K;

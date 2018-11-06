@@ -12,8 +12,6 @@ public class Map : MonoBehaviour
 
     public Tile[,] map;
 
-    //public GameObject mapRoot;
-
     public static Map instance;
 
     void Awake()
@@ -22,6 +20,8 @@ public class Map : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            row = GameData.instance.mapSize;
+            col = GameData.instance.mapSize;
             map = new Tile[row, col];
             maxCharacter = row * col;
         }
