@@ -155,8 +155,7 @@ public class NetworkSystem : MonoBehaviour {
         string itemsDataString = www.downloadHandler.text;
         Debug.Log(itemsDataString);
 
-
-
+        GameData.instance.q = GetDataValue(itemsDataString, "queue:");
         //GameData.instance.enemyName = GetDataValue(itemsDataString, "player1_name:");
         //GameData.instance.enemyCharacter = GetDataValue(itemsDataString, "player1_character:");
 

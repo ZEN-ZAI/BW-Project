@@ -6,6 +6,9 @@ public class GameSystem : MonoBehaviour
 {
     public bool End;
     public bool delayLoad;
+    public bool delayGet;
+    public bool delayUp;
+
 
     public Player player;
 
@@ -34,6 +37,8 @@ public class GameSystem : MonoBehaviour
     void Update()
     {
 
+        GetDelay(1);
+
         if (!End)
         {
             CheckMyTurn();
@@ -48,10 +53,13 @@ public class GameSystem : MonoBehaviour
         if (GameData.instance.firstPlayer)
         {
             player.SetFrist();
-            Spawner.instance.RandomSpawnNPC(GameData.instance.mapSize / 10);
+            Spawner.instance.RandomSpawnNPC(GameData.instance.mapSize / 2);
             Spawner.instance.RandomSpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, 3);
             Spawner.instance.RandomSpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, 3);
             UpdateMap();
+            GameData.instance.q = GameData.instance.myName;
+            StartCoroutine(NetworkSystem.instance.Enqueue(GameData.instance.q));
+
         }
         else if (!GameData.instance.firstPlayer)
         {
@@ -69,6 +77,21 @@ public class GameSystem : MonoBehaviour
         LoadMap();
     }
 
+    public IEnumerator GetDelay(int sec)
+    {
+        delayGet = true;
+        yield return new WaitForSeconds(sec);
+        delayGet = false;
+        StartCoroutine(NetworkSystem.instance.GetData());
+    }
+
+    public IEnumerator UpDelay(int sec)
+    {
+        delayUp = true;
+        yield return new WaitForSeconds(sec);
+        delayUp = false;
+        UpdateMap();
+    }
 
 
     public void LoadMap()

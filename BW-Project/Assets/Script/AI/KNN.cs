@@ -10,7 +10,7 @@ public class KNN : MonoBehaviour
     private List<NewData> newData = new List<NewData>();
 
     public bool KNN_finish;
-    public int[] randomSet = new int[] { 3, 5, 7 };
+    public int[] randomSet = new int[] { 3, 5 };
 
     public static KNN instance;
 

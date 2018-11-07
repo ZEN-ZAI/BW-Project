@@ -82,7 +82,7 @@ public class MouseScript : MonoBehaviour
                 pathFinder.ResetPathBFS();
                 pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
                                    tempObjSelectCharacter.GetComponent<Character>().y,
-                                   player.energy);
+                                   GameData.instance.myEnergy);
             }
         }
     }

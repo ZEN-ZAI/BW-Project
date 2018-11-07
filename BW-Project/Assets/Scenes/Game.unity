@@ -996,7 +996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingPlayer: 0
-  mapSize: 15
+  mapSize: 50
   roomID: 105
   q: 
   K: 0
@@ -1711,6 +1711,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   End: 0
   delayLoad: 0
+  delayGet: 0
+  delayUp: 0
   player: {fileID: 970216968}
 --- !u!1 &970216964
 GameObject:
@@ -1789,7 +1791,6 @@ MonoBehaviour:
   playerName: 
   characterPlayerName: 
   myAllPeople: 0
-  energy: 0
   myTurn: 0
   leaderCharacter: {fileID: 0}
   mouseScript: {fileID: 970216966}

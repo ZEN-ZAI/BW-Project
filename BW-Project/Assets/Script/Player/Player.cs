@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     public string playerName;
     public string characterPlayerName;
     public int myAllPeople;
-    public int energy;
     public bool myTurn;
 
     public GameObject leaderCharacter;
@@ -27,7 +26,6 @@ public class Player : MonoBehaviour
         playerName = GameData.instance.myName;
         characterPlayerName = GameData.instance.myCharacterName;
         myAllPeople = GameData.instance.myAllPeople;
-        energy = GameData.instance.myEnergy;
         myTurn = GameData.instance.myTurn;
 
         if (GameData.instance.firstPlayer)
@@ -44,14 +42,14 @@ public class Player : MonoBehaviour
 
     public void SetFrist()
     {
-        energy = 5;
+        GameData.instance.myEnergy = 5;
         active = (state)(Playing);
         active();
     }
 
     public void SetSecond()
     {
-        energy = 6;
+        GameData.instance.myEnergy = 6;
         active = (state)(Waiting);
         active();
     }
@@ -59,7 +57,6 @@ public class Player : MonoBehaviour
     public void updateVariable()
     {
         GameData.instance.myAllPeople = myAllPeople;
-        GameData.instance.myEnergy = energy;
         GameData.instance.myTurn = myTurn;
     }
 
@@ -94,7 +91,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (active == Playing && energy == 0)
+        if (active == Playing && GameData.instance.myEnergy == 0)
         {
             EndTurn();
         }
@@ -139,7 +136,7 @@ public class Player : MonoBehaviour
 
     public void StartTurn()
     {
-        energy = 5;
+        GameData.instance.myEnergy = 5;
         myTurn = true;
     }
 
@@ -157,6 +154,10 @@ public class Player : MonoBehaviour
             myTurn = false;
             KNN.instance.StartKNN();
             myAllPeople = GameSystem.instance.HowManyMyPeople(playerName);
+            if (!GameSystem.instance.delayUp)
+            {
+                StartCoroutine(GameSystem.instance.UpDelay(1));
+            }
             GameSystem.instance.NextQueue();
         }
     }
@@ -173,7 +174,7 @@ public class Player : MonoBehaviour
     }
     private void MoveCharecter()
     {
-        mouseScript.SelectToMove(ref selectCharecter, ref energy, pathFinder);
+        mouseScript.SelectToMove(ref selectCharecter, ref GameData.instance.myEnergy, pathFinder);
 
     }
 }
