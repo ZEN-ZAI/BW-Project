@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class GameSystem : MonoBehaviour
 {
+    public bool End;
+    public bool delayLoad;
+
     public Player player;
 
-    public string q;
-
     public static GameSystem instance;
-
-    public bool End;
 
     void Awake()
     {
@@ -34,6 +33,7 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
+
         if (!End)
         {
             CheckMyTurn();
@@ -44,47 +44,49 @@ public class GameSystem : MonoBehaviour
     public void GameSetUp()
     {
         GenerateMap.instance.Generate();
+        
         if (GameData.instance.firstPlayer)
         {
-            SetUpNpc();
-            SetupMyCharacterPlayer();
-            SetupEnemyCharacterPlayer();
-            NetworkSystem.instance.UpdateMap(Map.instance);
+            player.SetFrist();
+            Spawner.instance.RandomSpawnNPC(GameData.instance.mapSize / 10);
+            Spawner.instance.RandomSpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, 3);
+            Spawner.instance.RandomSpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, 3);
+            UpdateMap();
         }
-        else
+        else if (!GameData.instance.firstPlayer)
         {
-            NetworkSystem.instance.LoadMap(Map.instance);
+            player.SetSecond();
+            LoadMap();
+            //StartCoroutine(LoadDelay(1));
         }
     }
 
-    public void SetUpNpc()
+    public IEnumerator LoadDelay(int sec)
     {
-        for (int i = 0; i < (Map.instance.row * Map.instance.col) / 10; i++)
-        {
-            Spawner.instance.SpawnNPC();
-        }
+        delayLoad = true;
+        yield return new WaitForSeconds(sec);
+        delayLoad = false;
+        LoadMap();
     }
 
-    public void SetupMyCharacterPlayer()
+
+
+    public void LoadMap()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName);
-        }
+        StartCoroutine(NetworkSystem.instance.LoadMap());
     }
 
-    public void SetupEnemyCharacterPlayer()
+    public void UpdateMap()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            Spawner.instance.SpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName);
-        }
-
+        StartCoroutine(NetworkSystem.instance.UpdateMap());
     }
+
     public void NextQueue()
     {
         // อัพ queue ขึ้น room
         GameData.instance.q = GameData.instance.enemyName;
+        StartCoroutine(NetworkSystem.instance.Enqueue(GameData.instance.q));
+        
     }
 
     public void CheckMyTurn()

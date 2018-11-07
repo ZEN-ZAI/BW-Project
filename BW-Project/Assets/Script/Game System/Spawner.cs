@@ -24,6 +24,22 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void RandomSpawnNPC(int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            SpawnNPC();
+        }
+    }
+
+    public void RandomSpawnCharacter(string playerName, string skinName, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            SpawnCharacter(playerName, skinName);
+        }
+    }
+
     void Spawn(GameObject character,int x,int y)
     {
         GameObject tempCharacter = Instantiate(character, Map.instance.GetBlockPosition(x,y), Quaternion.identity);
@@ -33,8 +49,7 @@ public class Spawner : MonoBehaviour
         Map.instance.allCharacter++;
     }
 
-    #region Random Spawn
-    public void SpawnNPC()
+    private void SpawnNPC()
     {
         if (Map.instance.allCharacter >= Map.instance.maxCharacter)
         {
@@ -56,7 +71,7 @@ public class Spawner : MonoBehaviour
 
         Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
-    public void SpawnCharacter(string playerName,string skinName)
+    private void SpawnCharacter(string playerName,string skinName)
     {
         if (Map.instance.allCharacter >= Map.instance.maxCharacter)
         {
@@ -110,9 +125,7 @@ public class Spawner : MonoBehaviour
 
         Debug.Log("Character<"+ playerName + "> spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
-    #endregion
 
-    #region Position Spawn
     public void SpawnNPC(int x,int y)
     {
         Spawn(CharacterNpc, x, y);
@@ -121,33 +134,41 @@ public class Spawner : MonoBehaviour
     }
     public void SpawnCharacter(string playerName, string skinName, int x, int y)
     {
-        GameObject tempCharacter = new GameObject();
 
         if (skinName == "Prayut")
         {
-            tempCharacter = Instantiate(CharacterPrayut, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            GameObject tempCharacter = Instantiate(CharacterPrayut, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
         }
         else if (skinName == "Trump")
         {
-            tempCharacter = Instantiate(CharacterTrump, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            GameObject tempCharacter = Instantiate(CharacterTrump, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
         }
         else if (skinName == "Kim")
         {
-            tempCharacter = Instantiate(CharacterKim, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            GameObject tempCharacter = Instantiate(CharacterKim, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
         }
         else
         {
             Debug.Log("Error : characterPlayerName in Spawner");
         }
 
-        Map.instance.map[y, x].LinkCharacter(tempCharacter);
-        tempCharacter.GetComponent<Character>().x = x;
-        tempCharacter.GetComponent<Character>().y = y;
-        tempCharacter.GetComponent<Character>().group = playerName;
-        Map.instance.allCharacter++;
-
         Debug.Log("Character<" + playerName + "> spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
-    #endregion
+
 
 }

@@ -49,6 +49,7 @@ public class Tile : MonoBehaviour
 
     public void DestroyCharacter()
     {
+        Destroy(character);
         character = null;
     }
 }

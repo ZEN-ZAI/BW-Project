@@ -34,9 +34,9 @@ public class NetworkSystem : MonoBehaviour {
         //DontDestroyOnLoad(gameObject);
     }
 
-    public IEnumerator LoadMap(Map map)
+    public IEnumerator LoadMap()
     {
-        string[,] tempMap = new string[map.row, map.col];
+        string[,] tempMap = new string[GameData.instance.mapSize, GameData.instance.mapSize];
         loadMap_isRuning = true;
 
         WWWForm form = new WWWForm();
@@ -45,7 +45,7 @@ public class NetworkSystem : MonoBehaviour {
         form.AddField("room_id", GameData.instance.roomID);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + loadMap, form);
-        yield return www.downloadHandler.text;
+        yield return www.SendWebRequest();
 
         string itemsDataString = www.downloadHandler.text;
 
@@ -63,28 +63,31 @@ public class NetworkSystem : MonoBehaviour {
         tempData = itemsDataString.Split(';');
         int num = 0;
 
-        for (int row = 0; row < map.row; row++)
+        for (int row = 0; row < Map.instance.row; row++)
         {
-            for (int col = 0; col < map.col; col++)
+            for (int col = 0; col < Map.instance.col; col++)
             {
+
                 tempMap[row, col] = tempData[num];
 
-                if (tempMap[row, col] == "" && map.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if (tempMap[row, col] == "" && Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
-                    map.DestroyCharacter(col, row);
+                    Map.instance.DestroyCharacter(col, row);
                     Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
                 }
-                if (tempMap[row, col] == "npc" && map.map[row, col].GetComponent<Tile>().HaveCharacter())
+
+                if (tempMap[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnNPC(col, row);
                     Debug.Log("Load npc <x:" + col + " y:" + row + ">");
                 }
-                if (tempMap[row, col] == GameData.instance.myName)
+
+                if(tempMap[row, col] == GameData.instance.myName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, col, row);
                     Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
                 }
-                if (tempMap[row, col] == GameData.instance.enemyName)
+                if(tempMap[row, col] == GameData.instance.enemyName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, col, row);
                     Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
@@ -96,7 +99,7 @@ public class NetworkSystem : MonoBehaviour {
         loadMap_isRuning = false;
     }
 
-     public IEnumerator UpdateMap(Map map)
+     public IEnumerator UpdateMap()
     {
         updateMap_isRuning = true;
 
@@ -106,13 +109,13 @@ public class NetworkSystem : MonoBehaviour {
         form.AddField("room_id", GameData.instance.roomID);
 
         int num = 0;
-        for (int i = 0; i < map.row; i++)
+        for (int i = 0; i < Map.instance.row; i++)
         {
-            for (int j = 0; j < map.col; j++)
+            for (int j = 0; j < Map.instance.col; j++)
             {
-                if (map.map[i, j].GetComponent<Tile>().HaveCharacter())
+                if (Map.instance.map[i, j].GetComponent<Tile>().HaveCharacter())
                 {
-                    form.AddField("map" + num, map.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group);
+                    form.AddField("map" + num, Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group);
                 }
                 else
                 {
@@ -123,7 +126,7 @@ public class NetworkSystem : MonoBehaviour {
         }
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap ,form);
-        yield return www.downloadHandler.text;
+        yield return www.SendWebRequest();
 
         string itemsDataString = www.downloadHandler.text;
 

@@ -20,10 +20,6 @@ public class Map : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            row = GameData.instance.mapSize;
-            col = GameData.instance.mapSize;
-            map = new Tile[row, col];
-            maxCharacter = row * col;
         }
         else if (instance != this)
         {
@@ -32,23 +28,13 @@ public class Map : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
-    /*void Start()
+    void Start()
     {
+        row = GameData.instance.mapSize;
+        col = GameData.instance.mapSize;
         map = new Tile[row, col];
         maxCharacter = row * col;
-        int num = 0;
-
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                map[i, j] = mapRoot.transform.GetChild(num).GetComponent<Tile>();
-                map[i, j].row = i;
-                map[i, j].col = j;
-                num++;
-            }
-        }
-    }*/
+    }
 
     public Vector3 GetBlockPosition(int index_x, int index_y)
     {

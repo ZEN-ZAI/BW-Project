@@ -996,27 +996,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingPlayer: 0
-  mapSize: 0
-  roomID: 100
+  mapSize: 15
+  roomID: 105
   q: 
   K: 0
-  firstPlayer: 1
-  myName: p1
+  firstPlayer: 0
+  myName: ewq
   myCharacterName: Prayut
   myAllPeople: 0
   myEnergy: 0
   myTurn: 0
-  enemyName: p2
-  enemyCharacterName: Kim
+  enemyName: qwe
+  enemyCharacterName: Trump
   enemyAllPeople: 0
   enemyEnergy: 0
   enemyTurn: 0
   leaderCharacter: {fileID: 0}
-  npc: {fileID: 1971496216838371313, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
-  characterPlayer: {fileID: 4875990969283717650, guid: f3e59da2669304c4789a7b494ec69b71,
-    type: 3}
-  characterEnemy: {fileID: 4875990969283717650, guid: f3e59da2669304c4789a7b494ec69b71,
-    type: 3}
 --- !u!4 &563510684
 Transform:
   m_ObjectHideFlags: 0
@@ -1714,9 +1709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b236dd21ac99eae45bde6403c15421b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 970216968}
-  q: 
   End: 0
+  delayLoad: 0
+  player: {fileID: 970216968}
 --- !u!1 &970216964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,6 +1792,7 @@ MonoBehaviour:
   energy: 0
   myTurn: 0
   leaderCharacter: {fileID: 0}
+  mouseScript: {fileID: 970216966}
   selectCharecter: 0
 --- !u!1001 &970968785
 PrefabInstance:

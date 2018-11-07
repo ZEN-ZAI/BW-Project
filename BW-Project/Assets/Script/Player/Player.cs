@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     public GameObject leaderCharacter;
 
-    private MouseScript mouseScript;
+    public MouseScript mouseScript;
     private PathFinder pathFinder;
 
     public bool selectCharecter;
@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        mouseScript = FindObjectOfType<MouseScript>();
         pathFinder = FindObjectOfType<PathFinder>();
 
         playerName = GameData.instance.myName;
@@ -129,7 +128,13 @@ public class Player : MonoBehaviour
 
     private void Waiting()
     {
+        MouseOver();
 
+        if (!GameSystem.instance.delayLoad)
+        {
+            StartCoroutine(GameSystem.instance.LoadDelay(1));
+        }
+        
     }
 
     public void StartTurn()

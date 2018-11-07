@@ -41,7 +41,7 @@ public class MatchMakingSystem : MonoBehaviour {
             return;
         }
 
-        if (GameData.instance.myName == "null" || GameData.instance.myName == "npc")
+        if (GameData.instance.myName == "null" || GameData.instance.myName == "Npc")
         {
             Debug.Log("You can't use name 'null', Please enter new name.");
             return;

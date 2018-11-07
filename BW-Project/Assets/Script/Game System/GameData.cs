@@ -27,10 +27,6 @@ public class GameData : MonoBehaviour
 
     public GameObject leaderCharacter;
 
-    public GameObject npc;
-    public GameObject characterPlayer;
-    public GameObject characterEnemy;
-
     public static GameData instance;
 
     void Awake()
