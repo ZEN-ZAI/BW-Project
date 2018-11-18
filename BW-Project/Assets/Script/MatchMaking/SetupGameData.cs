@@ -7,7 +7,11 @@ using UnityEngine.UI;
 public class SetupGameData : MonoBehaviour
 {
     public InputField inputField_PlayerName;
-    public Dropdown dropdown;
+    //public Dropdown dropdown;
+    public Toggle toggleSmall;
+    public Toggle toggleMedium;
+    public Toggle toggleLarge;
+    public Toggle toggleWorld;
     public GameObject waitingScreen;
 
 
@@ -18,6 +22,8 @@ public class SetupGameData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
 
         GameData.instance.myName = inputField_PlayerName.text;
 
@@ -30,22 +36,24 @@ public class SetupGameData : MonoBehaviour
             waitingScreen.SetActive(false);
         }
 
-        if (dropdown.value == 0)
+        
+        if (toggleSmall.isOn)
         {
             GameData.instance.mapSize = 15;
         }
-        else if (dropdown.value == 1)
+        else if (toggleMedium.isOn)
         {
             GameData.instance.mapSize = 25;
         }
-        else if (dropdown.value == 2)
+        else if (toggleLarge.isOn)
         {
             GameData.instance.mapSize = 35;
         }
-        else if (dropdown.value == 3)
+        else if (toggleWorld.isOn)
         {
             GameData.instance.mapSize = 50;
         }
+        
 
         if (GameData.instance.myName != "" && GameData.instance.enemyName != "")
         {

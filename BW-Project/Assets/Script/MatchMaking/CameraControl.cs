@@ -8,26 +8,25 @@ public class CameraControl : MonoBehaviour {
     public Transform moveToShowRoom_Point;
     public Transform moveToComic_Point;
 
-    private bool moveToShowRoom;
-    private bool moveToComic;
+    public bool moveToShowRoom;
+    public bool moveToComic;
 
     public static CameraControl instance;
 
-    private void Awake()
+    void Awake()
     {
         instance = this;
     }
 
-    private void Update()
+    void Update()
     {
         if (moveToShowRoom)
         {
-            moveToComic = false;
             Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, moveToShowRoom_Point.position,moveSpeed * Time.deltaTime);
         }
-        else if (moveToComic)
+
+        if (moveToComic)
         {
-            moveToShowRoom = false;
             Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, moveToComic_Point.position, moveSpeed * Time.deltaTime);
         }
     }
@@ -35,11 +34,13 @@ public class CameraControl : MonoBehaviour {
     public void MoveToShowRoom()
     {
         moveToShowRoom = true;
+        moveToComic = false;
     }
 
     public void MoveToComic()
     {
         moveToComic = true;
+        moveToShowRoom = false;
     }
 
 }

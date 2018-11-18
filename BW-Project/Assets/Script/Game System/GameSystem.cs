@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class GameSystem : MonoBehaviour
 {
-    public bool End;
     public bool delayLoad;
     public bool delayGet;
     public bool delayUp;
-
 
     public Player player;
 
@@ -36,12 +34,19 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
-
-        GetDelay(1);
-
-        if (!End)
+        if (!delayLoad)
         {
-            CheckMyTurn();
+            StartCoroutine(GetDelay(1));
+        }
+        
+
+        if (!GameData.instance.End)
+        {
+            if (GameData.instance.myName == GameData.instance.q)
+            {
+                player.StartTurn();
+            }
+
             CheckEndGame();
         }
     }
@@ -64,10 +69,15 @@ public class GameSystem : MonoBehaviour
         else if (!GameData.instance.firstPlayer)
         {
             player.SetSecond();
-            LoadMap();
-            //StartCoroutine(LoadDelay(1));
+
+            if (!delayLoad)
+            {
+                //StartCoroutine(LoadDelay(1));
+                LoadMap();
+            }
         }
     }
+
 
     public IEnumerator LoadDelay(int sec)
     {
@@ -85,7 +95,8 @@ public class GameSystem : MonoBehaviour
         StartCoroutine(NetworkSystem.instance.GetData());
     }
 
-    public IEnumerator UpDelay(int sec)
+    
+    public IEnumerator UpdateDelay(int sec)
     {
         delayUp = true;
         yield return new WaitForSeconds(sec);
@@ -112,14 +123,6 @@ public class GameSystem : MonoBehaviour
         
     }
 
-    public void CheckMyTurn()
-    {
-        if (GameData.instance.myName == GameData.instance.q)
-        {
-            player.StartTurn();
-        }
-    }
-
     public void CheckEndGame()
     {
         int num = 0;
@@ -140,7 +143,7 @@ public class GameSystem : MonoBehaviour
 
         if (num == 0)
         {
-            End = true;
+            GameData.instance.End = true;
             player.myTurn = false;
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)

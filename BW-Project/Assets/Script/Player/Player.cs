@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
-        else if (active == Waiting && GameSystem.instance.End) // Waiting to end
+        else if (active == Waiting && GameData.instance.End) // Waiting to end
         {
             active = (state)(Waiting);
             active();
@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
             myAllPeople = GameSystem.instance.HowManyMyPeople(playerName);
             if (!GameSystem.instance.delayUp)
             {
-                StartCoroutine(GameSystem.instance.UpDelay(1));
+                StartCoroutine(GameSystem.instance.UpdateDelay(1));
             }
             GameSystem.instance.NextQueue();
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
+    public bool End;
     public bool waitingPlayer;
     public int mapSize;
 

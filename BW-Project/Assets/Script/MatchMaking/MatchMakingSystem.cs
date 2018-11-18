@@ -176,7 +176,7 @@ public class MatchMakingSystem : MonoBehaviour {
 
         if (www.downloadHandler.text == "")
         {
-            Debug.Log("Connecting Error.");
+            Debug.Log("Connecting Error, Can't delete room.");
         }
         else
         {

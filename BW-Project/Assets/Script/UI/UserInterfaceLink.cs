@@ -12,26 +12,21 @@ public class UserInterfaceLink : MonoBehaviour
     #endregion
 
     #region Player Attribute
-    public GameObject[] rootUI;
-    public TextMeshProUGUI[] textPlayerName = new TextMeshProUGUI[2];
-    public TextMeshProUGUI[] textEnergyPlayer = new TextMeshProUGUI[2];
-    public TextMeshProUGUI[] textHowManyCharacterPlayer = new TextMeshProUGUI[2];
-    public TextMeshProUGUI[] textTurnPlayer = new TextMeshProUGUI[2];
+    public TextMeshProUGUI textPlayerName;
+    public TextMeshProUGUI textEnergyPlayer;
+    public TextMeshProUGUI textHowManyCharacterPlayer;
+    public TextMeshProUGUI textTurnPlayer;
+    #endregion
+
+    #region Enemy Attribute
+    public TextMeshProUGUI textEnemyName;
+    public TextMeshProUGUI textEnergyEnemy;
+    public TextMeshProUGUI textHowManyCharacterEnemy;
+    public TextMeshProUGUI textTurnEnemy;
     #endregion
 
     void Start()
     {
-        int num = 0;
-        foreach (var item in rootUI)
-        {
-
-            textPlayerName[num] = item.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            textEnergyPlayer[num] = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-            textHowManyCharacterPlayer[num] = item.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-            textTurnPlayer[num] = item.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-
-            num++;
-        }
     }
 
     void Update()
@@ -42,15 +37,15 @@ public class UserInterfaceLink : MonoBehaviour
     private void UIUpdate()
     {
         textKNN.text = "" + GameData.instance.K;
-        textPlayerName[0].text = "Player: " + GameData.instance.myName;
-        textEnergyPlayer[0].text = "" + GameData.instance.myEnergy;
-        textHowManyCharacterPlayer[0].text = "My all people: " + GameData.instance.myAllPeople;
-        textTurnPlayer[0].text = "" + GameData.instance.myTurn.ToString();
+        textPlayerName.text = "Player: " + GameData.instance.myName;
+        textEnergyPlayer.text = "" + GameData.instance.myEnergy;
+        textHowManyCharacterPlayer.text = "My all people: " + GameData.instance.myAllPeople;
+        textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
 
-        textPlayerName[1].text = "Player: " + GameData.instance.enemyName;
-        textEnergyPlayer[1].text = "" + GameData.instance.enemyEnergy;
-        textHowManyCharacterPlayer[1].text = "My all people: " + GameData.instance.enemyAllPeople;
-        textTurnPlayer[1].text = "" + GameData.instance.enemyTurn.ToString();
+        textEnemyName.text = "Player: " + GameData.instance.enemyName;
+        textEnergyEnemy.text = "" + GameData.instance.enemyEnergy;
+        textHowManyCharacterEnemy.text = "My all people: " + GameData.instance.enemyAllPeople;
+        textTurnEnemy.text = "" + GameData.instance.enemyTurn.ToString();
 
 
     }
