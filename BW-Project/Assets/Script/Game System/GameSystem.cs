@@ -30,10 +30,6 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
-        if (player.active == player.Waiting)
-        {
-            Debug.Log("player.active == player.Waiting");
-        }
         if (setup == true && !GameData.instance.End)
         {
             if (player.active == player.Waiting)
@@ -57,6 +53,14 @@ public class GameSystem : MonoBehaviour
                 }
 
                 CheckEndGame();
+            }
+        }
+
+        if (!GameData.instance.firstPlayer && !setup)
+        {
+            if (CalculatePeople("Npc") !=0)
+            {
+                setup = true;
             }
         }
     }
@@ -85,7 +89,6 @@ public class GameSystem : MonoBehaviour
             {
                 NetworkSystem.instance.LoadMap();
             }
-            setup = true;
         }
     }
 

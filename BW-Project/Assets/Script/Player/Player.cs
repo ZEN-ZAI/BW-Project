@@ -131,6 +131,8 @@ public class Player : MonoBehaviour
     {
         GameData.instance.myEnergy = 5;
         GameData.instance.myTurn = true;
+
+        NetworkSystem.instance.LoadMap();
     }
 
     public void UesSkill()
