@@ -9,11 +9,6 @@ public class SetMaterial : MonoBehaviour {
     void Start()
     {
         defaultMaterial = transform.gameObject.GetComponent<Renderer>().sharedMaterial;
-        /*
-        prayutMaterial = Spawner.instance.CharacterPrayut.GetComponent<Renderer>().sharedMaterial;
-        trumpMaterial = Spawner.instance.CharacterTrump.GetComponent<Renderer>().sharedMaterial;
-        kimMaterial = Spawner.instance.CharacterKim.GetComponent<Renderer>().sharedMaterial;
-        */
     }
 
     public void SetDefaultMaterial()
@@ -25,18 +20,18 @@ public class SetMaterial : MonoBehaviour {
     {
         if (material == "Prayut")
         {
-            defaultMaterial = Spawner.instance.CharacterPrayut.GetComponent<Renderer>().sharedMaterial; ;
-            transform.GetComponent<Renderer>().sharedMaterial = Spawner.instance.CharacterPrayut.GetComponent<Renderer>().sharedMaterial;
+            defaultMaterial = CharacterStore.instance.prayut.GetComponent<Renderer>().sharedMaterial;
+            transform.GetComponent<Renderer>().sharedMaterial = CharacterStore.instance.prayut.GetComponent<Renderer>().sharedMaterial;
         }
         else if (material == "Trump")
         {
-            defaultMaterial = Spawner.instance.CharacterTrump.GetComponent<Renderer>().sharedMaterial;
-            transform.GetComponent<Renderer>().sharedMaterial = Spawner.instance.CharacterTrump.GetComponent<Renderer>().sharedMaterial;
+            defaultMaterial = CharacterStore.instance.trump.GetComponent<Renderer>().sharedMaterial;
+            transform.GetComponent<Renderer>().sharedMaterial = CharacterStore.instance.trump.GetComponent<Renderer>().sharedMaterial;
         }
         else if (material == "Kim")
         {
-            defaultMaterial = Spawner.instance.CharacterKim.GetComponent<Renderer>().sharedMaterial;
-            transform.GetComponent<Renderer>().sharedMaterial = Spawner.instance.CharacterKim.GetComponent<Renderer>().sharedMaterial;
+            defaultMaterial = CharacterStore.instance.kim.GetComponent<Renderer>().sharedMaterial;
+            transform.GetComponent<Renderer>().sharedMaterial = CharacterStore.instance.kim.GetComponent<Renderer>().sharedMaterial;
         }
 
     }

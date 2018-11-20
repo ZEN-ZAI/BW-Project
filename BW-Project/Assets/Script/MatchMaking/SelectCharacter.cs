@@ -4,19 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MouseQuickPlay : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class SelectCharacter : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-
-    private AudioSource audioSource;
-    public AudioClip button;
-
     private Image myImageComponent;
     public Sprite imageColor;
     public Sprite imageBW;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         myImageComponent = gameObject.GetComponent<Image>();
     }
 
@@ -46,7 +41,9 @@ public class MouseQuickPlay : MonoBehaviour, IPointerEnterHandler, IPointerClick
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        audioSource.PlayOneShot(button);
+        SoundStore.instance.PlayButtonSound();
+        GameObject.Find("Dummy Picture").GetComponent<Image>().sprite = imageColor;
+        GameObject.Find("Dummy").GetComponent<SetMaterial>().SetNewMaterial(gameObject.name);
         Debug.Log("Select " + gameObject.name);
         GameData.instance.myCharacterName = gameObject.name;
         CameraControl.instance.MoveToShowRoom();

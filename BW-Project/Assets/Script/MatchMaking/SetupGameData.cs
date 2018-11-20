@@ -2,29 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class SetupGameData : MonoBehaviour
 {
     public InputField inputField_PlayerName;
-    //public Dropdown dropdown;
-    public Toggle toggleSmall;
-    public Toggle toggleMedium;
-    public Toggle toggleLarge;
-    public Toggle toggleWorld;
+    public TMP_Dropdown dropdown;
     public GameObject waitingScreen;
-
-
-    public GameObject trump;
-    public GameObject kim;
-    public GameObject prayut;
 
     // Update is called once per frame
     void Update()
     {
-
-
-
         GameData.instance.myName = inputField_PlayerName.text;
 
         if (GameData.instance.waitingPlayer)
@@ -37,21 +26,17 @@ public class SetupGameData : MonoBehaviour
         }
 
         
-        if (toggleSmall.isOn)
+        if (dropdown.value == 0)
         {
             GameData.instance.mapSize = 15;
         }
-        else if (toggleMedium.isOn)
+        else if (dropdown.value == 1)
         {
             GameData.instance.mapSize = 25;
         }
-        else if (toggleLarge.isOn)
+        else if (dropdown.value == 2)
         {
             GameData.instance.mapSize = 35;
-        }
-        else if (toggleWorld.isOn)
-        {
-            GameData.instance.mapSize = 50;
         }
         
 
