@@ -25,9 +25,13 @@ public class SoundStore : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayButtonSound()
+    public void StopSound()
     {
         GetComponent<AudioSource>().Stop();
+    }
+
+    public void PlayButtonSound()
+    {
         GetComponent<AudioSource>().PlayOneShot(button);
     }
 
