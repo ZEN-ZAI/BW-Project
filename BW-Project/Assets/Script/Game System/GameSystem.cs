@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GameSystem : MonoBehaviour
 {
-    public bool delayLoad;
-    public bool delayGet;
-    public bool delayUp;
-
     public Player player;
 
     public static GameSystem instance;
@@ -34,11 +30,25 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
-        if (!delayLoad)
+        if (!NetworkSystem.instance.getData_isRuning)
         {
-            StartCoroutine(GetDelay(1));
+            NetworkSystem.instance.GetData();
         }
-        
+
+        if (player.active == player.Waiting)
+        {
+            if (!NetworkSystem.instance.loadMap_isRuning)
+            {
+                NetworkSystem.instance.LoadMap();
+            }
+        }
+        if (player.active == player.Playing)
+        {
+            if (!NetworkSystem.instance.updateMap_isRuning)
+            {
+                NetworkSystem.instance.UpdateMap();
+            }
+        }
 
         if (!GameData.instance.End)
         {
@@ -61,65 +71,27 @@ public class GameSystem : MonoBehaviour
             Spawner.instance.RandomSpawnNPC(GameData.instance.mapSize / 2);
             Spawner.instance.RandomSpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, 3);
             Spawner.instance.RandomSpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, 3);
-            UpdateMap();
+            NetworkSystem.instance.UpdateMap();
             GameData.instance.q = GameData.instance.myName;
-            StartCoroutine(NetworkSystem.instance.Enqueue(GameData.instance.q));
+            NetworkSystem.instance.Enqueue(GameData.instance.q); // อัพ queue แรกขึ้น room
 
         }
         else if (!GameData.instance.firstPlayer)
         {
             player.SetSecond();
 
-            if (!delayLoad)
+            if (!NetworkSystem.instance.loadMap_isRuning)
             {
-                //StartCoroutine(LoadDelay(1));
-                LoadMap();
+                NetworkSystem.instance.LoadMap();
             }
         }
-    }
-
-
-    public IEnumerator LoadDelay(int sec)
-    {
-        delayLoad = true;
-        yield return new WaitForSeconds(sec);
-        delayLoad = false;
-        LoadMap();
-    }
-
-    public IEnumerator GetDelay(int sec)
-    {
-        delayGet = true;
-        yield return new WaitForSeconds(sec);
-        delayGet = false;
-        StartCoroutine(NetworkSystem.instance.GetData());
-    }
-
-    
-    public IEnumerator UpdateDelay(int sec)
-    {
-        delayUp = true;
-        yield return new WaitForSeconds(sec);
-        delayUp = false;
-        UpdateMap();
-    }
-
-
-    public void LoadMap()
-    {
-        StartCoroutine(NetworkSystem.instance.LoadMap());
-    }
-
-    public void UpdateMap()
-    {
-        StartCoroutine(NetworkSystem.instance.UpdateMap());
     }
 
     public void NextQueue()
     {
         // อัพ queue ขึ้น room
         GameData.instance.q = GameData.instance.enemyName;
-        StartCoroutine(NetworkSystem.instance.Enqueue(GameData.instance.q));
+        NetworkSystem.instance.Enqueue(GameData.instance.q);
         
     }
 
@@ -162,7 +134,7 @@ public class GameSystem : MonoBehaviour
 
     }
 
-    public int HowManyMyPeople(string group)
+    public int CalculatePeople(string group)
     {
         int num = 0;
 

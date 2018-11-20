@@ -42,7 +42,6 @@ public class SetupGameData : MonoBehaviour
 
         if (GameData.instance.myName != "" && GameData.instance.enemyName != "")
         {
-
             LoadingScene.instance.LoadScene("Game");
         }
     }

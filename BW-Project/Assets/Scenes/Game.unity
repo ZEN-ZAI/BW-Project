@@ -888,7 +888,7 @@ MonoBehaviour:
   End: 0
   waitingPlayer: 0
   mapSize: 15
-  roomID: 100
+  roomID: 101
   q: 
   K: 0
   firstPlayer: 0
@@ -3082,6 +3082,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2006055452}
   - component: {fileID: 2006055453}
+  - component: {fileID: 2006055454}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -3115,14 +3116,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bf74e4a4b560b46b19f8b534951f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterNpc: {fileID: 1971496216838371313, guid: 810c6fb540c41e946a1b87776edfb02e,
-    type: 3}
-  CharacterPrayut: {fileID: 4875990969283717650, guid: f3e59da2669304c4789a7b494ec69b71,
-    type: 3}
-  CharacterTrump: {fileID: 1611125962888871080, guid: 59cbf3c59cc448d479b85536efccabbd,
-    type: 3}
-  CharacterKim: {fileID: 8422643659963750997, guid: e4750e2235e98f942a8ea25fbbe00ce1,
-    type: 3}
+--- !u!114 &2006055454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006055451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b504d33e268e8a4d816682bd01ffe3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc: {fileID: 1971496216838371313, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
+  trump: {fileID: 1611125962888871080, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
+  kim: {fileID: 8422643659963750997, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
+  prayut: {fileID: 4875990969283717650, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
 --- !u!1001 &6279542088536381244
 PrefabInstance:
   m_ObjectHideFlags: 0

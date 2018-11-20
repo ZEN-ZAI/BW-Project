@@ -17,6 +17,7 @@ public class NetworkSystem : MonoBehaviour {
 
     public bool loadMap_isRuning;
     public bool updateMap_isRuning;
+    public bool getData_isRuning;
 
     public static NetworkSystem instance;
 
@@ -34,7 +35,42 @@ public class NetworkSystem : MonoBehaviour {
         //DontDestroyOnLoad(gameObject);
     }
 
-    public IEnumerator LoadMap()
+    public void LoadMap()
+    {
+        StartCoroutine(_LoadMap());
+    }
+
+    public void UpdateMap()
+    {
+        StartCoroutine(_UpdateMap());
+    }
+
+    public void GetData()
+    {
+        StartCoroutine(_GetData());
+    }
+
+    public void Enqueue(string name)
+    {
+        StartCoroutine(_Enqueue(name));
+    }
+
+    public void UpdateMap(int sec)
+    {
+        StartCoroutine(UpdateDelay(sec));
+    }
+
+    public void LoadMap(int sec)
+    {
+        StartCoroutine(LoadDelay(sec));
+    }
+
+    public void GetData(int sec)
+    {
+        StartCoroutine(GetDataDelay(sec));
+    }
+
+    private IEnumerator _LoadMap()
     {
         string[,] tempMap = new string[GameData.instance.mapSize, GameData.instance.mapSize];
         loadMap_isRuning = true;
@@ -59,7 +95,6 @@ public class NetworkSystem : MonoBehaviour {
             Debug.Log(itemsDataString);
         }
 
-        
         tempData = itemsDataString.Split(';');
         int num = 0;
 
@@ -99,7 +134,7 @@ public class NetworkSystem : MonoBehaviour {
         loadMap_isRuning = false;
     }
 
-     public IEnumerator UpdateMap()
+    private IEnumerator _UpdateMap()
     {
         updateMap_isRuning = true;
 
@@ -142,8 +177,10 @@ public class NetworkSystem : MonoBehaviour {
         updateMap_isRuning = false;
     }
 
-    public IEnumerator GetData()
+    private IEnumerator _GetData()
     {
+        getData_isRuning = true;
+
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
@@ -158,10 +195,11 @@ public class NetworkSystem : MonoBehaviour {
         GameData.instance.q = GetDataValue(itemsDataString, "queue:");
         //GameData.instance.enemyName = GetDataValue(itemsDataString, "player1_name:");
         //GameData.instance.enemyCharacter = GetDataValue(itemsDataString, "player1_character:");
+        getData_isRuning = false;
 
     }
 
-    public IEnumerator Enqueue(string playerName)
+    private IEnumerator _Enqueue(string playerName)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -175,6 +213,24 @@ public class NetworkSystem : MonoBehaviour {
         string itemsDataString = www.downloadHandler.text;
         Debug.Log(itemsDataString);
 
+    }
+
+    private IEnumerator LoadDelay(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        LoadMap();
+    }
+
+    private IEnumerator GetDataDelay(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        GetData();
+    }
+
+    private IEnumerator UpdateDelay(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        UpdateMap();
     }
 
     string GetDataValue(string data, string index)

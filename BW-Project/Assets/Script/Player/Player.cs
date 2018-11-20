@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Playing()
+    public void Playing()
     {
 
         if (!selectCharecter)
@@ -113,7 +113,6 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.tag == "Path")
             {
                 MoveCharecter();
-
             }
             else
             {
@@ -123,15 +122,9 @@ public class Player : MonoBehaviour
 
     }
 
-    private void Waiting()
+    public void Waiting()
     {
         MouseOver();
-
-        if (!GameSystem.instance.delayLoad)
-        {
-            StartCoroutine(GameSystem.instance.LoadDelay(1));
-        }
-        
     }
 
     public void StartTurn()
@@ -145,19 +138,13 @@ public class Player : MonoBehaviour
         leaderCharacter.GetComponent<LeaderCharacter>().UseSkill();
     }
 
-
-
     public void EndTurn()
     {
         if (myTurn)
         {
             myTurn = false;
             KNN.instance.StartKNN();
-            myAllPeople = GameSystem.instance.HowManyMyPeople(playerName);
-            if (!GameSystem.instance.delayUp)
-            {
-                StartCoroutine(GameSystem.instance.UpdateDelay(1));
-            }
+            myAllPeople = GameSystem.instance.CalculatePeople(playerName);
             GameSystem.instance.NextQueue();
         }
     }
@@ -175,6 +162,5 @@ public class Player : MonoBehaviour
     private void MoveCharecter()
     {
         mouseScript.SelectToMove(ref selectCharecter, ref GameData.instance.myEnergy, pathFinder);
-
     }
 }

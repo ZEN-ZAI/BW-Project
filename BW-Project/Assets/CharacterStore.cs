@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterStore : MonoBehaviour
 {
+    public GameObject npc;
     public GameObject trump;
     public GameObject kim;
     public GameObject prayut;
@@ -21,6 +22,6 @@ public class CharacterStore : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }
