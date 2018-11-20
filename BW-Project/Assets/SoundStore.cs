@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SoundStore : MonoBehaviour
 {
-
-    private AudioSource audioSource;
     public AudioClip button;
     public AudioClip TH;
     public AudioClip NK;
@@ -27,33 +25,27 @@ public class SoundStore : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
-
     public void PlayButtonSound()
     {
-        audioSource.Stop();
-        audioSource.PlayOneShot(button);
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(button);
     }
 
     public void PlayTH()
     {
-        audioSource.Stop();
-        audioSource.PlayOneShot(TH);
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(TH);
     }
 
     public void PlayNK()
     {
-        audioSource.Stop();
-        audioSource.PlayOneShot(NK);
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(NK);
     }
 
     public void PlayUSA()
     {
-        audioSource.Stop();
-        audioSource.PlayOneShot(USA);
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(USA);
     }
 }
