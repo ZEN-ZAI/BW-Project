@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public string playerName;
     public string characterPlayerName;
     public int myAllPeople;
-    public bool myTurn;
+    //public bool myTurn;
 
     public GameObject leaderCharacter;
 
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         playerName = GameData.instance.myName;
         characterPlayerName = GameData.instance.myCharacterName;
         myAllPeople = GameData.instance.myAllPeople;
-        myTurn = GameData.instance.myTurn;
+        //myTurn = GameData.instance.myTurn;
 
         if (GameData.instance.firstPlayer)
         {
@@ -57,29 +57,29 @@ public class Player : MonoBehaviour
     public void updateVariable()
     {
         GameData.instance.myAllPeople = myAllPeople;
-        GameData.instance.myTurn = myTurn;
+        //GameData.instance.myTurn = myTurn;
     }
 
     void Update()
     {
         updateVariable();
 
-        if (active == Playing && myTurn) //  to self
+        if (active == Playing && GameData.instance.myTurn) //  to self
         {
             active = (state)(Playing);
             active();
         }
-        else if (active == Playing && !myTurn) // Playing to Waiting
+        else if (active == Playing && !GameData.instance.myTurn) // Playing to Waiting
         {
             active = (state)(Waiting);
             active();
         }
-        else if (active == Waiting && !myTurn) // to self
+        else if (active == Waiting && !GameData.instance.myTurn) // to self
         {
             active = (state)(Waiting);
             active();
         }
-        else if (active == Waiting && myTurn) // Waiting to Playing
+        else if (active == Waiting && GameData.instance.myTurn) // Waiting to Playing
         {
             active = (state)(Playing);
             active();
@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
     public void StartTurn()
     {
         GameData.instance.myEnergy = 5;
-        myTurn = true;
+        GameData.instance.myTurn = true;
     }
 
     public void UesSkill()
@@ -140,13 +140,24 @@ public class Player : MonoBehaviour
 
     public void EndTurn()
     {
-        if (myTurn)
+        if (GameData.instance.myTurn)
         {
-            myTurn = false;
             KNN.instance.StartKNN();
+            if (KNN.instance.KNN_finish)
+            {
+                NetworkSystem.instance.UpdateMap();
+            }
             myAllPeople = GameSystem.instance.CalculatePeople(playerName);
             GameSystem.instance.NextQueue();
+
+            GameData.instance.myTurn = false;
         }
+    }
+
+    private IEnumerable DelayEndTurn(int sec)
+    {
+        yield return new WaitForSeconds(1);
+        GameData.instance.myTurn = false;
     }
 
     public void MouseOver()

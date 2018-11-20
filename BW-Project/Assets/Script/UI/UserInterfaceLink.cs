@@ -25,10 +25,6 @@ public class UserInterfaceLink : MonoBehaviour
     public TextMeshProUGUI textTurnEnemy;
     #endregion
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         UIUpdate();

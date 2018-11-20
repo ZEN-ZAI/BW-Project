@@ -1713,9 +1713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b236dd21ac99eae45bde6403c15421b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayLoad: 0
-  delayGet: 0
-  delayUp: 0
   player: {fileID: 970216968}
 --- !u!1 &970216964
 GameObject:
@@ -1794,7 +1791,6 @@ MonoBehaviour:
   playerName: 
   characterPlayerName: 
   myAllPeople: 0
-  myTurn: 0
   leaderCharacter: {fileID: 0}
   mouseScript: {fileID: 970216966}
   selectCharecter: 0
@@ -2157,6 +2153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadMap_isRuning: 0
   updateMap_isRuning: 0
+  getData_isRuning: 0
+  tempMap: 
 --- !u!1 &1288061855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2568,7 +2566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textKNN: {fileID: 757551674}
   textTime: {fileID: 0}
-  textPlayerName: {fileID: 696392020}
+  textPlayerName: {fileID: 240203705}
   textEnergyPlayer: {fileID: 696392020}
   textHowManyCharacterPlayer: {fileID: 905331808}
   textTurnPlayer: {fileID: 1288061857}

@@ -9,7 +9,7 @@ public class NetworkSystem : MonoBehaviour {
     private string password = "541459%server";
     private string database_IP = "http://www.brainwashgame.com";
     private string getData = "/GetData.php";
-    private string updateMap = "/UpdateMap.php";
+    private string updateMap = "/UpdateMap2.php";
     private string loadMap = "/LoadMap.php";
     private string enqueue = "/EnQueue.php";
 
@@ -92,7 +92,7 @@ public class NetworkSystem : MonoBehaviour {
         else
         {
             Debug.Log("Load map.");
-            Debug.Log(itemsDataString);
+            //Debug.Log(itemsDataString);
         }
 
         tempData = itemsDataString.Split(';');
@@ -109,23 +109,24 @@ public class NetworkSystem : MonoBehaviour {
                 {
                     Map.instance.DestroyCharacter(col, row);
                     Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
-                }
+                }else
 
                 if (tempMap[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnNPC(col, row);
-                    Debug.Log("Load npc <x:" + col + " y:" + row + ">");
-                }
+                    //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
+                }else
 
                 if(tempMap[row, col] == GameData.instance.myName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, col, row);
-                    Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
-                }
+                    //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
+                }else
+
                 if(tempMap[row, col] == GameData.instance.enemyName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, col, row);
-                    Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
+                    //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
                 }
                 num++;
             }
@@ -134,6 +135,7 @@ public class NetworkSystem : MonoBehaviour {
         loadMap_isRuning = false;
     }
 
+    public string tempMap;
     private IEnumerator _UpdateMap()
     {
         updateMap_isRuning = true;
@@ -142,6 +144,9 @@ public class NetworkSystem : MonoBehaviour {
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
+        form.AddField("mapSize", GameData.instance.mapSize);
+
+        tempMap = null;
 
         int num = 0;
         for (int i = 0; i < Map.instance.row; i++)
@@ -150,15 +155,17 @@ public class NetworkSystem : MonoBehaviour {
             {
                 if (Map.instance.map[i, j].GetComponent<Tile>().HaveCharacter())
                 {
-                    form.AddField("map" + num, Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group);
+                    tempMap += Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group + "|";
                 }
                 else
                 {
-                    form.AddField("map" + num, "");
+                    tempMap += "_" + "|";
                 }
                 num++;
             }
         }
+
+        form.AddField("map",tempMap);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap ,form);
         yield return www.SendWebRequest();
@@ -173,7 +180,6 @@ public class NetworkSystem : MonoBehaviour {
         {
             Debug.Log(itemsDataString);
         }
-
         updateMap_isRuning = false;
     }
 

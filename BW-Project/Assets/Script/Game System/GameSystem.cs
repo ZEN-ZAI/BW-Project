@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameSystem : MonoBehaviour
 {
     public Player player;
-
+    private bool setup;
     public static GameSystem instance;
 
     void Awake()
@@ -30,34 +30,34 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
-        if (!NetworkSystem.instance.getData_isRuning)
-        {
-            NetworkSystem.instance.GetData();
-        }
-
         if (player.active == player.Waiting)
         {
-            if (!NetworkSystem.instance.loadMap_isRuning)
-            {
-                NetworkSystem.instance.LoadMap();
-            }
+            Debug.Log("player.active == player.Waiting");
         }
-        if (player.active == player.Playing)
+        if (setup == true && !GameData.instance.End)
         {
-            if (!NetworkSystem.instance.updateMap_isRuning)
+            if (player.active == player.Waiting)
             {
-                NetworkSystem.instance.UpdateMap();
-            }
-        }
+                if (!NetworkSystem.instance.getData_isRuning)
+                {
+                    NetworkSystem.instance.GetData();
+                }
 
-        if (!GameData.instance.End)
-        {
-            if (GameData.instance.myName == GameData.instance.q)
-            {
-                player.StartTurn();
+                if (!NetworkSystem.instance.loadMap_isRuning)
+                {
+                    NetworkSystem.instance.LoadMap();
+                }
             }
 
-            CheckEndGame();
+            if (!GameData.instance.End)
+            {
+                if (GameData.instance.myName == GameData.instance.q && player.active == player.Waiting)
+                {
+                    player.StartTurn();
+                }
+
+                CheckEndGame();
+            }
         }
     }
 
@@ -74,16 +74,18 @@ public class GameSystem : MonoBehaviour
             NetworkSystem.instance.UpdateMap();
             GameData.instance.q = GameData.instance.myName;
             NetworkSystem.instance.Enqueue(GameData.instance.q); // อัพ queue แรกขึ้น room
-
+            setup = true;
         }
         else if (!GameData.instance.firstPlayer)
         {
             player.SetSecond();
+            NetworkSystem.instance.GetData();
 
             if (!NetworkSystem.instance.loadMap_isRuning)
             {
                 NetworkSystem.instance.LoadMap();
             }
+            setup = true;
         }
     }
 
@@ -116,7 +118,7 @@ public class GameSystem : MonoBehaviour
         if (num == 0)
         {
             GameData.instance.End = true;
-            player.myTurn = false;
+            GameData.instance.myTurn = false;
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
