@@ -28,17 +28,21 @@ public class SetupGameData : MonoBehaviour
         
         if (dropdown.value == 0)
         {
-            GameData.instance.mapSize = 15;
+            GameData.instance.mapSize = 25;
         }
         else if (dropdown.value == 1)
         {
-            GameData.instance.mapSize = 25;
+            GameData.instance.mapSize = 35;
         }
         else if (dropdown.value == 2)
         {
-            GameData.instance.mapSize = 35;
+            GameData.instance.mapSize = 55;
         }
-        
+        else if (dropdown.value == 3)
+        {
+            GameData.instance.mapSize = 100;
+        }
+
 
         if (GameData.instance.myName != "" && GameData.instance.enemyName != "")
         {

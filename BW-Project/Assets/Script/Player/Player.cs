@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public string playerName;
-    public string characterPlayerName;
-    public int myAllPeople;
-    //public bool myTurn;
-
-    public GameObject leaderCharacter;
-
     public MouseScript mouseScript;
     private PathFinder pathFinder;
 
@@ -22,10 +15,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         pathFinder = FindObjectOfType<PathFinder>();
-
-        playerName = GameData.instance.myName;
-        characterPlayerName = GameData.instance.myCharacterName;
-        myAllPeople = GameData.instance.myAllPeople;
         //myTurn = GameData.instance.myTurn;
 
         if (GameData.instance.firstPlayer)
@@ -54,15 +43,9 @@ public class Player : MonoBehaviour
         active();
     }
 
-    public void updateVariable()
-    {
-        GameData.instance.myAllPeople = myAllPeople;
-        //GameData.instance.myTurn = myTurn;
-    }
 
     void Update()
     {
-        updateVariable();
 
         if (active == Playing && GameData.instance.myTurn) //  to self
         {
@@ -125,6 +108,7 @@ public class Player : MonoBehaviour
     public void Waiting()
     {
         MouseOver();
+        GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
     }
 
     public void StartTurn()
@@ -133,11 +117,13 @@ public class Player : MonoBehaviour
         GameData.instance.myTurn = true;
 
         NetworkSystem.instance.LoadMap();
+        GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
+        GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
     }
 
     public void UesSkill()
     {
-        leaderCharacter.GetComponent<LeaderCharacter>().UseSkill();
+        GameData.instance.leaderCharacter.GetComponent<LeaderCharacter>().UseSkill();
     }
 
     public void EndTurn()
@@ -145,14 +131,12 @@ public class Player : MonoBehaviour
         if (GameData.instance.myTurn)
         {
             KNN.instance.StartKNN();
-            if (KNN.instance.KNN_finish)
-            {
-                NetworkSystem.instance.UpdateMap();
-            }
-            myAllPeople = GameSystem.instance.CalculatePeople(playerName);
+            NetworkSystem.instance.UpdateMap();
+            GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myName);
+            GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
             GameSystem.instance.NextQueue();
-
             GameData.instance.myTurn = false;
+            GameData.instance.myEnergy = 0;
         }
     }
 
@@ -169,11 +153,12 @@ public class Player : MonoBehaviour
 
     private void SelectCharecter()
     {
-        mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder, this);
+        mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder);
 
     }
     private void MoveCharecter()
     {
         mouseScript.SelectToMove(ref selectCharecter, ref GameData.instance.myEnergy, pathFinder);
+        NetworkSystem.instance.UpdateMap();
     }
 }

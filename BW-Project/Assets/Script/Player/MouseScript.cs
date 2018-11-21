@@ -41,7 +41,7 @@ public class MouseScript : MonoBehaviour
         }
     }
 
-    public void MouseSelectCharacter(ref bool select, PathFinder pathFinder, Player player)
+    public void MouseSelectCharacter(ref bool select, PathFinder pathFinder)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -50,7 +50,7 @@ public class MouseScript : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
-                hit.collider.gameObject.GetComponent<Character>().group == player.playerName)
+                hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myName)
             {
 
                 if (tempObjSelectCharacter != null)

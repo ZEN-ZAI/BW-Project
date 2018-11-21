@@ -109,19 +109,19 @@ public class NetworkSystem : MonoBehaviour {
                 {
                     Map.instance.DestroyCharacter(col, row);
                     Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
-                }else
+                }
 
                 if (tempMap[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnNPC(col, row);
                     //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
-                }else
+                }
 
                 if(tempMap[row, col] == GameData.instance.myName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, col, row);
                     //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
-                }else
+                }
 
                 if(tempMap[row, col] == GameData.instance.enemyName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {

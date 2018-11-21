@@ -38,10 +38,12 @@ public class UserInterfaceLink : MonoBehaviour
         textHowManyCharacterPlayer.text = "My people: " + GameData.instance.myAllPeople;
         textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
 
+        textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
+        textTurnEnemy.text = "" + GameData.instance.enemyTurn.ToString();
+
         textEnemyName.text = "" + GameData.instance.enemyName;
         textEnergyEnemy.text = "" + GameData.instance.enemyEnergy;
         textHowManyCharacterEnemy.text = "My people: " + GameData.instance.enemyAllPeople;
-        textTurnEnemy.text = "" + GameData.instance.enemyTurn.ToString();
 
 
     }

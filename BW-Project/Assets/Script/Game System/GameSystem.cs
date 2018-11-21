@@ -30,6 +30,25 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
+        if (!GameData.instance.firstPlayer && !setup)
+        {
+            if (CalculatePeople("Npc") !=0)
+            {
+                setup = true;
+            }
+        }
+
+        if (GameData.instance.myTurn == true)
+        {
+            GameData.instance.enemyTurn = false;
+
+        }
+        else if (!GameData.instance.myTurn)
+        {
+            GameData.instance.enemyTurn = true;
+        }
+
+
         if (setup == true && !GameData.instance.End)
         {
             if (player.active == player.Waiting)
@@ -45,24 +64,15 @@ public class GameSystem : MonoBehaviour
                 }
             }
 
-            if (!GameData.instance.End)
+            if (GameData.instance.myName == GameData.instance.q && player.active == player.Waiting)
             {
-                if (GameData.instance.myName == GameData.instance.q && player.active == player.Waiting)
-                {
-                    player.StartTurn();
-                }
-
-                CheckEndGame();
+                player.StartTurn();
             }
+
+            CheckEndGame();
         }
 
-        if (!GameData.instance.firstPlayer && !setup)
-        {
-            if (CalculatePeople("Npc") !=0)
-            {
-                setup = true;
-            }
-        }
+
     }
 
     public void GameSetUp()
@@ -121,7 +131,7 @@ public class GameSystem : MonoBehaviour
         if (num == 0)
         {
             GameData.instance.End = true;
-            GameData.instance.myTurn = false;
+            //GameData.instance.myTurn = false;
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
