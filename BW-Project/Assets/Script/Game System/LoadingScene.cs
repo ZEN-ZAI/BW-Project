@@ -13,7 +13,16 @@ public class LoadingScene : MonoBehaviour {
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+
+        }
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void LoadScene(string scene)

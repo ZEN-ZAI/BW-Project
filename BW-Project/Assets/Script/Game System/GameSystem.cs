@@ -32,21 +32,12 @@ public class GameSystem : MonoBehaviour
     {
         if (!GameData.instance.firstPlayer && !setup)
         {
-            if (CalculatePeople("Npc") !=0)
+            if (CalculatePeople("Npc") != 0)
             {
                 setup = true;
             }
         }
 
-        if (GameData.instance.myTurn == true)
-        {
-            GameData.instance.enemyTurn = false;
-
-        }
-        else if (!GameData.instance.myTurn)
-        {
-            GameData.instance.enemyTurn = true;
-        }
 
 
         if (setup == true && !GameData.instance.End)
@@ -57,7 +48,6 @@ public class GameSystem : MonoBehaviour
                 {
                     NetworkSystem.instance.GetData();
                 }
-
                 if (!NetworkSystem.instance.loadMap_isRuning)
                 {
                     NetworkSystem.instance.LoadMap();
@@ -78,7 +68,7 @@ public class GameSystem : MonoBehaviour
     public void GameSetUp()
     {
         GenerateMap.instance.Generate();
-        
+
         if (GameData.instance.firstPlayer)
         {
             player.SetFrist();
@@ -93,12 +83,7 @@ public class GameSystem : MonoBehaviour
         else if (!GameData.instance.firstPlayer)
         {
             player.SetSecond();
-            NetworkSystem.instance.GetData();
-
-            if (!NetworkSystem.instance.loadMap_isRuning)
-            {
-                NetworkSystem.instance.LoadMap();
-            }
+            NetworkSystem.instance.LoadMap();
         }
     }
 
@@ -107,7 +92,7 @@ public class GameSystem : MonoBehaviour
         // อัพ queue ขึ้น room
         GameData.instance.q = GameData.instance.enemyName;
         NetworkSystem.instance.Enqueue(GameData.instance.q);
-        
+
     }
 
     public void CheckEndGame()
@@ -131,7 +116,7 @@ public class GameSystem : MonoBehaviour
         if (num == 0)
         {
             GameData.instance.End = true;
-            //GameData.instance.myTurn = false;
+            GameData.instance.myTurn = false;
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
@@ -170,6 +155,10 @@ public class GameSystem : MonoBehaviour
 
     }
 
-
+    public void RestartGame()
+    {
+        StopAllCoroutines();
+        LoadingScene.instance.LoadScene("MatchMaking");
+    }
 
 }

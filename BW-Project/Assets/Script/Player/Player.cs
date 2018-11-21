@@ -159,6 +159,5 @@ public class Player : MonoBehaviour
     private void MoveCharecter()
     {
         mouseScript.SelectToMove(ref selectCharecter, ref GameData.instance.myEnergy, pathFinder);
-        NetworkSystem.instance.UpdateMap();
     }
 }

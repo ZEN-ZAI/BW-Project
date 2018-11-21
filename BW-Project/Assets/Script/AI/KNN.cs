@@ -33,7 +33,6 @@ public class KNN : MonoBehaviour
         Random_K();
         NewDataSet();
         SetCompareDataset();
-        NetworkSystem.instance.UpdateMap();
     }
 
     public void Random_K()

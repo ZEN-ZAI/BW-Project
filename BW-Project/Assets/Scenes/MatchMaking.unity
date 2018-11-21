@@ -2867,7 +2867,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 3
+  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -3879,7 +3879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1694632598912184, guid: c3b6fd8529ed55c47892babc89cfdf93, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3b6fd8529ed55c47892babc89cfdf93, type: 3}
@@ -4950,6 +4950,7 @@ MonoBehaviour:
   enemyCharacterName: 
   enemyAllPeople: 0
   enemyEnergy: 0
+  enemyTurn: 0
   leaderCharacter: {fileID: 0}
 --- !u!4 &1734439967
 Transform:
@@ -5105,7 +5106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npc: {fileID: 1971496216838371313, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
   trump: {fileID: 1611125962888871080, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
-  kim: {fileID: 1611125962888871080, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
+  kim: {fileID: 8422643659963750997, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
   prayut: {fileID: 4875990969283717650, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
 --- !u!4 &1854334271
 Transform:

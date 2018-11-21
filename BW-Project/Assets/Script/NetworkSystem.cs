@@ -13,7 +13,7 @@ public class NetworkSystem : MonoBehaviour {
     private string loadMap = "/LoadMap.php";
     private string enqueue = "/EnQueue.php";
 
-    private string[] tempData;
+    public string[] tempData;
 
     public bool loadMap_isRuning;
     public bool updateMap_isRuning;
@@ -92,7 +92,7 @@ public class NetworkSystem : MonoBehaviour {
         else
         {
             Debug.Log("Load map.");
-            //Debug.Log(itemsDataString);
+            Debug.Log(itemsDataString);
         }
 
         tempData = itemsDataString.Split(';');
@@ -105,7 +105,7 @@ public class NetworkSystem : MonoBehaviour {
 
                 tempMap[row, col] = tempData[num];
 
-                if (tempMap[row, col] == "" && Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if (Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Map.instance.DestroyCharacter(col, row);
                     Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
@@ -115,13 +115,13 @@ public class NetworkSystem : MonoBehaviour {
                 {
                     Spawner.instance.SpawnNPC(col, row);
                     //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
-                }
+                }else
 
                 if(tempMap[row, col] == GameData.instance.myName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, col, row);
                     //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
-                }
+                }else
 
                 if(tempMap[row, col] == GameData.instance.enemyName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {

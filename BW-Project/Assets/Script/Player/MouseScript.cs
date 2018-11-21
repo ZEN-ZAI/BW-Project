@@ -33,7 +33,7 @@ public class MouseScript : MonoBehaviour
 
                 Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
                 enegy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
-
+                NetworkSystem.instance.UpdateMap();
                 tempObjSelectCharacter = null;
                 select = false;
                 pathFinder.ResetPathBFS();
