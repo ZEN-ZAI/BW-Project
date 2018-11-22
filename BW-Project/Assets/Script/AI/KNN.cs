@@ -10,7 +10,7 @@ public class KNN : MonoBehaviour
     private List<NewData> newData = new List<NewData>();
 
     public bool KNN_finish;
-    public int[] randomSet = new int[] { 3, 5};
+    private int[] randomSet = new int[] { 2,3,4};
 
     public static KNN instance;
 
@@ -37,7 +37,7 @@ public class KNN : MonoBehaviour
 
     public void Random_K()
     {
-        int ran = Random.Range(0,2);
+        int ran = Random.Range(0, randomSet.Length);
         GameData.instance.K = randomSet[ran];
     }
 

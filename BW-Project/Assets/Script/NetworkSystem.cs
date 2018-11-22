@@ -12,6 +12,7 @@ public class NetworkSystem : MonoBehaviour {
     private string updateMap = "/UpdateMap2.php";
     private string loadMap = "/LoadMap.php";
     private string enqueue = "/EnQueue.php";
+    private string updateState = "/UpdateState.php";
 
     private string deleteRoom = "/DeleteRoom.php";
 
@@ -77,6 +78,11 @@ public class NetworkSystem : MonoBehaviour {
     public void GetData()
     {
         StartCoroutine(_GetData());
+    }
+
+    public void UpdateState(string state)
+    {
+        StartCoroutine(_UpdateState(state));
     }
 
     public void Enqueue(string name)
@@ -228,8 +234,17 @@ public class NetworkSystem : MonoBehaviour {
         Debug.Log(itemsDataString);
 
         GameData.instance.q = GetDataValue(itemsDataString, "queue:");
-        //GameData.instance.enemyName = GetDataValue(itemsDataString, "player1_name:");
-        //GameData.instance.enemyCharacter = GetDataValue(itemsDataString, "player1_character:");
+        GameData.instance.state = GetDataValue(itemsDataString, "state:");
+
+        if (GameData.instance.firstPlayer)
+        {
+            GameData.instance.enemyEnergy = int.Parse(GetDataValue(itemsDataString, "player2_energy:"));
+        }
+        else
+        {
+            GameData.instance.enemyEnergy = int.Parse(GetDataValue(itemsDataString, "player1_energy:"));
+        }
+
         getData_isRuning = false;
 
     }
@@ -243,6 +258,22 @@ public class NetworkSystem : MonoBehaviour {
         form.AddField("playername", playerName);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + enqueue, form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+        Debug.Log(itemsDataString);
+
+    }
+
+    private IEnumerator _UpdateState(string state)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", GameData.instance.roomID);
+        form.AddField("state", state);
+
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + updateState, form);
         yield return www.SendWebRequest();
 
         string itemsDataString = www.downloadHandler.text;

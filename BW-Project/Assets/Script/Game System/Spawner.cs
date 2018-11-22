@@ -65,6 +65,7 @@ public class Spawner : MonoBehaviour
 
         Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
+
     private void SpawnCharacter(string playerName,string skinName)
     {
         if (Map.instance.allCharacter >= Map.instance.maxCharacter)

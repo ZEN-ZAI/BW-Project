@@ -6,7 +6,6 @@ public class GameSystem : MonoBehaviour
 {
     public Player player;
     public string playerWin;
-    private bool setup;
     public static GameSystem instance;
 
     void Awake()
@@ -41,18 +40,6 @@ public class GameSystem : MonoBehaviour
         if (!NetworkSystem.instance.getData_isRuning && setup == true)
         {
             NetworkSystem.instance.GetData();
-        }
-
-        if (GameData.instance.q == "END" && playerWin != GameData.instance.myName)
-        {
-            if (!NetworkSystem.instance.loadMap_isRuning)
-            {
-                NetworkSystem.instance.LoadMap();
-            }
-            GameData.instance.myAllPeople = CalculatePeople(GameData.instance.myName);
-            GameData.instance.enemyAllPeople = CalculatePeople(GameData.instance.enemyName);
-            NetworkSystem.instance.Enqueue("END");
-            CheckEndGame();
         }
 
         if (setup == true && !GameData.instance.End)
@@ -107,26 +94,10 @@ public class GameSystem : MonoBehaviour
 
     public void CheckEndGame()
     {
-        int num = 0;
-
-        for (int i = 0; i < Map.instance.row; i++)
-        {
-            for (int j = 0; j < Map.instance.col; j++)
-            {
-                if (Map.instance.map[i, j].HaveCharacter())
-                {
-                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == "Npc")
-                    {
-                        num++;
-                    }
-                }
-            }
-        }
+        int num = CalculatePeople("Npc");
 
         if (num == 0)
         {
-            GameData.instance.End = true;
-            GameData.instance.myTurn = false;
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
@@ -171,6 +142,7 @@ public class GameSystem : MonoBehaviour
     public void ResetClearData()
     {
         StopAllCoroutines();
+
         NetworkSystem.instance.DeleteRoom();
         GameData.instance.End = false;
         GameData.instance.waitingPlayer = false;
@@ -187,6 +159,7 @@ public class GameSystem : MonoBehaviour
         GameData.instance.myEnergy = 0;
         GameData.instance.myTurn = false;
 
+        GameData.instance.enemyID = "";
         GameData.instance.enemyName = "";
         GameData.instance.enemyCharacterName = "";
         GameData.instance.enemyAllPeople = 0;

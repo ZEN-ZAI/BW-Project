@@ -8,17 +8,22 @@ public class MatchMakingSystem : MonoBehaviour {
     private string username = "zenzai";
     private string password = "541459%server";
     private string database_IP = "http://www.brainwashgame.com";
-    private string matchMaking = "/Matchmaking.php";
+    private string matchMaking = "/Matchmaking2.php";
     private string getData = "/GetData.php";
     private string createRoom = "/CreateRoom.php";
     private string deleteRoom = "/DeleteRoom.php";
 
-
     private bool delay;
+
+    void Start()
+    {
+        int temp = Random.seed = (int)System.DateTime.Now.Ticks;
+        GameData.instance.myID = Mathf.Abs(temp);
+        Debug.Log("Player ID: "+GameData.instance.myID);
+    }
 
     void Update()
     {
-
         if (GameData.instance.roomID != "" && !delay)
         {
             StartCoroutine(TimeDelayConnect());
@@ -65,9 +70,10 @@ public class MatchMakingSystem : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("playername", GameData.instance.myName);
-        form.AddField("select_character", GameData.instance.myCharacterName);
-        form.AddField("map_size", GameData.instance.mapSize);
+        form.AddField("playerName", GameData.instance.myName);
+        form.AddField("playerID", GameData.instance.myID);
+        form.AddField("selectCharacter", GameData.instance.myCharacterName);
+        form.AddField("mapSize", GameData.instance.mapSize);
 
         UnityWebRequest www = UnityWebRequest.Post(url,form);
         yield return www.SendWebRequest();
@@ -153,12 +159,13 @@ public class MatchMakingSystem : MonoBehaviour {
         if (GameData.instance.firstPlayer)
         {
             Debug.Log("Wait player2.");
+            GameData.instance.enemyID = GetDataValue(tempStr, "player2_ID:");
             GameData.instance.enemyName = GetDataValue(tempStr, "player2_name:");
             GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player2_character:");
-
         }
         else if (!GameData.instance.firstPlayer)
         {
+            GameData.instance.enemyID = GetDataValue(tempStr, "player1_ID:");
             GameData.instance.enemyName = GetDataValue(tempStr, "player1_name:");
             GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player1_character:");
         }
@@ -184,6 +191,28 @@ public class MatchMakingSystem : MonoBehaviour {
             delay = false;
             GameData.instance.roomID = "";
         }
+
+    }
+
+    public void UpdateState(string state)
+    {
+        StartCoroutine(_UpdateState(state));
+    }
+
+    private IEnumerator _UpdateState(string state)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", "zenzai");
+        form.AddField("password", "541459%server");
+        form.AddField("room_id", GameData.instance.roomID);
+        form.AddField("mapSize", GameData.instance.mapSize);
+        form.AddField("state", state);
+
+        UnityWebRequest www = UnityWebRequest.Post("http://www.brainwashgame.com/UpdateState.php", form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+        Debug.Log(itemsDataString);
 
     }
 
