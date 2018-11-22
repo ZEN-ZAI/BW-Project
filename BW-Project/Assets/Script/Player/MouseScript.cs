@@ -34,6 +34,15 @@ public class MouseScript : MonoBehaviour
                 Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
                 enegy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
                 NetworkSystem.instance.UpdateMap();
+                if (GameData.instance.firstPlayer)
+                {
+                    NetworkSystem.instance.UpdateColumn("player1_energy", GameData.instance.myEnergy.ToString());
+                }
+                else
+                {
+                    NetworkSystem.instance.UpdateColumn("player2_energy", GameData.instance.myEnergy.ToString());
+                }
+
                 tempObjSelectCharacter = null;
                 select = false;
                 pathFinder.ResetPathBFS();

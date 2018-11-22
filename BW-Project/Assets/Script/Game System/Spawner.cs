@@ -34,6 +34,11 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void RandomSpawnMyPeople()
+    {
+        SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName);
+    }
+
     void Spawn(GameObject character,int x,int y)
     {
         GameObject tempCharacter = Instantiate(character, Map.instance.GetBlockPosition(x,y), Quaternion.identity);

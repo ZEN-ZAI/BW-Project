@@ -330,7 +330,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 240
+  orthographic size: 220
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -354,7 +354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38404808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 630, y: 300, z: -100}
+  m_LocalPosition: {x: -388, y: 218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2841,6 +2841,9 @@ MonoBehaviour:
   inputField_PlayerName: {fileID: 1730850450}
   dropdown: {fileID: 499747976}
   waitingScreen: {fileID: 586890568}
+  allCharacter: 0
+  maxCharacter: 0
+  tempMap: 
 --- !u!1 &955398769
 GameObject:
   m_ObjectHideFlags: 0
@@ -3054,7 +3057,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 3
+  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -3526,7 +3529,6 @@ RectTransform:
   - {fileID: 1860582221}
   - {fileID: 1730850446}
   - {fileID: 1007610993}
-  - {fileID: 2129479258}
   m_Father: {fileID: 25712436}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3843,20 +3845,16 @@ PrefabInstance:
     - target: {fileID: 224156051030214870, guid: c3b6fd8529ed55c47892babc89cfdf93,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224156051030214870, guid: c3b6fd8529ed55c47892babc89cfdf93,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1079156566078338, guid: c3b6fd8529ed55c47892babc89cfdf93, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1694632598912184, guid: c3b6fd8529ed55c47892babc89cfdf93, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3b6fd8529ed55c47892babc89cfdf93, type: 3}
@@ -4922,22 +4920,23 @@ MonoBehaviour:
   waitingPlayer: 0
   mapSize: 0
   online: 0
-  End: 0
+  firstPlayer: 0
   roomID: 
   q: 
   K: 0
-  firstPlayer: 0
+  state: 
+  End: 0
   myID: 0
   myName: 
   myCharacterName: 
   myAllPeople: 0
   myEnergy: 0
+  myTurn: 0
   enemyID: 
   enemyName: 
   enemyCharacterName: 
   enemyAllPeople: 0
   enemyEnergy: 0
-  myTurn: 0
   enemyTurn: 0
   leaderCharacter: {fileID: 0}
 --- !u!4 &1734439967
@@ -5492,12 +5491,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129479254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 448, y: 0, z: 71}
-  m_LocalScale: {x: 134.25342, y: 268.50684, z: 134.25342}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 583, y: 218.5, z: 50}
+  m_LocalScale: {x: 54.33068, y: 108.66136, z: 54.33068}
   m_Children: []
-  m_Father: {fileID: 1145934289}
-  m_RootOrder: 5
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2129479259
 MonoBehaviour:

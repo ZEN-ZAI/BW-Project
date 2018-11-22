@@ -192,24 +192,33 @@ public class MatchMakingSystem : MonoBehaviour {
         }
     }
 
-    public void UpdateState(string state)
+    public void UpdateColumn(string column, string state)
     {
-        StartCoroutine(_UpdateState(state));
+        StartCoroutine(_UpdateColumn(column,state));
     }
 
-    private IEnumerator _UpdateState(string state)
+    private IEnumerator _UpdateColumn(string column,string statement)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("state", state);
+        form.AddField("column", column);
+        form.AddField("state", statement);
 
-        UnityWebRequest www = UnityWebRequest.Post("http://www.brainwashgame.com/UpdateState.php", form);
+        UnityWebRequest www = UnityWebRequest.Post("http://www.brainwashgame.com/UpdateStatement.php", form);
         yield return www.SendWebRequest();
 
         string itemsDataString = www.downloadHandler.text;
-        Debug.Log(itemsDataString);
+
+        if (www.downloadHandler.text == "")
+        {
+            Debug.Log("Connecting Error, Can't update column");
+        }
+        else
+        {
+            Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
+        }
 
     }
 

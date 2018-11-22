@@ -7,6 +7,7 @@ public class GameSystem : MonoBehaviour
     public Player player;
     public string playerWin;
     public static GameSystem instance;
+    private bool setup;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class GameSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LoadingScene.instance.LoadingScreen(true);
         GameSetUp();
     }
 
@@ -39,6 +41,7 @@ public class GameSystem : MonoBehaviour
         {
             GameData.instance.End = true;
             NetworkSystem.instance.LoadMap();
+            
         }
 
         if (!GameData.instance.End)
@@ -68,13 +71,15 @@ public class GameSystem : MonoBehaviour
         if (GameData.instance.firstPlayer)
         {
             player.SetFrist();
-            GameData.instance.q = GameData.instance.myID;
-            NetworkSystem.instance.Enqueue(GameData.instance.q); // อัพ queue แรกขึ้น room
         }
         else if (!GameData.instance.firstPlayer)
         {
             player.SetSecond();
         }
+
+        LoadingScene.instance.LoadingScreen(false);
+        NetworkSystem.instance.UpdateColumn("state","setup_finish");
+        setup = true;
     }
 
     public void NextQueue()
@@ -109,7 +114,7 @@ public class GameSystem : MonoBehaviour
                 Debug.Log(playerWin);
             }
 
-            NetworkSystem.instance.UpdateState("END");
+            NetworkSystem.instance.UpdateColumn("state","END");
         }
     }
 

@@ -12,7 +12,7 @@ public class NetworkSystem : MonoBehaviour {
     private string updateMap = "/UpdateMap2.php";
     private string loadMap = "/LoadMap.php";
     private string enqueue = "/EnQueue.php";
-    private string updateState = "/UpdateState.php";
+    private string updateState = "/UpdateStatement.php";
 
     private string deleteRoom = "/DeleteRoom.php";
 
@@ -80,9 +80,9 @@ public class NetworkSystem : MonoBehaviour {
         StartCoroutine(_GetData());
     }
 
-    public void UpdateState(string state)
+    public void UpdateColumn(string column, string statement)
     {
-        StartCoroutine(_UpdateState(state));
+        StartCoroutine(_UpdateColumn(column, statement));
     }
 
     public void Enqueue(string name)
@@ -218,6 +218,7 @@ public class NetworkSystem : MonoBehaviour {
         updateMap_isRuning = false;
     }
 
+    
     private IEnumerator _GetData()
     {
         getData_isRuning = true;
@@ -236,15 +237,17 @@ public class NetworkSystem : MonoBehaviour {
         GameData.instance.q = GetDataValue(itemsDataString, "queue:");
         GameData.instance.state = GetDataValue(itemsDataString, "state:");
 
+        int tempInt;
         if (GameData.instance.firstPlayer)
         {
-            string temp = GetDataValue(itemsDataString, "player2_energy:");
-            GameData.instance.enemyEnergy = int.Parse(temp);
+            
+            int.TryParse(GetDataValue(itemsDataString, "player2_energy:"),out tempInt);
+            GameData.instance.enemyEnergy = tempInt;
         }
         else
         {
-            string temp = GetDataValue(itemsDataString, "player1_energy:");
-            GameData.instance.enemyEnergy = int.Parse(temp);
+            int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
+            GameData.instance.enemyEnergy = tempInt;
         }
 
         getData_isRuning = false;
@@ -267,13 +270,14 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    private IEnumerator _UpdateState(string state)
+    private IEnumerator _UpdateColumn(string column, string statement)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("state", state);
+        form.AddField("column", column);
+        form.AddField("state", statement);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + updateState, form);
         yield return www.SendWebRequest();

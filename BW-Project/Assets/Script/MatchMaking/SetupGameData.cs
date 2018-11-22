@@ -65,7 +65,7 @@ public class SetupGameData : MonoBehaviour
         }
 
         //for P2
-        if (GameData.instance.state == "setup_finish")
+        if (GameData.instance.state == "setup_spawn")
         {
             LoadingScene.instance.LoadScene("Game");
         }
@@ -80,7 +80,7 @@ public class SetupGameData : MonoBehaviour
 
     private void SpawnSetUp()
     {
-        int npc = 10;
+        int npc = GameData.instance.mapSize/3;
         int player = 3;
         
         for (int i = 0; i < npc; i++)
@@ -148,7 +148,7 @@ public class SetupGameData : MonoBehaviour
         else
         {
             Debug.Log(itemsDataString);
-            MatchMakingSystem.instance.UpdateState("setup_finish");
+            MatchMakingSystem.instance.UpdateColumn("state","setup_spawn");
         }
     }
 

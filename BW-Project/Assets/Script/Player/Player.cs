@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
             EndTurn();
         }
     }
-
+    public Vector3 clamping;
     public void Playing()
     {
 
@@ -90,6 +90,19 @@ public class Player : MonoBehaviour
         }
         else if (selectCharecter)
         {
+
+            Vector3 temp = mouseScript.tempObjSelectCharacter.GetComponent<Character>().transform.position;
+            temp.x += clamping.x;
+            temp.y += clamping.y;
+            temp.z -= clamping.z;
+
+            if (Camera.main.transform.position != temp)
+            {
+                Camera.main.orthographicSize = 80;
+                Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, temp, 2 * Time.deltaTime);
+            }
+            
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -114,8 +127,7 @@ public class Player : MonoBehaviour
     {
         GameData.instance.myEnergy = 5;
         GameData.instance.myTurn = true;
-
-        NetworkSystem.instance.LoadMap(2);
+        NetworkSystem.instance.LoadMap();
     }
 
     public void UesSkill()
@@ -129,8 +141,24 @@ public class Player : MonoBehaviour
         {
             KNN.instance.StartKNN();
             NetworkSystem.instance.UpdateMap();
+
+            GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myID);
+            GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyID);
+
+            if (GameData.instance.firstPlayer)
+            {
+                NetworkSystem.instance.UpdateColumn("player1_people", GameData.instance.myAllPeople.ToString());
+                NetworkSystem.instance.UpdateColumn("player2_people", GameData.instance.enemyAllPeople.ToString());
+            }
+            else
+            {
+                NetworkSystem.instance.UpdateColumn("player2_people", GameData.instance.myAllPeople.ToString());
+                NetworkSystem.instance.UpdateColumn("player1_people", GameData.instance.enemyAllPeople.ToString());
+            }
+
             GameSystem.instance.NextQueue();
-            StartCoroutine(DelayEndTurn(1));
+
+            GameData.instance.myTurn = false;
             GameData.instance.myEnergy = 0;
         }
     }

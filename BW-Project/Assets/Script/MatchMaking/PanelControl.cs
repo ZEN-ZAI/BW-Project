@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PanelControl : MonoBehaviour {
 
     public float moveSpeed;
-    
+
     public RectTransform comic;
     public RectTransform showRoom;
 
@@ -26,12 +26,14 @@ public class PanelControl : MonoBehaviour {
         {
             comic.localPosition = Vector3.Lerp(comic.localPosition, new Vector3(-2000,0),moveSpeed * Time.deltaTime);
             showRoom.localPosition = Vector3.Lerp(showRoom.localPosition, new Vector3(0, 0), moveSpeed * Time.deltaTime);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(388, 218), moveSpeed * Time.deltaTime);
         }
 
         if (moveRight)
         {
             comic.localPosition = Vector3.Lerp(comic.localPosition, new Vector3(0, 0), moveSpeed * Time.deltaTime);
             showRoom.localPosition = Vector3.Lerp(showRoom.localPosition, new Vector3(2000, 0), moveSpeed * Time.deltaTime);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(-388, 218), moveSpeed * Time.deltaTime);
         }
     }
 

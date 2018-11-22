@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseZoom : MonoBehaviour
+public class CameraZoom : MonoBehaviour
 {
-
     public float scrollWheel;
     public int zoomPower;
 
     public int mapZoomOut;
     public int mapZoomIn;
 
-    // Use this for initialization
-    void Start()
-    {
+    public float orthographicSizeOrigin;
 
+    public static CameraZoom instance;
+
+    void Awake()
+    {
+        instance = this;
     }
 
     // Update is called once per frame

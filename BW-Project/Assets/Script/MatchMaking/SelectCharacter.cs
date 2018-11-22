@@ -10,10 +10,10 @@ public class SelectCharacter : MonoBehaviour
     {
         Debug.Log("Select " + name);
         SoundStore.instance.PlayButtonSound();
-
-        GameObject.Find("Dummy Picture").GetComponent<Image>().sprite = GameObject.Find(name).GetComponent<Image>().sprite;
-        GameObject.Find("Dummy").GetComponent<SetMaterial>().SetNewMaterial(name);
         GameData.instance.myCharacterName = name;
+
+        GameObject.Find("Dummy").GetComponent<SetMaterial>().SetNewMaterial(name);
+        GameObject.Find("Dummy Picture").GetComponent<Image>().sprite = GameObject.Find(name).GetComponent<Image>().sprite;
         
         PanelControl.instance.MoveLeft();
     }
