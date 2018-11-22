@@ -108,7 +108,6 @@ public class Player : MonoBehaviour
     public void Waiting()
     {
         MouseOver();
-        GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
     }
 
     public void StartTurn()
@@ -116,7 +115,7 @@ public class Player : MonoBehaviour
         GameData.instance.myEnergy = 5;
         GameData.instance.myTurn = true;
 
-        NetworkSystem.instance.LoadMap();
+        NetworkSystem.instance.LoadMap(2);
         GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
         GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
     }
@@ -135,12 +134,12 @@ public class Player : MonoBehaviour
             GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myName);
             GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
             GameSystem.instance.NextQueue();
-            GameData.instance.myTurn = false;
+            StartCoroutine(DelayEndTurn(1));
             GameData.instance.myEnergy = 0;
         }
     }
 
-    private IEnumerable DelayEndTurn(int sec)
+    private IEnumerator DelayEndTurn(int sec)
     {
         yield return new WaitForSeconds(1);
         GameData.instance.myTurn = false;

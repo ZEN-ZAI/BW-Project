@@ -43,27 +43,4 @@ public class GameData : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-
-    public void ClearData()
-    {
-        End = false;
-        waitingPlayer = false;
-        mapSize = 0;
-
-        roomID = "";
-        q = "";
-        K = 0;
-        firstPlayer = false;
-
-        myName = "";
-        myCharacterName = "";
-        myAllPeople = 0;
-        myEnergy = 0;
-        myTurn = false;
-
-        enemyName = "";
-        enemyCharacterName = "";
-        enemyAllPeople = 0;
-        enemyEnergy = 0;
-    }
 }

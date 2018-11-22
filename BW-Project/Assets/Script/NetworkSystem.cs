@@ -13,6 +13,8 @@ public class NetworkSystem : MonoBehaviour {
     private string loadMap = "/LoadMap.php";
     private string enqueue = "/EnQueue.php";
 
+    private string deleteRoom = "/DeleteRoom.php";
+
     public string[] tempData;
 
     public bool loadMap_isRuning;
@@ -33,6 +35,33 @@ public class NetworkSystem : MonoBehaviour {
 
         }
         //DontDestroyOnLoad(gameObject);
+    }
+
+    public void DeleteRoom()
+    {
+        StartCoroutine(DeleteRoom(database_IP+deleteRoom));
+    }
+
+    private IEnumerator DeleteRoom(string url)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", GameData.instance.roomID);
+
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.SendWebRequest();
+
+        if (www.downloadHandler.text == "")
+        {
+            Debug.Log("Connecting Error, Can't delete room.");
+        }
+        else
+        {
+            Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
+            GameData.instance.roomID = "";
+        }
+
     }
 
     public void LoadMap()

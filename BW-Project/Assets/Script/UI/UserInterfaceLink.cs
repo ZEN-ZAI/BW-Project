@@ -9,6 +9,7 @@ public class UserInterfaceLink : MonoBehaviour
     #region System Attribute
     public TextMeshProUGUI textKNN;
     public TextMeshProUGUI textTime;
+    public TextMeshProUGUI textEnd;
     #endregion
 
     #region Player Attribute
@@ -54,6 +55,6 @@ public class UserInterfaceLink : MonoBehaviour
         textEnergyEnemy.text = "" + GameData.instance.enemyEnergy;
         textHowManyCharacterEnemy.text = "My people: " + GameData.instance.enemyAllPeople;
 
-
+        textEnd.text = "" + GameSystem.instance.playerWin;
     }
 }

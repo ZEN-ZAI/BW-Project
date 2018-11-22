@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameSystem : MonoBehaviour
 {
     public Player player;
+    public string playerWin;
     private bool setup;
     public static GameSystem instance;
 
@@ -37,17 +38,28 @@ public class GameSystem : MonoBehaviour
                 setup = true;
             }
         }
+        if (!NetworkSystem.instance.getData_isRuning && setup == true)
+        {
+            NetworkSystem.instance.GetData();
+        }
 
-
+        if (GameData.instance.q == "END" && playerWin != GameData.instance.myName)
+        {
+            if (!NetworkSystem.instance.loadMap_isRuning)
+            {
+                NetworkSystem.instance.LoadMap();
+            }
+            GameData.instance.myAllPeople = CalculatePeople(GameData.instance.myName);
+            GameData.instance.enemyAllPeople = CalculatePeople(GameData.instance.enemyName);
+            NetworkSystem.instance.Enqueue("END");
+            CheckEndGame();
+        }
 
         if (setup == true && !GameData.instance.End)
         {
             if (player.active == player.Waiting)
             {
-                if (!NetworkSystem.instance.getData_isRuning)
-                {
-                    NetworkSystem.instance.GetData();
-                }
+
                 if (!NetworkSystem.instance.loadMap_isRuning)
                 {
                     NetworkSystem.instance.LoadMap();
@@ -61,8 +73,6 @@ public class GameSystem : MonoBehaviour
 
             CheckEndGame();
         }
-
-
     }
 
     public void GameSetUp()
@@ -120,15 +130,18 @@ public class GameSystem : MonoBehaviour
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
-                Debug.Log("Player<" + GameData.instance.myName + "> : WIN");
+                playerWin = "Player<" + GameData.instance.myName + "> : WIN";
+                Debug.Log(playerWin);
             }
             else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
             {
-                Debug.Log("Player<" + GameData.instance.enemyName + "> : WIN");
+                playerWin = "Player<" + GameData.instance.enemyName + "> : WIN";
+                Debug.Log(playerWin);
             }
             else
             {
-                Debug.Log(" - Draw -");
+                playerWin = "- Draw -";
+                Debug.Log(playerWin);
             }
         }
 
@@ -155,9 +168,29 @@ public class GameSystem : MonoBehaviour
 
     }
 
-    public void RestartGame()
+    public void ResetClearData()
     {
         StopAllCoroutines();
+        NetworkSystem.instance.DeleteRoom();
+        GameData.instance.End = false;
+        GameData.instance.waitingPlayer = false;
+        GameData.instance.mapSize = 0;
+
+        GameData.instance.roomID = "";
+        GameData.instance.q = "";
+        GameData.instance.K = 0;
+        GameData.instance.firstPlayer = false;
+
+        //myName = "";
+        GameData.instance.myCharacterName = "";
+        GameData.instance.myAllPeople = 0;
+        GameData.instance.myEnergy = 0;
+        GameData.instance.myTurn = false;
+
+        GameData.instance.enemyName = "";
+        GameData.instance.enemyCharacterName = "";
+        GameData.instance.enemyAllPeople = 0;
+        GameData.instance.enemyEnergy = 0;
         LoadingScene.instance.LoadScene("MatchMaking");
     }
 
