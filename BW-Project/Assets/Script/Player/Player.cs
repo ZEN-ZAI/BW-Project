@@ -116,8 +116,6 @@ public class Player : MonoBehaviour
         GameData.instance.myTurn = true;
 
         NetworkSystem.instance.LoadMap(2);
-        GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
-        GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
     }
 
     public void UesSkill()
@@ -131,8 +129,6 @@ public class Player : MonoBehaviour
         {
             KNN.instance.StartKNN();
             NetworkSystem.instance.UpdateMap();
-            GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myName);
-            GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyName);
             GameSystem.instance.NextQueue();
             StartCoroutine(DelayEndTurn(1));
             GameData.instance.myEnergy = 0;

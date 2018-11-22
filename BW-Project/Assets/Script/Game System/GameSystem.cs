@@ -30,30 +30,28 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
-        if (!GameData.instance.firstPlayer && !setup)
-        {
-            if (CalculatePeople("Npc") != 0)
-            {
-                setup = true;
-            }
-        }
-        if (!NetworkSystem.instance.getData_isRuning && setup == true)
+        if (!NetworkSystem.instance.getData_isRuning)
         {
             NetworkSystem.instance.GetData();
         }
 
-        if (setup == true && !GameData.instance.End)
+        if (GameData.instance.state == "END" && !GameData.instance.End)
+        {
+            GameData.instance.End = true;
+            NetworkSystem.instance.LoadMap();
+        }
+
+        if (!GameData.instance.End)
         {
             if (player.active == player.Waiting)
             {
-
                 if (!NetworkSystem.instance.loadMap_isRuning)
                 {
                     NetworkSystem.instance.LoadMap();
                 }
             }
 
-            if (GameData.instance.myName == GameData.instance.q && player.active == player.Waiting)
+            if (GameData.instance.myID == GameData.instance.q && player.active == player.Waiting)
             {
                 player.StartTurn();
             }
@@ -65,29 +63,24 @@ public class GameSystem : MonoBehaviour
     public void GameSetUp()
     {
         GenerateMap.instance.Generate();
+        NetworkSystem.instance.LoadMap();
 
         if (GameData.instance.firstPlayer)
         {
             player.SetFrist();
-            Spawner.instance.RandomSpawnNPC(GameData.instance.mapSize / 2);
-            Spawner.instance.RandomSpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, 3);
-            Spawner.instance.RandomSpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, 3);
-            NetworkSystem.instance.UpdateMap();
-            GameData.instance.q = GameData.instance.myName;
+            GameData.instance.q = GameData.instance.myID;
             NetworkSystem.instance.Enqueue(GameData.instance.q); // อัพ queue แรกขึ้น room
-            setup = true;
         }
         else if (!GameData.instance.firstPlayer)
         {
             player.SetSecond();
-            NetworkSystem.instance.LoadMap();
         }
     }
 
     public void NextQueue()
     {
         // อัพ queue ขึ้น room
-        GameData.instance.q = GameData.instance.enemyName;
+        GameData.instance.q = GameData.instance.enemyID;
         NetworkSystem.instance.Enqueue(GameData.instance.q);
 
     }
@@ -98,15 +91,16 @@ public class GameSystem : MonoBehaviour
 
         if (num == 0)
         {
+            GameData.instance.End = true;
 
             if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
-                playerWin = "Player<" + GameData.instance.myName + "> : WIN";
+                playerWin = "Player<" + GameData.instance.myID + "> : WIN";
                 Debug.Log(playerWin);
             }
             else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
             {
-                playerWin = "Player<" + GameData.instance.enemyName + "> : WIN";
+                playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
                 Debug.Log(playerWin);
             }
             else
@@ -114,8 +108,9 @@ public class GameSystem : MonoBehaviour
                 playerWin = "- Draw -";
                 Debug.Log(playerWin);
             }
-        }
 
+            NetworkSystem.instance.UpdateState("END");
+        }
     }
 
     public int CalculatePeople(string group)
@@ -144,14 +139,17 @@ public class GameSystem : MonoBehaviour
         StopAllCoroutines();
 
         NetworkSystem.instance.DeleteRoom();
-        GameData.instance.End = false;
+        
         GameData.instance.waitingPlayer = false;
         GameData.instance.mapSize = 0;
 
+        GameData.instance.firstPlayer = false;
         GameData.instance.roomID = "";
         GameData.instance.q = "";
         GameData.instance.K = 0;
-        GameData.instance.firstPlayer = false;
+
+        GameData.instance.state = "";
+        GameData.instance.End = false;
 
         //myName = "";
         GameData.instance.myCharacterName = "";
@@ -164,6 +162,8 @@ public class GameSystem : MonoBehaviour
         GameData.instance.enemyCharacterName = "";
         GameData.instance.enemyAllPeople = 0;
         GameData.instance.enemyEnergy = 0;
+        GameData.instance.enemyTurn = false;
+
         LoadingScene.instance.LoadScene("MatchMaking");
     }
 

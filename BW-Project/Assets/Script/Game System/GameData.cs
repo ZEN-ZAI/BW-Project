@@ -11,28 +11,26 @@ public class GameData : MonoBehaviour
 
     public bool online;
     
-    public bool End;
+    public bool firstPlayer;
     public string roomID;
-    public string state;
     public string q;
     public int K;
-    public bool firstPlayer;
+    
+    public string state;
+    public bool End;
 
-    public int myID;
+    public string myID;
     public string myName;
     public string myCharacterName;
     public int myAllPeople;
     public int myEnergy;
-
+    public bool myTurn;
 
     public string enemyID;
     public string enemyName;
     public string enemyCharacterName;
     public int enemyAllPeople;
     public int enemyEnergy;
-
-
-    public bool myTurn;
     public bool enemyTurn;
 
     public GameObject leaderCharacter;

@@ -152,15 +152,15 @@ public class NetworkSystem : MonoBehaviour {
                     //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
                 }else
 
-                if(tempMap[row, col] == GameData.instance.myName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if(tempMap[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
-                    Spawner.instance.SpawnCharacter(GameData.instance.myName, GameData.instance.myCharacterName, col, row);
+                    Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName, col, row);
                     //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
                 }else
 
-                if(tempMap[row, col] == GameData.instance.enemyName && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if(tempMap[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
-                    Spawner.instance.SpawnCharacter(GameData.instance.enemyName, GameData.instance.enemyCharacterName, col, row);
+                    Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName, col, row);
                     //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
                 }
                 num++;
@@ -238,11 +238,13 @@ public class NetworkSystem : MonoBehaviour {
 
         if (GameData.instance.firstPlayer)
         {
-            GameData.instance.enemyEnergy = int.Parse(GetDataValue(itemsDataString, "player2_energy:"));
+            string temp = GetDataValue(itemsDataString, "player2_energy:");
+            GameData.instance.enemyEnergy = int.Parse(temp);
         }
         else
         {
-            GameData.instance.enemyEnergy = int.Parse(GetDataValue(itemsDataString, "player1_energy:"));
+            string temp = GetDataValue(itemsDataString, "player1_energy:");
+            GameData.instance.enemyEnergy = int.Parse(temp);
         }
 
         getData_isRuning = false;

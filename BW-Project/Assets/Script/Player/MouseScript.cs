@@ -50,7 +50,7 @@ public class MouseScript : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
-                hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myName)
+                hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
             {
 
                 if (tempObjSelectCharacter != null)

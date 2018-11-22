@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KNN_finish: 0
-  randomSet: 030000000500000007000000
 --- !u!1 &156220240
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,22 +899,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e60e822fc7a2f8c4488e3c8d9241edaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  End: 0
   waitingPlayer: 0
   mapSize: 0
+  online: 0
+  End: 0
   roomID: 
+  state: 
   q: 
   K: 0
   firstPlayer: 0
+  myID: 0
   myName: 
   myCharacterName: 
   myAllPeople: 0
   myEnergy: 0
-  myTurn: 0
+  enemyID: 
   enemyName: 
   enemyCharacterName: 
   enemyAllPeople: 0
   enemyEnergy: 0
+  myTurn: 0
   enemyTurn: 0
   leaderCharacter: {fileID: 0}
 --- !u!4 &563510684

@@ -14,7 +14,15 @@ public class SetupGameData : MonoBehaviour
     public string[,] map;
     public int allCharacter;
     public int maxCharacter;
-    
+
+    private bool spawed;
+
+    void Start()
+    {
+        int temp = Random.seed = (int)System.DateTime.Now.Ticks;
+        GameData.instance.myID = Mathf.Abs(temp).ToString();
+        Debug.Log("Player ID: " + GameData.instance.myID);
+    }
 
     // Update is called once per frame
     void Update()
@@ -48,13 +56,16 @@ public class SetupGameData : MonoBehaviour
             NewMap(100);
         }
 
-        if (GameData.instance.state == "player2_joint")
+        //for P1
+        if (GameData.instance.firstPlayer && GameData.instance.enemyID != "" && !spawed)
         {
+            spawed = true;
             SpawnSetUp();
             StartCoroutine(SetUpMap());
         }
 
-        if (GameData.instance.state == "load game")
+        //for P2
+        if (GameData.instance.state == "setup_finish")
         {
             LoadingScene.instance.LoadScene("Game");
         }
@@ -69,9 +80,9 @@ public class SetupGameData : MonoBehaviour
 
     private void SpawnSetUp()
     {
-        int npc = GameData.instance.mapSize / 3;
+        int npc = 10;
         int player = 3;
-
+        
         for (int i = 0; i < npc; i++)
         {
             Spawn("Npc");
@@ -87,16 +98,11 @@ public class SetupGameData : MonoBehaviour
 
     private void Spawn(string name)
     {
-        if (allCharacter >= maxCharacter)
-        {
-            Debug.Log("Error: Map is full");
-            return;
-        }
 
         int x = Random.Range(0, GameData.instance.mapSize);
         int y = Random.Range(0, GameData.instance.mapSize);
 
-        while (map[y, x] !="")
+        while (map[y, x] == name)
         {
             Debug.Log("Error: Spawn Repeated");
             x = Random.Range(0, GameData.instance.mapSize);
@@ -123,7 +129,7 @@ public class SetupGameData : MonoBehaviour
         {
             for (int j = 0; j < GameData.instance.mapSize; j++)
             {
-                tempMap += map[i,j] + "|";
+                tempMap += map[i, j] + "|";
                 num++;
             }
         }
@@ -142,25 +148,8 @@ public class SetupGameData : MonoBehaviour
         else
         {
             Debug.Log(itemsDataString);
-            StartCoroutine(UpdateState("p1_setup_finish"));
+            MatchMakingSystem.instance.UpdateState("setup_finish");
         }
-    }
-
-    private IEnumerator UpdateState(string state)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("username", "zenzai");
-        form.AddField("password", "541459%server");
-        form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("mapSize", GameData.instance.mapSize);
-        form.AddField("state", state);
-
-        UnityWebRequest www = UnityWebRequest.Post("http://www.brainwashgame.com/UpdateState.php", form);
-        yield return www.SendWebRequest();
-
-        string itemsDataString = www.downloadHandler.text;
-        Debug.Log(itemsDataString);
-
     }
 
 

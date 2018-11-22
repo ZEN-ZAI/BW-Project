@@ -23,7 +23,6 @@ public class KNN : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
-
         }
     }
 
@@ -96,15 +95,15 @@ public class NewData
             {
                 if (Map.instance.map[i, j].HaveCharacter())
                 {
-                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.myName)
+                    if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.myID)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, GameData.instance.myName));
+                        CompareDataset.Add(new DataSet(result, GameData.instance.myID));
                     }
-                    else if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.enemyName)
+                    else if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.enemyID)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, GameData.instance.enemyName));
+                        CompareDataset.Add(new DataSet(result, GameData.instance.enemyID));
                     }
                     else if (Map.instance.map[i, j].character.GetComponent<Character>().group == "Npc")
                     {
@@ -135,7 +134,7 @@ public class NewData
             {
                 tempVoteP1++;
             }
-            else if (CompareDataset[k].group == GameData.instance.enemyName)
+            else if (CompareDataset[k].group == GameData.instance.enemyID)
             {
                 tempVoteP2++;
             }
@@ -151,7 +150,7 @@ public class NewData
         }
         else if (tempVoteP2 > tempVoteP1 && tempVoteP2 > tempVoteNpc)
         {
-            character.ChangeGroup(GameData.instance.enemyName, GameData.instance.enemyCharacterName);
+            character.ChangeGroup(GameData.instance.enemyID, GameData.instance.enemyCharacterName);
         }
         else if (tempVoteNpc > tempVoteP1 && tempVoteNpc > tempVoteP2)
         {

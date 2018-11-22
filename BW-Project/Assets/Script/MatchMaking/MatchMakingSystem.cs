@@ -15,11 +15,11 @@ public class MatchMakingSystem : MonoBehaviour {
 
     private bool delay;
 
-    void Start()
+    public static MatchMakingSystem instance;
+
+    void Awake()
     {
-        int temp = Random.seed = (int)System.DateTime.Now.Ticks;
-        GameData.instance.myID = Mathf.Abs(temp);
-        Debug.Log("Player ID: "+GameData.instance.myID);
+        instance = this;
     }
 
     void Update()
@@ -88,8 +88,12 @@ public class MatchMakingSystem : MonoBehaviour {
         }
 
         string tempStr = www.downloadHandler.text;
-        
-        addRoom(tempStr);
+
+        if (tempStr.Contains("["))
+        {
+            GameData.instance.roomID = tempStr.Remove(0, tempStr.IndexOf("[") + 1);
+            GameData.instance.roomID = GameData.instance.roomID.Remove(GameData.instance.roomID.Length - 1);
+        }
 
         if (tempStr.Contains("Room is fully"))
         {
@@ -124,15 +128,6 @@ public class MatchMakingSystem : MonoBehaviour {
             Debug.Log(www.downloadHandler.text);
         }
     }
-    void addRoom(string tempStr)
-    {
-
-        if (tempStr.Contains("["))
-        {
-            GameData.instance.roomID = tempStr.Remove(0, tempStr.IndexOf("[") + 1);
-            GameData.instance.roomID = GameData.instance.roomID.Remove(GameData.instance.roomID.Length - 1);
-        }
-    }
 
     IEnumerator TimeDelayConnect()
     {
@@ -156,6 +151,8 @@ public class MatchMakingSystem : MonoBehaviour {
 
         Debug.Log(tempStr);
 
+        
+
         if (GameData.instance.firstPlayer)
         {
             Debug.Log("Wait player2.");
@@ -169,6 +166,8 @@ public class MatchMakingSystem : MonoBehaviour {
             GameData.instance.enemyName = GetDataValue(tempStr, "player1_name:");
             GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player1_character:");
         }
+
+        GameData.instance.state = GetDataValue(tempStr, "state:");
     }
 
     IEnumerator DeleteRoom(string url)
@@ -191,7 +190,6 @@ public class MatchMakingSystem : MonoBehaviour {
             delay = false;
             GameData.instance.roomID = "";
         }
-
     }
 
     public void UpdateState(string state)
@@ -202,10 +200,9 @@ public class MatchMakingSystem : MonoBehaviour {
     private IEnumerator _UpdateState(string state)
     {
         WWWForm form = new WWWForm();
-        form.AddField("username", "zenzai");
-        form.AddField("password", "541459%server");
+        form.AddField("username", username);
+        form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("mapSize", GameData.instance.mapSize);
         form.AddField("state", state);
 
         UnityWebRequest www = UnityWebRequest.Post("http://www.brainwashgame.com/UpdateState.php", form);
