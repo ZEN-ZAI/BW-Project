@@ -980,7 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingPlayer: 0
-  mapSize: 50
+  mapSize: 35
   online: 0
   firstPlayer: 0
   roomID: 0
@@ -1048,8 +1048,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollWheel: 0
   zoomPower: 20
-  mapZoomOut: 0
-  mapZoomIn: 0
+  mapZoomOut: 200
+  mapZoomIn: 40
   orthographicSizeOrigin: 0
   zoomIn: 0
   zoomInPower: 65
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b119a167ea2b4443b7addbe8fe724e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 175
+  speed: 100
   speedMoveToPoint: 5
   moveToPoint: 0
   targetPosition: {x: 0, y: 0, z: 0}
@@ -1114,11 +1114,11 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &668451119
@@ -1894,7 +1894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295abed61a185a64b8543fee8102f0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseScript: {fileID: 970216966}
   selectCharecter: 0
   aMouseOverMaterial: {fileID: 2100000, guid: 93fdf19a958e4d24fbc2bac9934d2842, type: 2}
   aMouseSelectMaterial: {fileID: 2100000, guid: ae2a8309347dbd345ae93e8546f91633,
@@ -3161,7 +3160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block:
-  - {fileID: 3464632163330424109, guid: 22c45175a38e9084ebc2440d34d260d2, type: 3}
+  - {fileID: 9047016008805780503, guid: 61aa28adcd9c16f4cb31fdf2ec4f8677, type: 3}
   End: 0
 --- !u!156049354 &1599702347
 Grid:

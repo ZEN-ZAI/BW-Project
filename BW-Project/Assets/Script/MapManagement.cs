@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 
 public class MapManagement : MonoBehaviour
 {
-    public InputField inputField_roomNumber;
     public InputField inputField_roomName;
     public InputField inputField_mapSize;
 
@@ -42,6 +41,11 @@ public class MapManagement : MonoBehaviour
         if (inputField_mapSize.text != "")
         {
             MapSize = Convert.ToInt32(inputField_mapSize.text);
+        }
+
+        if (inputField_roomName.text == "room")
+        {
+            inputField_roomName.text = "";
         }
     }
 
@@ -153,7 +157,7 @@ public class MapManagement : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("room_id", inputField_roomNumber.text);
+        form.AddField("room_id", inputField_roomName.text);
         form.AddField("mapSize", inputField_mapSize.text);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
@@ -166,6 +170,7 @@ public class MapManagement : MonoBehaviour
         else
         {
             Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
+            inputField_roomName.text = "";
         }
     }
 
@@ -174,7 +179,7 @@ public class MapManagement : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("room_id", inputField_roomNumber.text);
+        form.AddField("room_id", inputField_roomName.text);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
@@ -194,7 +199,7 @@ public class MapManagement : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("room_id", inputField_roomNumber.text);
+        form.AddField("room_id", inputField_roomName.text);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();

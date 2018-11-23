@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public MouseScript mouseScript;
     private PathFinder pathFinder;
 
     public bool selectCharecter;
@@ -139,33 +138,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        /*if (!selectCharecter)
-        {
-            MouseOver();
-            SelectCharecter();
-        }
-        else if (selectCharecter)
-        {
-            if (CameraMove.instance.targetPosition == Vector3.zero)// because taget is 0(null) then can work
-            {
-                CameraMove.instance.MoveToPoint(mouseScript.tempObjSelectCharacter.GetComponent<Character>().transform.position);
-                //CameraZoom.instance.ZoomIn();
-            }
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.tag == "Path")
-            {
-                MoveCharecter();
-            }
-            else
-            {
-                SelectCharecter();
-            }
-        }*/
-
     }
 
     private void CancelSelectCharacter()
@@ -271,7 +243,7 @@ public class Player : MonoBehaviour
 
     public void Waiting()
     {
-        MouseOver();
+        ShowMouseOverObject();
     }
 
     public void StartTurn()
@@ -317,20 +289,5 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         GameData.instance.myTurn = false;
-    }
-
-    public void MouseOver()
-    {
-        mouseScript.ShowMouseOverObject();
-    }
-
-    private void SelectCharecter()
-    {
-        mouseScript.MouseSelectCharacter(ref selectCharecter, pathFinder);
-
-    }
-    private void MoveCharecter()
-    {
-        mouseScript.SelectToMove(ref selectCharecter, ref GameData.instance.myEnergy, pathFinder);
     }
 }
