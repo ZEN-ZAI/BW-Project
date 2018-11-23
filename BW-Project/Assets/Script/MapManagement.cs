@@ -17,7 +17,8 @@ public class MapManagement : MonoBehaviour
     private string deleteRoom = "/DeleteRoom.php";
     private string loadMap = "/LoadMap.php";
 
-    public GameObject block;
+    public GameObject[] block;
+    public GameObject dummyBlock;
     private int positionX;
     private int positionZ;
 
@@ -25,14 +26,30 @@ public class MapManagement : MonoBehaviour
 
     public bool loadMap_isRuning;
 
+    public Transform rootMap;
     public Tile[,] map;
     public List<GameObject> allBlock;
     public int MapSize;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    public static MapManagement instance;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+
+        }
+    }
+
+    private void ResetInput()
+    {
+        inputField_roomName.text = "";
+        inputField_mapSize.text = "";
     }
 
     // Update is called once per frame
@@ -51,7 +68,7 @@ public class MapManagement : MonoBehaviour
 
     public void CreateRoom()
     {
-        StartCoroutine(CreateRoom(url+createRoom));
+        StartCoroutine(CreateRoom(url + createRoom));
     }
 
 
@@ -73,14 +90,14 @@ public class MapManagement : MonoBehaviour
         allBlock.Clear();
     }
 
-
-    private void Generate()
+    public void GenerateMap()
     {
+        map = new Tile[MapSize, MapSize];
         for (int i = 0; i < MapSize; i++)
         {
             for (int j = 0; j < MapSize; j++)
             {
-                GenerateBlock(block,new Vector3(positionX, 0, positionZ), i, j);
+                GenerateBlock(dummyBlock, new Vector3(positionX, 0, positionZ), i, j);
                 positionZ++;
             }
             positionX++;
@@ -88,14 +105,23 @@ public class MapManagement : MonoBehaviour
         }
     }
 
-    private void GenerateBlock(GameObject block,Vector3 position, int row, int col)
+    public void DeleteMap()
     {
-        GameObject blockTemp = Instantiate(block, gameObject.transform);
+        ClearMap();
+
+        foreach (Transform child in rootMap.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void GenerateBlock(GameObject block, Vector3 position, int row, int col)
+    {
+        GameObject blockTemp = Instantiate(block, rootMap.transform);
         blockTemp.GetComponent<Tile>().row = row;
         blockTemp.GetComponent<Tile>().col = col;
         blockTemp.transform.localPosition = position;
         map[row, col] = blockTemp.GetComponent<Tile>();
-        allBlock.Add(blockTemp);
     }
 
     private IEnumerator LoadMap(string url)
@@ -137,12 +163,142 @@ public class MapManagement : MonoBehaviour
 
                 tempMap[row, col] = tempData[num];
 
-                if (tempMap[row, col] == "")
+                if (tempMap[row, col] == "Building_A")
                 {
-                    GenerateBlock(block, new Vector3(positionX, 0, positionZ),row,col);
+                    GenerateBlock(block[0], new Vector3(positionX, 0, positionZ), row, col);
                     positionZ++;
                 }
-                
+                else if (tempMap[row, col] == "Building_B")
+                {
+                    GenerateBlock(block[1], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Building_C")
+                {
+                    GenerateBlock(block[2], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Building_D")
+                {
+                    GenerateBlock(block[3], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Building_E")
+                {
+                    GenerateBlock(block[4], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Building_F")
+                {
+                    GenerateBlock(block[5], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Building_G")
+                {
+                    GenerateBlock(block[6], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Building_H")
+                {
+                    GenerateBlock(block[7], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_A")
+                {
+                    GenerateBlock(block[8], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_B")
+                {
+                    GenerateBlock(block[9], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_C")
+                {
+                    GenerateBlock(block[10], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_D")
+                {
+                    GenerateBlock(block[11], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_Sand_A")
+                {
+                    GenerateBlock(block[12], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_Sand_Desert_A")
+                {
+                    GenerateBlock(block[13], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_Sand_Desert_B")
+                {
+                    GenerateBlock(block[14], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_water_A")
+                {
+                    GenerateBlock(block[15], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_water_B")
+                {
+                    GenerateBlock(block[16], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "MainFloor_water_C")
+                {
+                    GenerateBlock(block[17], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Road")
+                {
+                    GenerateBlock(block[18], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Road_Intersection_A")
+                {
+                    GenerateBlock(block[19], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Road_Intersection_B")
+                {
+                    GenerateBlock(block[20], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Road_ThirdStreed")
+                {
+                    GenerateBlock(block[21], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Road_Turn_A")
+                {
+                    GenerateBlock(block[22], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Road_Turn_B")
+                {
+                    GenerateBlock(block[23], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Rock_A")
+                {
+                    GenerateBlock(block[24], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Tree_A")
+                {
+                    GenerateBlock(block[25], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+                else if (tempMap[row, col] == "Tree_B")
+                {
+                    GenerateBlock(block[26], new Vector3(positionX, 0, positionZ), row, col);
+                    positionZ++;
+                }
+
                 num++;
             }
             positionX++;
@@ -170,7 +326,7 @@ public class MapManagement : MonoBehaviour
         else
         {
             Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
-            inputField_roomName.text = "";
+            ResetInput();
         }
     }
 
@@ -191,6 +347,7 @@ public class MapManagement : MonoBehaviour
         else
         {
             Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
+            ResetInput();
         }
     }
 
