@@ -94,9 +94,7 @@ public class Player : MonoBehaviour
         }
         if (selectCharecter && Input.GetMouseButton(1))
         {
-            mouseScript.tempObjSelectCharacter = null;
-            pathFinder.ResetPathBFS();
-            selectCharecter = false;
+            CancelSelectCharacter();
         }
 
 
@@ -108,15 +106,10 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
                 hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
             {
-                hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
-                tempObjSelectCharacter = hit.collider.gameObject;
+                FirstSelectCharacter(hit);
 
-                pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
-                                   tempObjSelectCharacter.GetComponent<Character>().y,
-                                   GameData.instance.myEnergy);
-
-                selectCharecter = true;
-                Debug.Log("Select: " + hit.collider.gameObject.name);
+                CameraMove.instance.MoveToPoint(tempObjSelectCharacter.transform.position);
+                CameraZoom.instance.ZoomIn();
             }
         }
         else if (selectCharecter && Input.GetMouseButtonDown(0))
@@ -127,58 +120,22 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null
                 && hit.collider.GetComponent<Tile>().pathLevel > 0)
             {
+                SelectToMove(hit);
 
-                int tempChar_x = tempObjSelectCharacter.GetComponent<Character>().x; int target_x = hit.collider.GetComponent<Tile>().col;
-                int tempChar_y = tempObjSelectCharacter.GetComponent<Character>().y; int target_y = hit.collider.GetComponent<Tile>().row;
-
-                tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
-                tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
-
-
-                Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
-                GameData.instance.enemyEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
-                NetworkSystem.instance.UpdateMap();
-                if (GameData.instance.firstPlayer)
-                {
-                    NetworkSystem.instance.UpdateColumn("player1_energy", GameData.instance.myEnergy.ToString());
-                }
-                else
-                {
-                    NetworkSystem.instance.UpdateColumn("player2_energy", GameData.instance.myEnergy.ToString());
-                }
-
-                tempObjSelectCharacter = null;
-                selectCharecter = false;
-                pathFinder.ResetPathBFS();
             }
             else
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null
                 && hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
             {
-                Debug.Log("New select++++++++++++++++++++++");
-                tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
-                Debug.Log("Set Default Material to tempCharacter");
-
-                pathFinder.ResetPathBFS();
-                pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
-                                   tempObjSelectCharacter.GetComponent<Character>().y,
-                                   GameData.instance.myEnergy);
-
-                selectCharecter = true;
-                hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
-                tempObjSelectCharacter = hit.collider.gameObject;
-
-                Debug.Log("Select: " + hit.collider.gameObject.name);
+                NewSelectCharacter(hit);
+                CameraMove.instance.MoveToPoint(tempObjSelectCharacter.transform.position);
+                CameraZoom.instance.ZoomIn();
             }
             else /*if(Physics.Raycast(ray, out hit, Mathf.Infinity))*/
             {
                 if (tempObjSelectCharacter != null)
                 {
-                    selectCharecter = false;
-                    pathFinder.ResetPathBFS();
-                    tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
-                    tempObjSelectCharacter = null;
-                    Debug.Log("select is false");
+                    CancelSelectCharacter();
                 }
             }
         }
@@ -210,7 +167,73 @@ public class Player : MonoBehaviour
         }*/
 
     }
-    public void ShowMouseOverObject()
+
+    private void CancelSelectCharacter()
+    {
+        selectCharecter = false;
+        pathFinder.ResetPathBFS();
+        tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+        tempObjSelectCharacter = null;
+        Debug.Log("select is false");
+    }
+
+    private void SelectToMove(RaycastHit hit)
+    {
+        int tempChar_x = tempObjSelectCharacter.GetComponent<Character>().x; int target_x = hit.collider.GetComponent<Tile>().col;
+        int tempChar_y = tempObjSelectCharacter.GetComponent<Character>().y; int target_y = hit.collider.GetComponent<Tile>().row;
+
+        tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
+        tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+
+
+        Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
+        GameData.instance.enemyEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
+        NetworkSystem.instance.UpdateMap();
+        if (GameData.instance.firstPlayer)
+        {
+            NetworkSystem.instance.UpdateColumn("player1_energy", GameData.instance.myEnergy.ToString());
+        }
+        else
+        {
+            NetworkSystem.instance.UpdateColumn("player2_energy", GameData.instance.myEnergy.ToString());
+        }
+
+        tempObjSelectCharacter = null;
+        selectCharecter = false;
+        pathFinder.ResetPathBFS();
+    }
+
+    private void FirstSelectCharacter(RaycastHit hit)
+    {
+        hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
+        tempObjSelectCharacter = hit.collider.gameObject;
+
+        pathFinder.ResetPathBFS();
+        pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
+                           tempObjSelectCharacter.GetComponent<Character>().y,
+                           GameData.instance.myEnergy);
+
+        selectCharecter = true;
+        Debug.Log("Select: " + hit.collider.gameObject.name);
+    }
+
+    private void NewSelectCharacter(RaycastHit hit)
+    {
+        tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial(); Debug.Log("Set Default Material to tempCharacter");
+
+        selectCharecter = true;
+        hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
+        tempObjSelectCharacter = hit.collider.gameObject;
+
+        pathFinder.ResetPathBFS();
+        pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
+                           tempObjSelectCharacter.GetComponent<Character>().y,
+                           GameData.instance.myEnergy);
+
+        Debug.Log("New Select: " + hit.collider.gameObject.name);
+    }
+
+    private void ShowMouseOverObject()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -225,7 +248,6 @@ public class Player : MonoBehaviour
 
             tempObjMouseOverObj = hit.collider.gameObject;
             hit.collider.GetComponent<Renderer>().sharedMaterial = aMouseOverMaterial;
-
             //Debug.Log("Mouse Over: " + hit.collider.gameObject.name);
         }
         else

@@ -22,20 +22,6 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (moveToPoint)
-        {
-            Camera.main.transform.position = Vector3.LerpUnclamped(Camera.main.transform.position,
-            targetPosition, speedMoveToPoint * Time.deltaTime);
-
-            distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
-            if (Vector3.Distance(Camera.main.transform.position, targetPosition) < 5)
-            {
-                moveToPoint = false;
-                targetPosition = Vector3.zero;
-            }
-        }
-
         if (Input.GetKey("w"))
         {
             transform.Translate(Vector3.up * speed * Time.deltaTime);
@@ -51,6 +37,18 @@ public class CameraMove : MonoBehaviour
         if (Input.GetKey("a"))
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
+        }
+
+        if (moveToPoint)
+        {
+            Camera.main.transform.position = Vector3.LerpUnclamped(Camera.main.transform.position,
+            targetPosition, speedMoveToPoint * Time.deltaTime);
+
+            distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
+            if (Vector3.Distance(Camera.main.transform.position, targetPosition) < 3)
+            {
+                moveToPoint = false;
+            }
         }
 
     }

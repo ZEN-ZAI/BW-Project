@@ -1047,12 +1047,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollWheel: 0
-  zoomPower: 10
+  zoomPower: 20
   mapZoomOut: 0
   mapZoomIn: 0
   orthographicSizeOrigin: 0
   zoomIn: 0
-  zoomInPower: 70
+  zoomInPower: 65
 --- !u!114 &668451116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,11 +1065,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b119a167ea2b4443b7addbe8fe724e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
-  speedMoveToPoint: 2
+  speed: 175
+  speedMoveToPoint: 5
   moveToPoint: 0
   targetPosition: {x: 0, y: 0, z: 0}
   clamp: {x: 150, y: 175, z: 145}
+  distance: 0
 --- !u!81 &668451117
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1895,6 +1896,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseScript: {fileID: 970216966}
   selectCharecter: 0
+  aMouseOverMaterial: {fileID: 2100000, guid: 93fdf19a958e4d24fbc2bac9934d2842, type: 2}
+  aMouseSelectMaterial: {fileID: 2100000, guid: ae2a8309347dbd345ae93e8546f91633,
+    type: 2}
+  tempObjSelectCharacter: {fileID: 0}
 --- !u!1001 &970968785
 PrefabInstance:
   m_ObjectHideFlags: 0

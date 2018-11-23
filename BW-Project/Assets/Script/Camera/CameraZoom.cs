@@ -39,11 +39,13 @@ public class CameraZoom : MonoBehaviour
 
         if (scrollWheel > 0f && Camera.main.orthographicSize != mapZoomIn) // Zoom in
         {
+            zoomIn = false;
             //transform.Translate(new Vector3(0,0,1) * zoomPower * Time.deltaTime);
             Camera.main.orthographicSize -= zoomPower;
         }
         else if (scrollWheel < 0f && Camera.main.orthographicSize != mapZoomOut) // Zoom out
         {
+            zoomIn = false;
             //transform.Translate(new Vector3(0, 0, -1) * zoomPower * Time.deltaTime);
             Camera.main.orthographicSize += zoomPower;
         }
