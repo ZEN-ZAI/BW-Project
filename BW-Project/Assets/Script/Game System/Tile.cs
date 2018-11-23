@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
     public int col;
 
     public int pathLevel;
-
+    
     public bool visited;
 
     public GameObject character;
