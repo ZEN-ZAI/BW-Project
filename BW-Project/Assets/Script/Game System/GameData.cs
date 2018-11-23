@@ -17,7 +17,6 @@ public class GameData : MonoBehaviour
     public int K;
     
     public string state;
-    public bool End;
 
     public string myID;
     public string myName;

@@ -37,15 +37,13 @@ public class GameSystem : MonoBehaviour
             NetworkSystem.instance.GetData();
         }
 
-        if (GameData.instance.state == "END" && !GameData.instance.End)
-        {
-            GameData.instance.End = true;
-            NetworkSystem.instance.LoadMap();
-            
-        }
+        FirstQueue();
 
-        if (!GameData.instance.End)
+        if (GameData.instance.state == "playing")
         {
+            SwapTurn();
+
+
             if (player.active == player.Waiting)
             {
                 if (!NetworkSystem.instance.loadMap_isRuning)
@@ -54,12 +52,63 @@ public class GameSystem : MonoBehaviour
                 }
             }
 
-            if (GameData.instance.myID == GameData.instance.q && player.active == player.Waiting)
+            CheckEndGame();
+        }
+    }
+
+    private void FirstQueue()
+    {
+        if (GameData.instance.state == "setup_finish" && GameData.instance.firstPlayer)
+        {
+            NetworkSystem.instance.Enqueue(GameData.instance.myID);
+            NetworkSystem.instance.UpdateColumn("state", "playing");
+            player.StartTurn();
+        }
+    }
+
+    private void SwapTurn()
+    {
+        if (GameData.instance.q == GameData.instance.myID && !GameData.instance.myTurn)
+        {
+            NetworkSystem.instance.LoadMap();
+            player.StartTurn();
+            GameData.instance.enemyTurn = false;
+        }
+        else if (GameData.instance.q == GameData.instance.enemyID)
+        {
+            GameData.instance.myTurn = false;
+            GameData.instance.enemyTurn = true;
+        }
+    }
+
+    public void CheckEndGame()
+    {
+        int num = CalculatePeople("Npc");
+
+        if (num == 0)
+        {
+            NetworkSystem.instance.LoadMap();
+            GameData.instance.myTurn = false;
+            GameData.instance.enemyTurn = false;
+
+            if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
             {
-                player.StartTurn();
+                playerWin = "Player<" + GameData.instance.myID + "> : WIN";
+                Debug.Log(playerWin);
+            }
+            else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
+            {
+                playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
+                Debug.Log(playerWin);
+            }
+            else
+            {
+                playerWin = "- Draw -";
+                Debug.Log(playerWin);
             }
 
-            CheckEndGame();
+            NetworkSystem.instance.UpdateColumn("state", "END");
+            GameData.instance.state = "END";
         }
     }
 
@@ -78,7 +127,7 @@ public class GameSystem : MonoBehaviour
         }
 
         LoadingScene.instance.LoadingScreen(false);
-        NetworkSystem.instance.UpdateColumn("state","setup_finish");
+        NetworkSystem.instance.UpdateColumn("state", "setup_finish");
         setup = true;
     }
 
@@ -87,36 +136,8 @@ public class GameSystem : MonoBehaviour
         // อัพ queue ขึ้น room
         GameData.instance.q = GameData.instance.enemyID;
         NetworkSystem.instance.Enqueue(GameData.instance.q);
-
     }
 
-    public void CheckEndGame()
-    {
-        int num = CalculatePeople("Npc");
-
-        if (num == 0)
-        {
-            GameData.instance.End = true;
-
-            if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
-            {
-                playerWin = "Player<" + GameData.instance.myID + "> : WIN";
-                Debug.Log(playerWin);
-            }
-            else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
-            {
-                playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
-                Debug.Log(playerWin);
-            }
-            else
-            {
-                playerWin = "- Draw -";
-                Debug.Log(playerWin);
-            }
-
-            NetworkSystem.instance.UpdateColumn("state","END");
-        }
-    }
 
     public int CalculatePeople(string group)
     {
@@ -136,7 +157,6 @@ public class GameSystem : MonoBehaviour
             }
         }
         return num;
-
     }
 
     public void ResetClearData()
@@ -144,7 +164,7 @@ public class GameSystem : MonoBehaviour
         StopAllCoroutines();
 
         NetworkSystem.instance.DeleteRoom();
-        
+
         GameData.instance.waitingPlayer = false;
         GameData.instance.mapSize = 0;
 
@@ -154,7 +174,6 @@ public class GameSystem : MonoBehaviour
         GameData.instance.K = 0;
 
         GameData.instance.state = "";
-        GameData.instance.End = false;
 
         //myName = "";
         GameData.instance.myCharacterName = "";

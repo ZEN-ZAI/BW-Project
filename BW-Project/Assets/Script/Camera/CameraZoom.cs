@@ -12,6 +12,9 @@ public class CameraZoom : MonoBehaviour
 
     public float orthographicSizeOrigin;
 
+    public bool zoomIn;
+    public int zoomInPower;
+
     public static CameraZoom instance;
 
     void Awake()
@@ -22,6 +25,15 @@ public class CameraZoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (zoomIn)
+        {
+            Camera.main.orthographicSize = Mathf.LerpUnclamped(Camera.main.orthographicSize, zoomInPower, 2 * Time.deltaTime);
+
+            if (Camera.main.orthographicSize < zoomInPower + 10)
+            {
+                zoomIn = false;
+            }
+        }
 
         scrollWheel = Input.GetAxis("Mouse ScrollWheel");
 
@@ -35,5 +47,11 @@ public class CameraZoom : MonoBehaviour
             //transform.Translate(new Vector3(0, 0, -1) * zoomPower * Time.deltaTime);
             Camera.main.orthographicSize += zoomPower;
         }
+    }
+
+    public void ZoomIn()
+    {
+        zoomIn = true;
+        orthographicSizeOrigin = Camera.main.orthographicSize;
     }
 }

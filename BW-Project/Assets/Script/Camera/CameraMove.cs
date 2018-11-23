@@ -5,10 +5,36 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     public int speed;
+    public int speedMoveToPoint;
+    public bool moveToPoint;
+
+    public Vector3 targetPosition;
+    public Vector3 clamp;
+    public float distance;
+
+    public static CameraMove instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (moveToPoint)
+        {
+            Camera.main.transform.position = Vector3.LerpUnclamped(Camera.main.transform.position,
+            targetPosition, speedMoveToPoint * Time.deltaTime);
+
+            distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
+            if (Vector3.Distance(Camera.main.transform.position, targetPosition) < 5)
+            {
+                moveToPoint = false;
+                targetPosition = Vector3.zero;
+            }
+        }
 
         if (Input.GetKey("w"))
         {
@@ -28,4 +54,22 @@ public class CameraMove : MonoBehaviour
         }
 
     }
+
+    public void MoveToPoint(Vector3 position)
+    {
+        moveToPoint = true;
+        targetPosition = Clamp(position);
+    }
+
+    private Vector3 Clamp(Vector3 position)
+    {
+        Vector3 temp = position;
+        temp.x += clamp.x;
+        temp.y += clamp.y;
+        temp.z -= clamp.z;
+
+        return temp;
+    }
+
+
 }

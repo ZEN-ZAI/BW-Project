@@ -980,14 +980,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingPlayer: 0
-  mapSize: 25
+  mapSize: 50
   online: 0
   firstPlayer: 0
   roomID: 0
   q: 
   K: 0
   state: 
-  End: 0
   myID: 0
   myName: 
   myCharacterName: Kim
@@ -1048,10 +1047,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollWheel: 0
-  zoomPower: 5
+  zoomPower: 10
   mapZoomOut: 0
   mapZoomIn: 0
   orthographicSizeOrigin: 0
+  zoomIn: 0
+  zoomInPower: 70
 --- !u!114 &668451116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,7 +1065,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b119a167ea2b4443b7addbe8fe724e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 75
+  speedMoveToPoint: 2
+  moveToPoint: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  clamp: {x: 150, y: 175, z: 145}
 --- !u!81 &668451117
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1890,7 +1895,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseScript: {fileID: 970216966}
   selectCharecter: 0
-  clamping: {x: 150, y: 175, z: 145}
 --- !u!1001 &970968785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3151,7 +3155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fe3533b5678714e889ccea39f3f325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 3464632163330424109, guid: 22c45175a38e9084ebc2440d34d260d2, type: 3}
+  block:
+  - {fileID: 3464632163330424109, guid: 22c45175a38e9084ebc2440d34d260d2, type: 3}
   End: 0
 --- !u!156049354 &1599702347
 Grid:

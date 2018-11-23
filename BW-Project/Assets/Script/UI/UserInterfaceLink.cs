@@ -39,17 +39,8 @@ public class UserInterfaceLink : MonoBehaviour
         textHowManyCharacterPlayer.text = "My people: " + GameData.instance.myAllPeople;
         textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
 
-        if (GameData.instance.myTurn == true)
-        {
-            textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
-            textTurnEnemy.text = "False";
-
-        }
-        else if (!GameData.instance.myTurn)
-        {
-            textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
-            textTurnEnemy.text = "True";
-        }
+        textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
+        textTurnEnemy.text = "" + GameData.instance.enemyTurn.ToString();
 
         textEnemyName.text = "" + GameData.instance.enemyName;
         textEnergyEnemy.text = "" + GameData.instance.enemyEnergy;

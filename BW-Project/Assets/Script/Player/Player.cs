@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
             active = (state)(Playing);
             active();
         }
-        else if (active == Waiting && GameData.instance.End) // Waiting to end
+        else if (active == Waiting && GameData.instance.state == "END") // Waiting to end
         {
             active = (state)(Waiting);
             active();
@@ -79,29 +79,122 @@ public class Player : MonoBehaviour
             EndTurn();
         }
     }
-    public Vector3 clamping;
+
+    public Material aMouseOverMaterial;
+    public Material aMouseSelectMaterial;
+
+    public GameObject tempObjSelectCharacter;
+    private GameObject tempObjMouseOverObj;
+
     public void Playing()
     {
-
         if (!selectCharecter)
+        {
+            ShowMouseOverObject();
+        }
+        if (selectCharecter && Input.GetMouseButton(1))
+        {
+            mouseScript.tempObjSelectCharacter = null;
+            pathFinder.ResetPathBFS();
+            selectCharecter = false;
+        }
+
+
+        if (!selectCharecter && Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
+                hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
+            {
+                hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
+                tempObjSelectCharacter = hit.collider.gameObject;
+
+                pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
+                                   tempObjSelectCharacter.GetComponent<Character>().y,
+                                   GameData.instance.myEnergy);
+
+                selectCharecter = true;
+                Debug.Log("Select: " + hit.collider.gameObject.name);
+            }
+        }
+        else if (selectCharecter && Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null
+                && hit.collider.GetComponent<Tile>().pathLevel > 0)
+            {
+
+                int tempChar_x = tempObjSelectCharacter.GetComponent<Character>().x; int target_x = hit.collider.GetComponent<Tile>().col;
+                int tempChar_y = tempObjSelectCharacter.GetComponent<Character>().y; int target_y = hit.collider.GetComponent<Tile>().row;
+
+                tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
+                tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+
+
+                Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
+                GameData.instance.enemyEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
+                NetworkSystem.instance.UpdateMap();
+                if (GameData.instance.firstPlayer)
+                {
+                    NetworkSystem.instance.UpdateColumn("player1_energy", GameData.instance.myEnergy.ToString());
+                }
+                else
+                {
+                    NetworkSystem.instance.UpdateColumn("player2_energy", GameData.instance.myEnergy.ToString());
+                }
+
+                tempObjSelectCharacter = null;
+                selectCharecter = false;
+                pathFinder.ResetPathBFS();
+            }
+            else
+            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null
+                && hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
+            {
+                Debug.Log("New select++++++++++++++++++++++");
+                tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+                Debug.Log("Set Default Material to tempCharacter");
+
+                pathFinder.ResetPathBFS();
+                pathFinder.PathFinding(tempObjSelectCharacter.GetComponent<Character>().x,
+                                   tempObjSelectCharacter.GetComponent<Character>().y,
+                                   GameData.instance.myEnergy);
+
+                selectCharecter = true;
+                hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
+                tempObjSelectCharacter = hit.collider.gameObject;
+
+                Debug.Log("Select: " + hit.collider.gameObject.name);
+            }
+            else /*if(Physics.Raycast(ray, out hit, Mathf.Infinity))*/
+            {
+                if (tempObjSelectCharacter != null)
+                {
+                    selectCharecter = false;
+                    pathFinder.ResetPathBFS();
+                    tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+                    tempObjSelectCharacter = null;
+                    Debug.Log("select is false");
+                }
+            }
+        }
+
+        /*if (!selectCharecter)
         {
             MouseOver();
             SelectCharecter();
         }
         else if (selectCharecter)
         {
-
-            Vector3 temp = mouseScript.tempObjSelectCharacter.GetComponent<Character>().transform.position;
-            temp.x += clamping.x;
-            temp.y += clamping.y;
-            temp.z -= clamping.z;
-
-            if (Camera.main.transform.position != temp)
+            if (CameraMove.instance.targetPosition == Vector3.zero)// because taget is 0(null) then can work
             {
-                Camera.main.orthographicSize = 80;
-                Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, temp, 2 * Time.deltaTime);
+                CameraMove.instance.MoveToPoint(mouseScript.tempObjSelectCharacter.GetComponent<Character>().transform.position);
+                //CameraZoom.instance.ZoomIn();
             }
-            
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -114,8 +207,44 @@ public class Player : MonoBehaviour
             {
                 SelectCharecter();
             }
-        }
+        }*/
 
+    }
+    public void ShowMouseOverObject()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) || Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")))
+        {
+
+            if (tempObjMouseOverObj != null)
+            {
+                tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
+            }
+
+            tempObjMouseOverObj = hit.collider.gameObject;
+            hit.collider.GetComponent<Renderer>().sharedMaterial = aMouseOverMaterial;
+
+            //Debug.Log("Mouse Over: " + hit.collider.gameObject.name);
+        }
+        else
+        {
+            if (tempObjMouseOverObj != null)
+            {
+                tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
+            }
+        }
+    }
+
+    int chebyshev(int herox, int monx, int heroy, int mony)
+    {
+        int result;
+        if (Mathf.Abs(monx - herox) > Mathf.Abs(mony - heroy))
+            result = Mathf.Abs(monx - herox);
+        else result = Mathf.Abs(mony - heroy);
+
+        return result;
     }
 
     public void Waiting()
@@ -127,7 +256,6 @@ public class Player : MonoBehaviour
     {
         GameData.instance.myEnergy = 5;
         GameData.instance.myTurn = true;
-        NetworkSystem.instance.LoadMap();
     }
 
     public void UesSkill()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GenerateMap : MonoBehaviour
 {
 
-    public GameObject block;
+    public GameObject[] block;
 
     private int positionX;
     //private int positionY;
@@ -45,7 +45,7 @@ public class GenerateMap : MonoBehaviour
 
     private void GenerateBlock(Vector3 position,int row,int col)
     {
-        GameObject blockTemp = Instantiate(block, gameObject.transform);
+        GameObject blockTemp = Instantiate(block[0], gameObject.transform);
         blockTemp.GetComponent<Tile>().row = row;
         blockTemp.GetComponent<Tile>().col = col;
         blockTemp.transform.localPosition = position;
