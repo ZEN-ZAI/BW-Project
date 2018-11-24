@@ -213,7 +213,7 @@ public class MatchMakingSystem : MonoBehaviour {
 
         if (www.downloadHandler.text == "")
         {
-            Debug.Log("Connecting Error, Can't update column");
+            Debug.LogError("Connecting Error, Can't update column");
         }
         else
         {

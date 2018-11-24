@@ -12,6 +12,8 @@ public class CameraMove : MonoBehaviour
     public Vector3 clamp;
     public float distance;
 
+    public int clipPlane;
+
     public static CameraMove instance;
 
     void Awake()
@@ -23,7 +25,7 @@ public class CameraMove : MonoBehaviour
     void Update()
     {
         
-        if (Camera.main.transform.position.y > 280)
+        if (Camera.main.transform.position.y > clipPlane)
         {
             Camera.main.nearClipPlane = 300;
         }

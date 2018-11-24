@@ -6,6 +6,12 @@ using TMPro;
 
 public class UserInterfaceLink : MonoBehaviour
 {
+    public Image statusPlayer1;
+    public Image statusPlayer2;
+
+    public Sprite playing;
+    public Sprite waiting;
+
     #region System Attribute
     public TextMeshProUGUI textKNN;
     public TextMeshProUGUI textTime;
@@ -47,5 +53,24 @@ public class UserInterfaceLink : MonoBehaviour
         textHowManyCharacterEnemy.text = "My people: " + GameData.instance.enemyAllPeople;
 
         textEnd.text = "" + GameSystem.instance.playerWin;
+
+        if (GameData.instance.myTurn)
+        {
+            statusPlayer1.sprite = playing;
+        }
+        else
+        {
+            statusPlayer1.sprite = waiting;
+        }
+
+
+        if (GameData.instance.enemyTurn)
+        {
+            statusPlayer2.sprite = playing;
+        }
+        else
+        {
+            statusPlayer2.sprite = waiting;
+        }
     }
 }

@@ -1167,6 +1167,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Debug Log
       objectReference: {fileID: 0}
+    - target: {fileID: 6279542088234299078, guid: 285943a2a14097c42a52314b9f44af6a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 285943a2a14097c42a52314b9f44af6a, type: 3}
 --- !u!1 &419117806
@@ -1487,8 +1492,6 @@ MonoBehaviour:
     - m_Text: Medium
       m_Image: {fileID: 0}
     - m_Text: Large
-      m_Image: {fileID: 0}
-    - m_Text: World
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4925,8 +4928,7 @@ MonoBehaviour:
   q: 
   K: 0
   state: 
-  End: 0
-  myID: 0
+  myID: 
   myName: 
   myCharacterName: 
   myAllPeople: 0
@@ -5091,10 +5093,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b504d33e268e8a4d816682bd01ffe3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 1971496216838371313, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
-  trump: {fileID: 1611125962888871080, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
-  kim: {fileID: 8422643659963750997, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
-  prayut: {fileID: 4875990969283717650, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
+  npc: {fileID: 119, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
+  trump: {fileID: 118, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
+  kim: {fileID: 121, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
+  prayut: {fileID: 120, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
 --- !u!4 &1854334271
 Transform:
   m_ObjectHideFlags: 0

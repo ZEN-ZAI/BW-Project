@@ -52,7 +52,7 @@ public class GameSystem : MonoBehaviour
                 }
             }
 
-            CheckEndGame();
+            //CheckEndGame();
         }
     }
 
@@ -120,12 +120,13 @@ public class GameSystem : MonoBehaviour
         }
         else if (GameData.instance.mapSize == 35)
         {
-            NetworkSystem.instance.LoadElement("test");
+            NetworkSystem.instance.LoadElement("Medium");
         }
-        else if (GameData.instance.mapSize == 55)
+        else if (GameData.instance.mapSize == 50)
         {
-            NetworkSystem.instance.LoadElement("test");
+            NetworkSystem.instance.LoadElement("Large");
         }
+        NetworkSystem.instance.LoadMap();
 
         if (GameData.instance.firstPlayer)
         {
@@ -136,7 +137,7 @@ public class GameSystem : MonoBehaviour
             player.SetSecond();
         }
 
-        LoadingScene.instance.LoadingScreen(false);
+        //LoadingScene.instance.LoadingScreen(false);
         NetworkSystem.instance.UpdateColumn("state", "setup_finish");
         setup = true;
     }

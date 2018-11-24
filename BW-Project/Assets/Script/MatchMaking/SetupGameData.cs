@@ -49,7 +49,7 @@ public class SetupGameData : MonoBehaviour
         }
         else if (dropdown.value == 2)
         {
-            NewMap(55);
+            NewMap(50);
         }
         else if (dropdown.value == 3)
         {
@@ -67,6 +67,7 @@ public class SetupGameData : MonoBehaviour
         //for P2
         if (GameData.instance.state == "setup_spawn")
         {
+            StopAllCoroutines();
             LoadingScene.instance.LoadScene("Game");
         }
     }
@@ -129,7 +130,14 @@ public class SetupGameData : MonoBehaviour
         {
             for (int j = 0; j < GameData.instance.mapSize; j++)
             {
-                tempMap += map[i, j] + "|";
+                if (map[i, j] != "")
+                {
+                    tempMap += map[i, j] + "|";
+                }
+                else
+                {
+                    tempMap += "_" + "|";
+                }
                 num++;
             }
         }

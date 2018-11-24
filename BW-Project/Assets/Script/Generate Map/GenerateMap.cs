@@ -28,6 +28,7 @@ public class GenerateMap : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
+    /*
     public void GenerateDefalut()
     {
         for (int i = 0; i < Map.instance.row; i++)
@@ -40,7 +41,7 @@ public class GenerateMap : MonoBehaviour
             positionX++;
             positionZ = 0;
         }
-    }
+    }*/
 
     public void GenerateBlock(int indexBlock,Vector3 position,int row,int col,int rotate)
     {
