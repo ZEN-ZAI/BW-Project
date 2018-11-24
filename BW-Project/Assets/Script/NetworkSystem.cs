@@ -246,12 +246,14 @@ public class NetworkSystem : MonoBehaviour {
         else
         {
             Debug.Log("Load Element.");
-            Debug.Log(itemsDataString);
+            
         }
+        itemsDataString = itemsDataString.Remove(itemsDataString.Length-1);
+        Debug.Log(itemsDataString);
 
         tempData = itemsDataString.Split(';');
-        int num = 0;
 
+        int num = 0;
         for (int row = 0; row < GameData.instance.mapSize; row++)
         {
             for (int col = 0; col < GameData.instance.mapSize; col++)
@@ -385,13 +387,6 @@ public class NetworkSystem : MonoBehaviour {
                     GenerateMap.instance.GenerateBlock(17, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
                     GenerateMap.instance.positionZ++;
                 }
-                else if (tempMap[row, col].Contains("Road"))
-                {
-                    string str = GetDataValue(tempMap[row, col], ":");
-                    int temp = Convert.ToInt32(str);
-                    GenerateMap.instance.GenerateBlock(18, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
-                    GenerateMap.instance.positionZ++;
-                }
                 else if (tempMap[row, col].Contains("Road_Intersection_A"))
                 {
                     string str = GetDataValue(tempMap[row, col], ":");
@@ -448,12 +443,19 @@ public class NetworkSystem : MonoBehaviour {
                     GenerateMap.instance.GenerateBlock(26, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
                     GenerateMap.instance.positionZ++;
                 }
+                else if (tempMap[row, col].Contains("Road"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(18, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
                 /*else
                 {
                     GenerateMap.instance.GenerateBlock(8, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, 0);
                     GenerateMap.instance.positionZ++;
                 }*/
-                
+
                 num++;
             }
             GenerateMap.instance.positionX++;
