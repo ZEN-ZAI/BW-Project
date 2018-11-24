@@ -9,6 +9,9 @@ public class GameSystem : MonoBehaviour
     public static GameSystem instance;
     private bool setup;
 
+    public bool getDate;
+    public bool loadCharacter;
+
     void Awake()
     {
         if (instance == null)
@@ -32,9 +35,9 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
-        if (!NetworkSystem.instance.getData_isRuning)
+        if (!getDate)
         {
-            NetworkSystem.instance.GetData();
+            StartCoroutine(NetworkSystem.instance.GetData(done => { if (done) { getDate = false; } }));
         }
 
         FirstQueue();
@@ -46,9 +49,10 @@ public class GameSystem : MonoBehaviour
 
             if (player.active == player.Waiting)
             {
-                if (!NetworkSystem.instance.loadMap_isRuning)
+                if (!loadCharacter)
                 {
-                    NetworkSystem.instance.LoadMap();
+                    loadCharacter = true;
+                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done => { if (done) { loadCharacter = false; } }));
                 }
             }
 
@@ -70,7 +74,7 @@ public class GameSystem : MonoBehaviour
     {
         if (GameData.instance.q == GameData.instance.myID && !GameData.instance.myTurn)
         {
-            NetworkSystem.instance.LoadMap();
+            StartCoroutine(NetworkSystem.instance.LoadCharacter(done => { if (done) { loadCharacter = false; } }));
             player.StartTurn();
             GameData.instance.enemyTurn = false;
         }
@@ -87,7 +91,7 @@ public class GameSystem : MonoBehaviour
 
         if (num == 0)
         {
-            NetworkSystem.instance.LoadMap();
+            StartCoroutine(NetworkSystem.instance.LoadCharacter(done => { if (done) { loadCharacter = false; } }));
             GameData.instance.myTurn = false;
             GameData.instance.enemyTurn = false;
 
@@ -116,17 +120,37 @@ public class GameSystem : MonoBehaviour
     {
         if (GameData.instance.mapSize == 25)
         {
-            NetworkSystem.instance.LoadElement("Small");
+            StartCoroutine(NetworkSystem.instance.LoadElement("Small",done => 
+            {
+                if (done)
+                {
+                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
+                    NetworkSystem.instance.UpdateColumn("state", "setup_finish");
+                }
+            }));
         }
         else if (GameData.instance.mapSize == 35)
         {
-            NetworkSystem.instance.LoadElement("Medium");
+            StartCoroutine(NetworkSystem.instance.LoadElement("Medium", done =>
+            {
+                if (done)
+                {
+                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
+                    NetworkSystem.instance.UpdateColumn("state", "setup_finish");
+                }
+            }));
         }
         else if (GameData.instance.mapSize == 50)
         {
-            NetworkSystem.instance.LoadElement("Large");
+            StartCoroutine(NetworkSystem.instance.LoadElement("Large", done =>
+            {
+                if (done)
+                {
+                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
+                    NetworkSystem.instance.UpdateColumn("state", "setup_finish");
+                }
+            }));
         }
-        NetworkSystem.instance.LoadMap();
 
         if (GameData.instance.firstPlayer)
         {
@@ -137,8 +161,7 @@ public class GameSystem : MonoBehaviour
             player.SetSecond();
         }
 
-        //LoadingScene.instance.LoadingScreen(false);
-        NetworkSystem.instance.UpdateColumn("state", "setup_finish");
+        LoadingScene.instance.LoadingScreen(false);
         setup = true;
     }
 

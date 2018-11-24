@@ -19,10 +19,6 @@ public class NetworkSystem : MonoBehaviour {
 
     public string[] tempData;
 
-    public bool loadMap_isRuning;
-    public bool updateMap_isRuning;
-    public bool getData_isRuning;
-
     public static NetworkSystem instance;
 
     void Awake()
@@ -39,19 +35,14 @@ public class NetworkSystem : MonoBehaviour {
         //DontDestroyOnLoad(gameObject);
     }
 
-    public void DeleteRoom()
-    {
-        StartCoroutine(DeleteRoom(database_IP+deleteRoom));
-    }
-
-    private IEnumerator DeleteRoom(string url)
+    public IEnumerator DeleteRoom()
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
 
-        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + deleteRoom, form);
         yield return www.SendWebRequest();
 
         if (www.downloadHandler.text == "")
@@ -66,55 +57,10 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    public void LoadMap()
+    public string[,] tempLoadCharacter;
+    public IEnumerator LoadCharacter(Action<bool> done)
     {
-        StartCoroutine(_LoadMap());
-    }
-
-    public void LoadElement(string mapName)
-    {
-        StartCoroutine(_LoadElement(mapName));
-    }
-
-    public void UpdateMap()
-    {
-        StartCoroutine(_UpdateMap());
-    }
-
-    public void GetData()
-    {
-        StartCoroutine(_GetData());
-    }
-
-    public void UpdateColumn(string column, string statement)
-    {
-        StartCoroutine(_UpdateColumn(column, statement));
-    }
-
-    public void Enqueue(string name)
-    {
-        StartCoroutine(_Enqueue(name));
-    }
-
-    public void UpdateMap(int sec)
-    {
-        StartCoroutine(UpdateDelay(sec));
-    }
-
-    public void LoadMap(int sec)
-    {
-        StartCoroutine(LoadDelay(sec));
-    }
-
-    public void GetData(int sec)
-    {
-        StartCoroutine(GetDataDelay(sec));
-    }
-    public string[,] tempCharacter;
-    private IEnumerator _LoadMap()
-    {
-        tempCharacter = new string[GameData.instance.mapSize, GameData.instance.mapSize];
-        loadMap_isRuning = true;
+        tempLoadCharacter = new string[GameData.instance.mapSize, GameData.instance.mapSize];
 
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -128,7 +74,7 @@ public class NetworkSystem : MonoBehaviour {
 
         if (itemsDataString == "")
         {
-            Debug.Log("Connecting Error.");
+            Debug.LogError("Connecting Error.");
         }
         else
         {
@@ -144,7 +90,7 @@ public class NetworkSystem : MonoBehaviour {
             for (int col = 0; col < Map.instance.col; col++)
             {
 
-                tempCharacter[row, col] = tempData[num];
+                tempLoadCharacter[row, col] = tempData[num];
 
                 if (Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
@@ -152,19 +98,19 @@ public class NetworkSystem : MonoBehaviour {
                     Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
                 }
 
-                if (tempCharacter[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if (tempLoadCharacter[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnNPC(col, row);
                     //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
                 }else
 
-                if(tempCharacter[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if(tempLoadCharacter[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName, col, row);
                     //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
                 }else
 
-                if(tempCharacter[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if(tempLoadCharacter[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName, col, row);
                     //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
@@ -172,22 +118,20 @@ public class NetworkSystem : MonoBehaviour {
                 num++;
             }
         }
-        
-        loadMap_isRuning = false;
+
+        done(true);
     }
 
-    public string tempMap;
-    private IEnumerator _UpdateMap()
+    public string tempUpdateCharecter;
+    public IEnumerator UpdateCharacter()
     {
-        updateMap_isRuning = true;
-
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
         form.AddField("mapSize", GameData.instance.mapSize);
 
-        tempMap = null;
+        tempUpdateCharecter = null;
 
         int num = 0;
         for (int i = 0; i < Map.instance.row; i++)
@@ -196,17 +140,17 @@ public class NetworkSystem : MonoBehaviour {
             {
                 if (Map.instance.map[i, j].GetComponent<Tile>().HaveCharacter())
                 {
-                    tempMap += Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group + "|";
+                    tempUpdateCharecter += Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group + "|";
                 }
                 else
                 {
-                    tempMap += "_" + "|";
+                    tempUpdateCharecter += "_" + "|";
                 }
                 num++;
             }
         }
 
-        form.AddField("map",tempMap);
+        form.AddField("map", tempUpdateCharecter);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap ,form);
         yield return www.SendWebRequest();
@@ -221,18 +165,16 @@ public class NetworkSystem : MonoBehaviour {
         {
             Debug.Log(itemsDataString);
         }
-        updateMap_isRuning = false;
     }
 
-    private IEnumerator _LoadElement(string mapName)
+    public IEnumerator LoadElement(string nameRoom, Action<bool> done)
     {
         string[,] tempMap = new string[GameData.instance.mapSize, GameData.instance.mapSize];
-        loadMap_isRuning = true;
 
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("room_id", mapName);
+        form.AddField("room_id", nameRoom);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + loadMap, form);
         yield return www.SendWebRequest();
@@ -462,15 +404,11 @@ public class NetworkSystem : MonoBehaviour {
             GenerateMap.instance.positionZ = 0;
         }
 
-        loadMap_isRuning = false;
+        done(true);
     }
 
-
-
-    private IEnumerator _GetData()
+    public IEnumerator GetData(Action<bool> done)
     {
-        getData_isRuning = true;
-
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
@@ -498,11 +436,10 @@ public class NetworkSystem : MonoBehaviour {
             GameData.instance.enemyEnergy = tempInt;
         }
 
-        getData_isRuning = false;
-
+        done(true);
     }
 
-    private IEnumerator _Enqueue(string playerName)
+    public IEnumerator Enqueue(string playerName)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -518,7 +455,7 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    private IEnumerator _UpdateColumn(string column, string statement)
+    public IEnumerator UpdateColumn(string column, string statement)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -535,25 +472,7 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    private IEnumerator LoadDelay(int sec)
-    {
-        yield return new WaitForSeconds(sec);
-        LoadMap();
-    }
-
-    private IEnumerator GetDataDelay(int sec)
-    {
-        yield return new WaitForSeconds(sec);
-        GetData();
-    }
-
-    private IEnumerator UpdateDelay(int sec)
-    {
-        yield return new WaitForSeconds(sec);
-        UpdateMap();
-    }
-
-    string GetDataValue(string data, string index)
+    private string GetDataValue(string data, string index)
     {
         string value = data.Substring(data.IndexOf(index) + index.Length);
         if (value.Contains(",")) value = value.Remove(value.IndexOf(","));
