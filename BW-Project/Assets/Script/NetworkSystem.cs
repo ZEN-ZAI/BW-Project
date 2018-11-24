@@ -35,6 +35,16 @@ public class NetworkSystem : MonoBehaviour {
         //DontDestroyOnLoad(gameObject);
     }
 
+    public void UpdateColumn(string column, string statement)
+    {
+        StartCoroutine(_UpdateColumn(column, statement));
+    }
+
+    public void Enqueue(string name)
+    {
+        StartCoroutine(_Enqueue(name));
+    }
+
     public IEnumerator DeleteRoom()
     {
         WWWForm form = new WWWForm();
@@ -55,6 +65,51 @@ public class NetworkSystem : MonoBehaviour {
             GameData.instance.roomID = "";
         }
 
+    }
+
+    public string tempUpdateCharecter;
+    public IEnumerator UpdateCharacter()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", GameData.instance.roomID);
+        form.AddField("mapSize", GameData.instance.mapSize);
+
+        tempUpdateCharecter = null;
+
+        int num = 0;
+        for (int i = 0; i < Map.instance.row; i++)
+        {
+            for (int j = 0; j < Map.instance.col; j++)
+            {
+                if (Map.instance.map[i, j].GetComponent<Tile>().HaveCharacter())
+                {
+                    tempUpdateCharecter += Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group + "|";
+                }
+                else
+                {
+                    tempUpdateCharecter += "_" + "|";
+                }
+                num++;
+            }
+        }
+
+        form.AddField("map", tempUpdateCharecter);
+
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap ,form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+
+        if (itemsDataString == "")
+        {
+            Debug.Log("Connecting Error.");
+        }
+        else
+        {
+            Debug.Log(itemsDataString);
+        }
     }
 
     public string[,] tempLoadCharacter;
@@ -120,51 +175,6 @@ public class NetworkSystem : MonoBehaviour {
         }
 
         done(true);
-    }
-
-    public string tempUpdateCharecter;
-    public IEnumerator UpdateCharacter()
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("username", username);
-        form.AddField("password", password);
-        form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("mapSize", GameData.instance.mapSize);
-
-        tempUpdateCharecter = null;
-
-        int num = 0;
-        for (int i = 0; i < Map.instance.row; i++)
-        {
-            for (int j = 0; j < Map.instance.col; j++)
-            {
-                if (Map.instance.map[i, j].GetComponent<Tile>().HaveCharacter())
-                {
-                    tempUpdateCharecter += Map.instance.map[i, j].GetComponent<Tile>().character.GetComponent<Character>().group + "|";
-                }
-                else
-                {
-                    tempUpdateCharecter += "_" + "|";
-                }
-                num++;
-            }
-        }
-
-        form.AddField("map", tempUpdateCharecter);
-
-        UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap ,form);
-        yield return www.SendWebRequest();
-
-        string itemsDataString = www.downloadHandler.text;
-
-        if (itemsDataString == "")
-        {
-            Debug.Log("Connecting Error.");
-        }
-        else
-        {
-            Debug.Log(itemsDataString);
-        }
     }
 
     public IEnumerator LoadElement(string nameRoom, Action<bool> done)
@@ -439,7 +449,7 @@ public class NetworkSystem : MonoBehaviour {
         done(true);
     }
 
-    public IEnumerator Enqueue(string playerName)
+    public IEnumerator _Enqueue(string playerName)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -455,7 +465,7 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    public IEnumerator UpdateColumn(string column, string statement)
+    public IEnumerator _UpdateColumn(string column, string statement)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);

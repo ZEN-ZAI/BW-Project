@@ -7,7 +7,6 @@ public class GameSystem : MonoBehaviour
     public Player player;
     public string playerWin;
     public static GameSystem instance;
-    private bool setup;
 
     public bool getDate;
     public bool loadCharacter;
@@ -40,7 +39,12 @@ public class GameSystem : MonoBehaviour
             StartCoroutine(NetworkSystem.instance.GetData(done => { if (done) { getDate = false; } }));
         }
 
-        FirstQueue();
+        if (GameData.instance.state == "setup_finish" && GameData.instance.firstPlayer)
+        {
+            NetworkSystem.instance.Enqueue(GameData.instance.myID);
+            NetworkSystem.instance.UpdateColumn("state", "playing");
+            player.StartTurn();
+        }
 
         if (GameData.instance.state == "playing")
         {
@@ -57,16 +61,6 @@ public class GameSystem : MonoBehaviour
             }
 
             //CheckEndGame();
-        }
-    }
-
-    private void FirstQueue()
-    {
-        if (GameData.instance.state == "setup_finish" && GameData.instance.firstPlayer)
-        {
-            NetworkSystem.instance.Enqueue(GameData.instance.myID);
-            NetworkSystem.instance.UpdateColumn("state", "playing");
-            player.StartTurn();
         }
     }
 
@@ -162,7 +156,6 @@ public class GameSystem : MonoBehaviour
         }
 
         LoadingScene.instance.LoadingScreen(false);
-        setup = true;
     }
 
     public void NextQueue()
