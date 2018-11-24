@@ -2512,7 +2512,7 @@ MonoBehaviour:
   - {fileID: 1392901263751285791, guid: 53dfed8cb4d398742ab1d4b8f72fd66f, type: 3}
   - {fileID: 7398863351431940831, guid: 2a4244fe23c46c046a6c8b50eea699c6, type: 3}
   - {fileID: 8523816679694907377, guid: a2cccb1937e8fbb488cd2ca29823fdfc, type: 3}
-  - {fileID: 9047016008805780503, guid: 61aa28adcd9c16f4cb31fdf2ec4f8677, type: 3}
+  - {fileID: 24, guid: 61aa28adcd9c16f4cb31fdf2ec4f8677, type: 3}
   - {fileID: 2898644687668020688, guid: 0839fa9f1b8ba9341b578250ea73be02, type: 3}
   - {fileID: 9077439248411175441, guid: 21ec92bc571247843aa1ca9944424e8d, type: 3}
   - {fileID: 4460282691271332374, guid: cc343c376f35b9246ba0d0d6af034a7b, type: 3}
@@ -2756,7 +2756,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 225370655}
   m_Direction: 2
   m_Value: 0.999999
-  m_Size: 0.766636
+  m_Size: 0.7666359
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

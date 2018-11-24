@@ -116,7 +116,7 @@ public class GameSystem : MonoBehaviour
     {
         if (GameData.instance.mapSize == 25)
         {
-            NetworkSystem.instance.LoadElement("test");
+            NetworkSystem.instance.LoadElement("Small");
         }
         else if (GameData.instance.mapSize == 35)
         {
