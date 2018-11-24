@@ -338,13 +338,6 @@ public class MapEditor : MonoBehaviour
                     GenerateBlock(block[17], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
-                else if (tempMap[row, col] == "Road")
-                {
-                    string str = GetDataValue(tempMap[row, col], ":");
-                    int temp = Convert.ToInt32(str);
-                    GenerateBlock(block[18], new Vector3(positionX, 0, positionZ), row, col, temp);
-                    positionZ++;
-                }
                 else if (tempMap[row, col].Contains("Road_Intersection_A"))
                 {
                     string str = GetDataValue(tempMap[row, col], ":");
@@ -399,6 +392,13 @@ public class MapEditor : MonoBehaviour
                     string str = GetDataValue(tempMap[row, col], ":");
                     int temp = Convert.ToInt32(str);
                     GenerateBlock(block[26], new Vector3(positionX, 0, positionZ), row, col, temp);
+                    positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateBlock(block[18], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 /*else
