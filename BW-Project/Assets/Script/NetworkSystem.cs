@@ -428,25 +428,35 @@ public class NetworkSystem : MonoBehaviour {
         yield return www.SendWebRequest();
 
         string itemsDataString = www.downloadHandler.text;
-        Debug.Log(itemsDataString);
 
-        GameData.instance.q = GetDataValue(itemsDataString, "queue:");
-        GameData.instance.state = GetDataValue(itemsDataString, "state:");
-
-        int tempInt;
-        if (GameData.instance.firstPlayer)
+        if (itemsDataString == "")
         {
-            
-            int.TryParse(GetDataValue(itemsDataString, "player2_energy:"),out tempInt);
-            GameData.instance.enemyEnergy = tempInt;
+            Debug.LogError("Connecting Error, GetData");
         }
         else
         {
-            int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
-            GameData.instance.enemyEnergy = tempInt;
-        }
+            Debug.Log(itemsDataString);
 
-        done(true);
+            GameData.instance.q = GetDataValue(itemsDataString, "queue:");
+            GameData.instance.state = GetDataValue(itemsDataString, "state:");
+
+            int tempInt;
+            if (GameData.instance.firstPlayer)
+            {
+
+                int.TryParse(GetDataValue(itemsDataString, "player2_energy:"), out tempInt);
+                GameData.instance.enemyEnergy = tempInt;
+            }
+            else
+            {
+                int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
+                GameData.instance.enemyEnergy = tempInt;
+            }
+
+            yield return new WaitForSeconds(1);
+            done(true);
+
+        }
     }
 
     public IEnumerator _Enqueue(string playerName)
@@ -459,9 +469,6 @@ public class NetworkSystem : MonoBehaviour {
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + enqueue, form);
         yield return www.SendWebRequest();
-
-        string itemsDataString = www.downloadHandler.text;
-        Debug.Log(itemsDataString);
 
     }
 
@@ -477,9 +484,21 @@ public class NetworkSystem : MonoBehaviour {
         UnityWebRequest www = UnityWebRequest.Post(database_IP + updateState, form);
         yield return www.SendWebRequest();
 
-        string itemsDataString = www.downloadHandler.text;
-        Debug.Log(itemsDataString);
+        /*if (itemsDataString == "")
+        {
+            Debug.LogError("Connecting Error, UpdateColumn["+ column + "] = "+ statement);
+        }
+        else
+        {
+            Debug.Log(itemsDataString);
+        }*/
 
+    }
+
+    private IEnumerator Delay(int sec,Action<bool> done)
+    {
+        yield return new WaitForSeconds(1);
+        done(true);
     }
 
     private string GetDataValue(string data, string index)

@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         pathFinder = FindObjectOfType<PathFinder>();
-        //myTurn = GameData.instance.myTurn;
 
         if (GameData.instance.firstPlayer)
         {
@@ -25,8 +24,6 @@ public class Player : MonoBehaviour
             SetSecond();
         }
     }
-
-    // Update is called once per frame
 
     public void SetFrist()
     {
@@ -233,7 +230,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    int chebyshev(int herox, int monx, int heroy, int mony)
+    private int chebyshev(int herox, int monx, int heroy, int mony)
     {
         int result;
         if (Mathf.Abs(monx - herox) > Mathf.Abs(mony - heroy))
