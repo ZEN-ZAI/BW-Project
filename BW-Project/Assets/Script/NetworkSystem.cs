@@ -245,16 +245,16 @@ public class NetworkSystem : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Load map.");
+            Debug.Log("Load Element.");
             Debug.Log(itemsDataString);
         }
 
         tempData = itemsDataString.Split(';');
         int num = 0;
 
-        for (int row = 0; row < Map.instance.row; row++)
+        for (int row = 0; row < GameData.instance.mapSize; row++)
         {
-            for (int col = 0; col < Map.instance.col; col++)
+            for (int col = 0; col < GameData.instance.mapSize; col++)
             {
 
                 tempMap[row, col] = tempData[num];
@@ -448,13 +448,16 @@ public class NetworkSystem : MonoBehaviour {
                     GenerateMap.instance.GenerateBlock(26, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
                     GenerateMap.instance.positionZ++;
                 }
-                else
+                /*else
                 {
                     GenerateMap.instance.GenerateBlock(8, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, 0);
                     GenerateMap.instance.positionZ++;
-                }
+                }*/
+                
                 num++;
             }
+            GenerateMap.instance.positionX++;
+            GenerateMap.instance.positionZ = 0;
         }
 
         loadMap_isRuning = false;

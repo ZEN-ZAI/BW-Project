@@ -231,7 +231,7 @@
     </member>
     <member name="M:UnityEngine.Collider2D.Cast(UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single,System.Boolean)">
       <summary>
-        <para>Casts the collider shape into the scene starting at the collider position ignoring the collider itself.</para>
+        <para>Casts the collider shape into the Scene starting at the collider position ignoring the collider itself.</para>
       </summary>
       <param name="direction">Vector representing the direction to cast the shape.</param>
       <param name="results">Array to receive results.</param>
@@ -243,7 +243,7 @@
     </member>
     <member name="M:UnityEngine.Collider2D.Cast(UnityEngine.Vector2,UnityEngine.ContactFilter2D,UnityEngine.RaycastHit2D[],System.Single,System.Boolean)">
       <summary>
-        <para>Casts the collider shape into the scene starting at the collider position ignoring the collider itself.</para>
+        <para>Casts the collider shape into the Scene starting at the collider position ignoring the collider itself.</para>
       </summary>
       <param name="direction">Vector representing the direction to cast the shape.</param>
       <param name="contactFilter">Filter results defined by the contact filter.</param>
@@ -359,7 +359,7 @@
     </member>
     <member name="M:UnityEngine.Collider2D.Raycast(UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a ray into the scene starting at the collider position ignoring the collider itself.</para>
+        <para>Casts a ray into the Scene starting at the collider position ignoring the collider itself.</para>
       </summary>
       <param name="direction">Vector representing the direction of the ray.</param>
       <param name="results">Array to receive results.</param>
@@ -374,7 +374,7 @@
     </member>
     <member name="M:UnityEngine.Collider2D.Raycast(UnityEngine.Vector2,UnityEngine.ContactFilter2D,UnityEngine.RaycastHit2D[],System.Single)">
       <summary>
-        <para>Casts a ray into the scene starting at the collider position ignoring the collider itself.</para>
+        <para>Casts a ray into the Scene starting at the collider position ignoring the collider itself.</para>
       </summary>
       <param name="direction">Vector representing the direction of the ray.</param>
       <param name="results">Array to receive results.</param>
@@ -1348,7 +1348,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.BoxCast(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a box against colliders in the scene, returning the first collider to contact with it.</para>
+        <para>Casts a box against colliders in the Scene, returning the first collider to contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the box originates.</param>
       <param name="size">The size of the box.</param>
@@ -1379,7 +1379,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.BoxCastAll(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a box against colliders in the scene, returning all colliders that contact with it.</para>
+        <para>Casts a box against colliders in the Scene, returning all colliders that contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the box originates.</param>
       <param name="size">The size of the box.</param>
@@ -1395,7 +1395,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.BoxCastNonAlloc(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a box into the scene, returning colliders that contact with it into the provided results array.</para>
+        <para>Casts a box into the Scene, returning colliders that contact with it into the provided results array.</para>
       </summary>
       <param name="origin">The point in 2D space where the box originates.</param>
       <param name="size">The size of the box.</param>
@@ -1412,7 +1412,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.CapsuleCast(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.CapsuleDirection2D,System.Single,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a capsule against colliders in the scene, returning the first collider to contact with it.</para>
+        <para>Casts a capsule against colliders in the Scene, returning the first collider to contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the capsule originates.</param>
       <param name="size">The size of the capsule.</param>
@@ -1445,7 +1445,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.CapsuleCastAll(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.CapsuleDirection2D,System.Single,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a capsule against colliders in the scene, returning all colliders that contact with it.</para>
+        <para>Casts a capsule against colliders in the Scene, returning all colliders that contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the capsule originates.</param>
       <param name="size">The size of the capsule.</param>
@@ -1462,7 +1462,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.CapsuleCastNonAlloc(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.CapsuleDirection2D,System.Single,UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a capsule into the scene, returning colliders that contact with it into the provided results array.</para>
+        <para>Casts a capsule into the Scene, returning colliders that contact with it into the provided results array.</para>
       </summary>
       <param name="origin">The point in 2D space where the capsule originates.</param>
       <param name="size">The size of the capsule.</param>
@@ -1480,7 +1480,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.CircleCast(UnityEngine.Vector2,System.Single,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a circle against colliders in the scene, returning the first collider to contact with it.</para>
+        <para>Casts a circle against colliders in the Scene, returning the first collider to contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the circle originates.</param>
       <param name="radius">The radius of the circle.</param>
@@ -1509,7 +1509,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.CircleCastAll(UnityEngine.Vector2,System.Single,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a circle against colliders in the scene, returning all colliders that contact with it.</para>
+        <para>Casts a circle against colliders in the Scene, returning all colliders that contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the circle originates.</param>
       <param name="radius">The radius of the circle.</param>
@@ -1524,7 +1524,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.CircleCastNonAlloc(UnityEngine.Vector2,System.Single,UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a circle into the scene, returning colliders that contact with it into the provided results array.</para>
+        <para>Casts a circle into the Scene, returning colliders that contact with it into the provided results array.</para>
       </summary>
       <param name="origin">The point in 2D space where the circle originates.</param>
       <param name="radius">The radius of the circle.</param>
@@ -1680,7 +1680,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.GetRayIntersection(UnityEngine.Ray,System.Single,System.Int32)">
       <summary>
-        <para>Cast a 3D ray against the colliders in the scene returning the first collider along the ray.</para>
+        <para>Cast a 3D ray against the colliders in the Scene returning the first collider along the ray.</para>
       </summary>
       <param name="ray">The 3D ray defining origin and direction to test.</param>
       <param name="distance">Maximum distance over which to cast the ray.</param>
@@ -1691,7 +1691,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.GetRayIntersectionAll(UnityEngine.Ray,System.Single,System.Int32)">
       <summary>
-        <para>Cast a 3D ray against the colliders in the scene returning all the colliders along the ray.</para>
+        <para>Cast a 3D ray against the colliders in the Scene returning all the colliders along the ray.</para>
       </summary>
       <param name="ray">The 3D ray defining origin and direction to test.</param>
       <param name="distance">Maximum distance over which to cast the ray.</param>
@@ -1702,7 +1702,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.GetRayIntersectionNonAlloc(UnityEngine.Ray,UnityEngine.RaycastHit2D[],System.Single,System.Int32)">
       <summary>
-        <para>Cast a 3D ray against the colliders in the scene returning the colliders along the ray.</para>
+        <para>Cast a 3D ray against the colliders in the Scene returning the colliders along the ray.</para>
       </summary>
       <param name="ray">The 3D ray defining origin and direction to test.</param>
       <param name="distance">Maximum distance over which to cast the ray.</param>
@@ -1801,7 +1801,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.LinecastAll(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a line against colliders in the scene.</para>
+        <para>Casts a line against colliders in the Scene.</para>
       </summary>
       <param name="start">The start point of the line in world space.</param>
       <param name="end">The end point of the line in world space.</param>
@@ -1814,7 +1814,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.LinecastNonAlloc(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a line against colliders in the scene.</para>
+        <para>Casts a line against colliders in the Scene.</para>
       </summary>
       <param name="minDepth">Only include objects with a Z coordinate (depth) greater than or equal to this value.</param>
       <param name="maxDepth">Only include objects with a Z coordinate (depth) less than or equal to this value.</param>
@@ -2107,7 +2107,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.Raycast(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a ray against colliders in the scene.</para>
+        <para>Casts a ray against colliders in the Scene.</para>
       </summary>
       <param name="origin">The point in 2D space where the ray originates.</param>
       <param name="direction">The vector representing the direction of the ray.</param>
@@ -2134,7 +2134,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.RaycastAll(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a ray against colliders in the scene, returning all colliders that contact with it.</para>
+        <para>Casts a ray against colliders in the Scene, returning all colliders that contact with it.</para>
       </summary>
       <param name="origin">The point in 2D space where the ray originates.</param>
       <param name="direction">The vector representing the direction of the ray.</param>
@@ -2148,7 +2148,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.RaycastNonAlloc(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single,System.Int32,System.Single,System.Single)">
       <summary>
-        <para>Casts a ray into the scene.</para>
+        <para>Casts a ray into the Scene.</para>
       </summary>
       <param name="minDepth">Only include objects with a Z coordinate (depth) greater than or equal to this value.</param>
       <param name="maxDepth">Only include objects with a Z coordinate (depth) less than or equal to this value.</param>
@@ -2170,7 +2170,7 @@
     </member>
     <member name="M:UnityEngine.Physics2D.Simulate(System.Single)">
       <summary>
-        <para>Simulate physics in the scene.</para>
+        <para>Simulate physics in the Scene.</para>
       </summary>
       <param name="step">The time to advance physics by.</param>
       <returns>
@@ -2289,7 +2289,7 @@
     </member>
     <member name="T:UnityEngine.PhysicsScene2D">
       <summary>
-        <para>Represents a single instance of a 2D physics scene.</para>
+        <para>Represents a single instance of a 2D physics Scene.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.PhysicsScene2D.BoxCast(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,UnityEngine.Vector2,System.Single,System.Int32)">
@@ -2503,18 +2503,18 @@
     </member>
     <member name="M:UnityEngine.PhysicsScene2D.IsEmpty">
       <summary>
-        <para>Determines whether the physics scene is empty or not.</para>
+        <para>Determines whether the physics Scene is empty or not.</para>
       </summary>
       <returns>
-        <para>True when the physics scene is empty.</para>
+        <para>True when the physics Scene is empty.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.PhysicsScene2D.IsValid">
       <summary>
-        <para>Determines whether the physics scene is valid or not.</para>
+        <para>Determines whether the physics Scene is valid or not.</para>
       </summary>
       <returns>
-        <para>True when the physics scene valid.</para>
+        <para>True when the physics Scene valid.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.PhysicsScene2D.Linecast(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32)">
@@ -2919,11 +2919,11 @@
     </member>
     <member name="M:UnityEngine.PhysicsSceneExtensions2D.GetPhysicsScene2D(UnityEngine.SceneManagement.Scene)">
       <summary>
-        <para>An extension method that returns the 2D physics scene from the scene.</para>
+        <para>An extension method that returns the 2D physics Scene from the Scene.</para>
       </summary>
-      <param name="scene">The scene from which to return the 2D physics scene.</param>
+      <param name="scene">The Scene from which to return the 2D physics Scene.</param>
       <returns>
-        <para>The 2D physics scene used by the scene.</para>
+        <para>The 2D physics Scene used by the Scene.</para>
       </returns>
     </member>
     <member name="T:UnityEngine.PhysicsUpdateBehaviour2D">
@@ -3306,7 +3306,7 @@
     </member>
     <member name="M:UnityEngine.Rigidbody2D.Cast(UnityEngine.Vector2,UnityEngine.RaycastHit2D[],System.Single)">
       <summary>
-        <para>All the Collider2D shapes attached to the Rigidbody2D are cast into the scene starting at each collider position ignoring the colliders attached to the same Rigidbody2D.</para>
+        <para>All the Collider2D shapes attached to the Rigidbody2D are cast into the Scene starting at each collider position ignoring the colliders attached to the same Rigidbody2D.</para>
       </summary>
       <param name="direction">Vector representing the direction to cast each Collider2D shape.</param>
       <param name="results">Array to receive results.</param>
@@ -3317,7 +3317,7 @@
     </member>
     <member name="M:UnityEngine.Rigidbody2D.Cast(UnityEngine.Vector2,UnityEngine.ContactFilter2D,UnityEngine.RaycastHit2D[],System.Single)">
       <summary>
-        <para>All the Collider2D shapes attached to the Rigidbody2D are cast into the scene starting at each collider position ignoring the colliders attached to the same Rigidbody2D.</para>
+        <para>All the Collider2D shapes attached to the Rigidbody2D are cast into the Scene starting at each collider position ignoring the colliders attached to the same Rigidbody2D.</para>
       </summary>
       <param name="direction">Vector representing the direction to cast each Collider2D shape.</param>
       <param name="contactFilter">Filter results defined by the contact filter.</param>

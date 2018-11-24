@@ -114,13 +114,18 @@ public class GameSystem : MonoBehaviour
 
     public void GameSetUp()
     {
-        //GenerateMap.instance.Generate();
-       /* if ()
+        if (GameData.instance.mapSize == 25)
         {
-
+            NetworkSystem.instance.LoadElement("test");
         }
-
-        NetworkSystem.instance.LoadElement();*/
+        else if (GameData.instance.mapSize == 35)
+        {
+            NetworkSystem.instance.LoadElement("test");
+        }
+        else if (GameData.instance.mapSize == 55)
+        {
+            NetworkSystem.instance.LoadElement("test");
+        }
 
         if (GameData.instance.firstPlayer)
         {

@@ -624,12 +624,12 @@
     </member>
     <member name="P:UnityEngine.Terrain.activeTerrain">
       <summary>
-        <para>The active terrain. This is a convenience function to get to the main terrain in the scene.</para>
+        <para>The active terrain. This is a convenience function to get to the main terrain in the Scene.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Terrain.activeTerrains">
       <summary>
-        <para>The active terrains in the scene.</para>
+        <para>The active terrains in the Scene.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Terrain.allowAutoConnect">

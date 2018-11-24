@@ -153,7 +153,7 @@
     </member>
     <member name="P:UnityEngine.CapsuleCollider.height">
       <summary>
-        <para>The height of the capsule meased in the object's local space.</para>
+        <para>The height of the capsule measured in the object's local space.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.CapsuleCollider.radius">
@@ -306,7 +306,7 @@
     </member>
     <member name="P:UnityEngine.Collider.bounds">
       <summary>
-        <para>The world space bounding volume of the collider.</para>
+        <para>The world space bounding volume of the collider (Read Only).</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Collider.contactOffset">
@@ -354,10 +354,10 @@
         <para>Casts a Ray that ignores all Colliders except this one.</para>
       </summary>
       <param name="ray">The starting point and direction of the ray.</param>
-      <param name="hitInfo">If true is returned, hitInfo will contain more information about where the collider was hit (See Also: RaycastHit).</param>
+      <param name="hitInfo">If true is returned, hitInfo will contain more information about where the collider was hit.</param>
       <param name="maxDistance">The max length of the ray.</param>
       <returns>
-        <para>True when the ray intersects any collider, otherwise false.</para>
+        <para>True when the ray intersects the collider, otherwise false.</para>
       </returns>
     </member>
     <member name="T:UnityEngine.Collision">
@@ -1228,7 +1228,7 @@ Note that there is a special case when the two overlapping colliders have physic
     </member>
     <member name="P:UnityEngine.Physics.gravity">
       <summary>
-        <para>The gravity applied to all rigid bodies in the scene.</para>
+        <para>The gravity applied to all rigid bodies in the Scene.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Physics.interCollisionDistance">
@@ -1347,7 +1347,7 @@ Note that there is a special case when the two overlapping colliders have physic
     </member>
     <member name="M:UnityEngine.Physics.CapsuleCast(UnityEngine.Vector3,UnityEngine.Vector3,System.Single,UnityEngine.Vector3,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a capsule against all colliders in the scene and returns detailed information on what was hit.</para>
+        <para>Casts a capsule against all colliders in the Scene and returns detailed information on what was hit.</para>
       </summary>
       <param name="point1">The center of the sphere at the start of the capsule.</param>
       <param name="point2">The center of the sphere at the end of the capsule.</param>
@@ -1391,7 +1391,7 @@ Note that there is a special case when the two overlapping colliders have physic
     </member>
     <member name="M:UnityEngine.Physics.CapsuleCastNonAlloc(UnityEngine.Vector3,UnityEngine.Vector3,System.Single,UnityEngine.Vector3,UnityEngine.RaycastHit[],System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a capsule against all colliders in the scene and returns detailed information on what was hit into the buffer.</para>
+        <para>Casts a capsule against all colliders in the Scene and returns detailed information on what was hit into the buffer.</para>
       </summary>
       <param name="point1">The center of the sphere at the start of the capsule.</param>
       <param name="point2">The center of the sphere at the end of the capsule.</param>
@@ -1483,11 +1483,9 @@ Note that there is a special case when the two overlapping colliders have physic
       <summary>
         <para>Makes the collision detection system ignore all collisions between collider1 and collider2.</para>
       </summary>
-      <param name="start">Start point.</param>
-      <param name="end">End point.</param>
+      <param name="collider1">Starting point of the collider.</param>
+      <param name="collider2">End point of the collider.</param>
       <param name="ignore">Ignore collision.</param>
-      <param name="collider1"></param>
-      <param name="collider2"></param>
     </member>
     <member name="M:UnityEngine.Physics.IgnoreLayerCollision(System.Int32,System.Int32,System.Boolean)">
       <summary>
@@ -1602,7 +1600,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Physics.Raycast(UnityEngine.Vector3,UnityEngine.Vector3,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the scene.</para>
+        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the Scene.</para>
       </summary>
       <param name="origin">The starting point of the ray in world coordinates.</param>
       <param name="direction">The direction of the ray.</param>
@@ -1615,7 +1613,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Physics.Raycast(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.RaycastHit&amp;,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a ray against all colliders in the scene and returns detailed information on what was hit.</para>
+        <para>Casts a ray against all colliders in the Scene and returns detailed information on what was hit.</para>
       </summary>
       <param name="origin">The starting point of the ray in world coordinates.</param>
       <param name="direction">The direction of the ray.</param>
@@ -1654,7 +1652,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Physics.RaycastAll(UnityEngine.Ray,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a ray through the scene and returns all hits. Note that order is not guaranteed.</para>
+        <para>Casts a ray through the Scene and returns all hits. Note that order is not guaranteed.</para>
       </summary>
       <param name="ray">The starting point and direction of the ray.</param>
       <param name="maxDistance">The max distance the rayhit is allowed to be from the start of the ray.</param>
@@ -1674,7 +1672,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Physics.RaycastNonAlloc(UnityEngine.Ray,UnityEngine.RaycastHit[],System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Cast a ray through the scene and store the hits into the buffer.</para>
+        <para>Cast a ray through the Scene and store the hits into the buffer.</para>
       </summary>
       <param name="ray">The starting point and direction of the ray.</param>
       <param name="results">The buffer to store the hits into.</param>
@@ -1687,7 +1685,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Physics.RaycastNonAlloc(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.RaycastHit[],System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Cast a ray through the scene and store the hits into the buffer.</para>
+        <para>Cast a ray through the Scene and store the hits into the buffer.</para>
       </summary>
       <param name="origin">The starting point and direction of the ray.</param>
       <param name="results">The buffer to store the hits into.</param>
@@ -1709,7 +1707,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Physics.Simulate(System.Single)">
       <summary>
-        <para>Simulate physics in the scene.</para>
+        <para>Simulate physics in the Scene.</para>
       </summary>
       <param name="step">The time to advance physics by.</param>
     </member>
@@ -1812,20 +1810,20 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="T:UnityEngine.PhysicsScene">
       <summary>
-        <para>Represents a single instance of a 3D physics scene.</para>
+        <para>Represents a single instance of a 3D physics Scene.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.PhysicsScene.IsEmpty">
       <summary>
-        <para>Gets whether the physics scene is empty or not.</para>
+        <para>Gets whether the physics Scene is empty or not.</para>
       </summary>
       <returns>
-        <para>Is the physics scene is empty?</para>
+        <para>Is the physics Scene is empty?</para>
       </returns>
     </member>
     <member name="M:UnityEngine.PhysicsScene.IsValid">
       <summary>
-        <para>Gets whether the physics scene is valid or not.</para>
+        <para>Gets whether the physics Scene is valid or not.</para>
       </summary>
       <returns>
         <para>Is the physics scene valid?</para>
@@ -1833,7 +1831,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.PhysicsScene.Raycast(UnityEngine.Vector3,UnityEngine.Vector3,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the scene.</para>
+        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the Scene.</para>
       </summary>
       <param name="origin">The starting point of the ray in world coordinates.</param>
       <param name="direction">The direction of the ray.</param>
@@ -1846,7 +1844,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.PhysicsScene.Raycast(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.RaycastHit&amp;,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the scene.</para>
+        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the Scene.</para>
       </summary>
       <param name="origin">The starting point of the ray in world coordinates.</param>
       <param name="direction">The direction of the ray.</param>
@@ -1860,7 +1858,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.PhysicsScene.Raycast(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.RaycastHit[],System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the scene.</para>
+        <para>Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the Scene.</para>
       </summary>
       <param name="origin">The starting point and direction of the ray.</param>
       <param name="direction">The direction of the ray.</param>
@@ -1888,11 +1886,11 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.PhysicsSceneExtensions.GetPhysicsScene(UnityEngine.SceneManagement.Scene)">
       <summary>
-        <para>An extension method that returns the 3D physics scene from the scene.</para>
+        <para>An extension method that returns the 3D physics Scene from the Scene.</para>
       </summary>
-      <param name="scene">The scene from which to return the 3D physics scene.</param>
+      <param name="scene">The Scene from which to return the 3D physics Scene.</param>
       <returns>
-        <para>The 3D physics scene used by the scene.</para>
+        <para>The 3D physics Scene used by the Scene.</para>
       </returns>
     </member>
     <member name="T:UnityEngine.QueryTriggerInteraction">
@@ -2099,7 +2097,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="P:UnityEngine.Rigidbody.maxAngularVelocity">
       <summary>
-        <para>The maximimum angular velocity of the rigidbody. (Default 7) range { 0, infinity }.</para>
+        <para>The maximimum angular velocity of the rigidbody measured in radians per second. (Default 7) range { 0, infinity }.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Rigidbody.maxDepenetrationVelocity">
@@ -2394,7 +2392,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
     </member>
     <member name="M:UnityEngine.Rigidbody.SweepTest(UnityEngine.Vector3,UnityEngine.RaycastHit&amp;,System.Single,UnityEngine.QueryTriggerInteraction)">
       <summary>
-        <para>Tests if a rigidbody would collide with anything, if it was moved through the scene.</para>
+        <para>Tests if a rigidbody would collide with anything, if it was moved through the Scene.</para>
       </summary>
       <param name="direction">The direction into which to sweep the rigidbody.</param>
       <param name="hitInfo">If true is returned, hitInfo will contain more information about where the collider was hit (See Also: RaycastHit).</param>

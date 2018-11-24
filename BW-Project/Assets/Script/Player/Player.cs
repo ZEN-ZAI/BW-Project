@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) || Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")))
         {
-            if (hit.collider.GetComponent<Tile>() != null)
+            if (hit.collider.GetComponent<Tile>() != null || hit.collider.GetComponent<Character>() != null)
             {
                 if (tempObjMouseOverObj != null)
                 {

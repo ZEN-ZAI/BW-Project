@@ -670,7 +670,7 @@
     </member>
     <member name="T:UnityEngine.Experimental.VFX.VisualEffect">
       <summary>
-        <para>The visual effect class that references an Experimental.VFX.VisualEffectAsset instance within the scene.</para>
+        <para>The visual effect class that references an Experimental.VFX.VisualEffectAsset instance within the Scene.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Experimental.VFX.VisualEffect.aliveParticleCount">

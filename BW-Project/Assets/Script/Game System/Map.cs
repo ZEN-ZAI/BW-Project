@@ -39,7 +39,7 @@ public class Map : MonoBehaviour
     public Vector3 GetBlockPosition(int index_x, int index_y)
     {
         //return map[index_y, index_x].transform.position;
-        return new Vector3(map[index_y, index_x].transform.position.x, 10, map[index_y, index_x].transform.position.z);
+        return new Vector3(map[index_y, index_x].transform.position.x, 6, map[index_y, index_x].transform.position.z);
     }
 
     public void MoveCharacter(int origin_x,int origin_y, int moveto_x,int moveto_y)

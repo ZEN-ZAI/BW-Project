@@ -542,7 +542,7 @@
     </member>
     <member name="P:UnityEngine.ParticleSystem.CollisionModule.quality">
       <summary>
-        <para>Specifies the accuracy of particle collisions against colliders in the scene.</para>
+        <para>Specifies the accuracy of particle collisions against colliders in the Scene.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.CollisionModule.radiusScale">
@@ -1118,7 +1118,7 @@
     </member>
     <member name="P:UnityEngine.ParticleSystem.LightsModule.light">
       <summary>
-        <para>Select what Light prefab you want to base your particle lights on.</para>
+        <para>Select what Light Prefab you want to base your particle lights on.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.LightsModule.maxLights">
@@ -1823,6 +1823,11 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     <member name="P:UnityEngine.ParticleSystem.Particle.animatedVelocity">
       <summary>
         <para>The animated velocity of the particle.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.ParticleSystem.Particle.axisOfRotation">
+      <summary>
+        <para>Mesh particles will rotate around this axis.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.Particle.lifetime">
