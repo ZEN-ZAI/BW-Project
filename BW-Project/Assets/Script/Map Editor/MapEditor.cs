@@ -18,7 +18,7 @@ public class MapEditor : MonoBehaviour
     private string loadMap = "/LoadMap.php";
     private string updateMap = "/UpdateMap2.php";
 
-    public GameObject[] block;
+    public GameObject[] block; //don't delete
     private int positionX;
     private int positionZ;
 
@@ -27,9 +27,8 @@ public class MapEditor : MonoBehaviour
     public bool loadMap_isRuning;
 
     public Transform rootMap;
-    public Tile[,] map;
+    //public GameObject[,] map;
     public string[,] tempNameBlock;
-    public List<GameObject> allBlock;
     public int MapSize;
 
     public static MapEditor instance;
@@ -49,6 +48,7 @@ public class MapEditor : MonoBehaviour
 
     private void Start()
     {
+        inputField_roomName.text = "test";
         inputField_mapSize.text = "15";
     }
 
@@ -77,7 +77,6 @@ public class MapEditor : MonoBehaviour
         StartCoroutine(CreateRoom(url + createRoom));
     }
 
-
     public void DeleteRoom()
     {
         StartCoroutine(DeleteRoom(url + deleteRoom));
@@ -93,10 +92,22 @@ public class MapEditor : MonoBehaviour
         StartCoroutine(_UpdateMap(url + updateMap));
     }
 
-    public void GenerateMap()
+    public void DeleteMap()
+    {
+        tempNameBlock = null;
+        positionX = 0;
+        positionZ = 0;
+
+        foreach (Transform child in rootMap.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void CreateMap()
     {
         tempNameBlock = new string[MapSize, MapSize];
-        map = new Tile[MapSize, MapSize];
+
         for (int i = 0; i < MapSize; i++)
         {
             for (int j = 0; j < MapSize; j++)
@@ -109,20 +120,6 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    public void DeleteMap()
-    {
-        tempNameBlock = null;
-        map = null;
-        positionX = 0;
-        positionZ = 0;
-        allBlock.Clear();
-
-        foreach (Transform child in rootMap.transform)
-        {
-            Destroy(child.gameObject);
-        }
-    }
-
     private void GenerateBlock(GameObject block, Vector3 position, int row, int col, int rotate)
     {
         GameObject blockTemp = Instantiate(block, rootMap.transform);
@@ -130,8 +127,8 @@ public class MapEditor : MonoBehaviour
         blockTemp.GetComponent<Tile>().col = col;
         blockTemp.transform.Rotate(new Vector3(0, rotate, 0));
         blockTemp.transform.localPosition = position;
-        map[row, col] = blockTemp.GetComponent<Tile>();
-        tempNameBlock[row, col] = block.name.Replace("(Clone)", "").Trim();
+        blockTemp.name = block.name.Replace("(Clone)", "").Trim();
+        tempNameBlock[row, col] = blockTemp.name+":" +rotate;
     }
 
     public string tempMap;
@@ -153,12 +150,8 @@ public class MapEditor : MonoBehaviour
                 
                 if (tempNameBlock[i, j] != null)
                 {
-                    tempMap += ""+tempNameBlock[i, j] + ":"+ map[i, j].transform.rotation.y + "|";
+                    tempMap += ""+ tempNameBlock[i, j] + "|";
                     //Debug.Log("<"+i+":"+j+ "> "+map[i, j].GetComponent<Tile>().nameBuilding + ":" + map[i, j].transform.rotation.y);
-                }
-                else
-                {
-                    tempMap += "_" + "|";
                 }
                 num++;
             }
@@ -186,7 +179,6 @@ public class MapEditor : MonoBehaviour
         DeleteMap();
 
         tempNameBlock = new string[MapSize, MapSize];
-        map = new Tile[MapSize, MapSize];
         string[,] tempMap = new string[MapSize, MapSize];
 
         WWWForm form = new WWWForm();
@@ -221,103 +213,120 @@ public class MapEditor : MonoBehaviour
 
                 if (tempMap[row, col].Contains("Building_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[0], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[1], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_C"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[2], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_D"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[3], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_E"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[4], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_F"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[5], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_G"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[6], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Building_H"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[7], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[8], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[9], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_C"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[10], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_D"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[11], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_Sand_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[12], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_Sand_Desert_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[13], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_Sand_Desert_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[14], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_water_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[15], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("MainFloor_water_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[16], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
@@ -329,55 +338,64 @@ public class MapEditor : MonoBehaviour
                 }
                 else if (tempMap[row, col].Contains("Road"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[18], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Road_Intersection_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[19], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Road_Intersection_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[20], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Road_ThirdStreed"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[21], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Road_Turn_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[22], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Road_Turn_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[23], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Rock_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[24], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Tree_A"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[25], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }
                 else if (tempMap[row, col].Contains("Tree_B"))
                 {
-                    int temp = Convert.ToInt32(GetDataValue(tempMap[row, col], ":"));
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
                     GenerateBlock(block[26], new Vector3(positionX, 0, positionZ), row, col, temp);
                     positionZ++;
                 }

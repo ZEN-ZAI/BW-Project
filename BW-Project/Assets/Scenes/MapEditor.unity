@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 25972714}
   - component: {fileID: 25972713}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: '-------------'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,7 +142,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000058, y: 1.0000058, z: 1.0000058}
   m_Children: []
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 219546602}
   - component: {fileID: 219546601}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: '-------------'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +515,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000058, y: 1.0000058, z: 1.0000058}
   m_Children: []
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -793,7 +793,7 @@ RectTransform:
   m_Children:
   - {fileID: 1924980768}
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 3
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -922,7 +922,7 @@ RectTransform:
   m_Children:
   - {fileID: 1765551254}
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1544,7 +1544,7 @@ GameObject:
   - component: {fileID: 449394370}
   - component: {fileID: 449394369}
   m_Layer: 5
-  m_Name: Delete Room
+  m_Name: Delete Map in Server
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1563,7 +1563,7 @@ RectTransform:
   m_Children:
   - {fileID: 539990509}
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1787,6 +1787,80 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 454978993}
+  m_CullTransparentMesh: 0
+--- !u!1 &458830559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 458830560}
+  - component: {fileID: 458830562}
+  - component: {fileID: 458830561}
+  m_Layer: 5
+  m_Name: '-------------'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &458830560
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458830559}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000058, y: 1.0000058, z: 1.0000058}
+  m_Children: []
+  m_Father: {fileID: 1603908835}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300.13, y: 3.08}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &458830561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458830559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &458830562
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458830559}
   m_CullTransparentMesh: 0
 --- !u!1 &477934789
 GameObject:
@@ -2042,7 +2116,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Delete Room
+  m_Text: Delete Map in Server
 --- !u!222 &539990511
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2191,7 +2265,7 @@ GameObject:
   - component: {fileID: 568384084}
   - component: {fileID: 568384083}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: '-------------'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2209,7 +2283,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000058, y: 1.0000058, z: 1.0000058}
   m_Children: []
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2459,7 +2533,6 @@ MonoBehaviour:
   - {fileID: 6410846567319234105, guid: f4f54e6d95580b14d85e23d44e9e8494, type: 3}
   loadMap_isRuning: 0
   rootMap: {fileID: 93296067}
-  allBlock: []
   MapSize: 15
   tempMap: 
 --- !u!4 &587835138
@@ -2759,7 +2832,7 @@ RectTransform:
   m_Children:
   - {fileID: 624483432}
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2807,7 +2880,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 587835137}
-        m_MethodName: GenerateMap
+        m_MethodName: CreateMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2926,7 +2999,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Create map
+  m_Text: Create map Local
 --- !u!222 &624483434
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3782,7 +3855,7 @@ GameObject:
   - component: {fileID: 975899311}
   - component: {fileID: 975899310}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: '-------------'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3800,7 +3873,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000058, y: 1.0000058, z: 1.0000058}
   m_Children: []
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5749,7 +5822,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Delecte map
+  m_Text: Delecte map Local
 --- !u!222 &1582130382
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5790,7 +5863,7 @@ RectTransform:
   m_Children:
   - {fileID: 1582130380}
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5919,15 +5992,16 @@ RectTransform:
   m_Children:
   - {fileID: 2022820352}
   - {fileID: 1233771029}
-  - {fileID: 219546600}
-  - {fileID: 276725791}
-  - {fileID: 295162670}
   - {fileID: 25972712}
+  - {fileID: 295162670}
+  - {fileID: 458830560}
   - {fileID: 2019406743}
   - {fileID: 449394368}
-  - {fileID: 568384082}
+  - {fileID: 219546600}
   - {fileID: 608123344}
   - {fileID: 1593445042}
+  - {fileID: 568384082}
+  - {fileID: 276725791}
   - {fileID: 975899309}
   m_Father: {fileID: 1152709622}
   m_RootOrder: 0
@@ -6589,7 +6663,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Load Map
+  m_Text: Load Map form Server
 --- !u!222 &1765551256
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6776,7 +6850,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Update Map
+  m_Text: Update Map to Server
 --- !u!222 &1924980770
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6798,7 +6872,7 @@ GameObject:
   - component: {fileID: 2019406745}
   - component: {fileID: 2019406744}
   m_Layer: 5
-  m_Name: Create Room
+  m_Name: Create Map in Server
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6817,7 +6891,7 @@ RectTransform:
   m_Children:
   - {fileID: 2098265638}
   m_Father: {fileID: 1603908835}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7253,7 +7327,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Create Room
+  m_Text: Create Map in Server
 --- !u!222 &2098265640
 CanvasRenderer:
   m_ObjectHideFlags: 0

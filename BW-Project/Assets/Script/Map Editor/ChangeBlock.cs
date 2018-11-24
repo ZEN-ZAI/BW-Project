@@ -45,21 +45,16 @@ public class ChangeBlock : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null)
                 {
-                    GameObject tempOld = hit.collider.gameObject;
                     GameObject newBlock = Instantiate(tempObjMouseOverObj, MapEditor.instance.rootMap.transform);
-                    newBlock.GetComponent<Tile>().col = tempOld.GetComponent<Tile>().col;
-                    newBlock.GetComponent<Tile>().row = tempOld.GetComponent<Tile>().row;
-                    
 
-                    newBlock.transform.position = tempOld.transform.position;
+                    newBlock.GetComponent<Tile>().row = hit.collider.gameObject.GetComponent<Tile>().row;
+                    newBlock.GetComponent<Tile>().col = hit.collider.gameObject.GetComponent<Tile>().col;
+                    newBlock.transform.position = hit.collider.transform.position;
                     newBlock.name = newBlock.name.Replace("(Clone)", "").Trim();
-                    MapEditor.instance.tempNameBlock[newBlock.GetComponent<Tile>().row, newBlock.GetComponent<Tile>().col] = newBlock.name;
 
-                    MapEditor.instance.map[newBlock.GetComponent<Tile>().row, newBlock.GetComponent<Tile>().col] = newBlock.GetComponent<Tile>();
-                    
-
-                    
                     Destroy(hit.collider.gameObject);
+
+                    MapEditor.instance.tempNameBlock[newBlock.GetComponent<Tile>().row, newBlock.GetComponent<Tile>().col] = newBlock.name+":"+0;
                 }
             }
         }
@@ -72,7 +67,11 @@ public class ChangeBlock : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null)
                 {
-                    hit.collider.gameObject.transform.Rotate(new Vector3(0, 90, 0));
+                    hit.collider.transform.Rotate(new Vector3(0, 90, 0));
+                    MapEditor.instance.tempNameBlock[hit.collider.GetComponent<Tile>().row, hit.collider.GetComponent<Tile>().col] =
+                        hit.collider.name+":"+ hit.collider.transform.rotation.eulerAngles.y;
+
+
                 }
             }
         }
@@ -83,6 +82,6 @@ public class ChangeBlock : MonoBehaviour
     public void select(int num)
     {
         tempObjMouseOverObj = MapEditor.instance.block[num];
-        Debug.Log("select ["+num+"]: "+ MapEditor.instance.block[num].name);
+        Debug.Log("select [" + num + "]: " + MapEditor.instance.block[num].name);
     }
 }
