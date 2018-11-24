@@ -22,6 +22,16 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (Camera.main.transform.position.y > 280)
+        {
+            Camera.main.nearClipPlane = 300;
+        }
+        else
+        {
+            Camera.main.nearClipPlane = 135;
+        }
+
         if (Input.GetKey("w"))
         {
             transform.Translate(Vector3.up * speed * Time.deltaTime);

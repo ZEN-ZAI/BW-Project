@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -68,6 +69,11 @@ public class NetworkSystem : MonoBehaviour {
     public void LoadMap()
     {
         StartCoroutine(_LoadMap());
+    }
+
+    public void LoadElement(string mapName)
+    {
+        StartCoroutine(_LoadElement(mapName));
     }
 
     public void UpdateMap()
@@ -218,7 +224,7 @@ public class NetworkSystem : MonoBehaviour {
         updateMap_isRuning = false;
     }
 
-    private IEnumerator _LoadElement(string mapSize)
+    private IEnumerator _LoadElement(string mapName)
     {
         string[,] tempMap = new string[GameData.instance.mapSize, GameData.instance.mapSize];
         loadMap_isRuning = true;
@@ -226,7 +232,7 @@ public class NetworkSystem : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        form.AddField("room_id", mapSize);
+        form.AddField("room_id", mapName);
 
         UnityWebRequest www = UnityWebRequest.Post(database_IP + loadMap, form);
         yield return www.SendWebRequest();
@@ -253,30 +259,199 @@ public class NetworkSystem : MonoBehaviour {
 
                 tempMap[row, col] = tempData[num];
 
-                if (Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if (tempMap[row, col].Contains("Building_A"))
                 {
-                    Map.instance.DestroyCharacter(col, row);
-                    Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(0, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
                 }
-
-                if (tempMap[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                else if (tempMap[row, col].Contains("Building_B"))
                 {
-                    Spawner.instance.SpawnNPC(col, row);
-                    //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(1, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Building_C"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(2, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Building_D"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(3, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Building_E"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(4, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Building_F"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(5, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Building_G"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(6, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Building_H"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(7, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(8, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_B"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(9, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_C"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(10, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_D"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(11, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_Sand_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(12, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_Sand_Desert_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(13, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_Sand_Desert_B"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(14, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_water_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(15, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_water_B"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(16, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("MainFloor_water_C"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(17, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(18, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road_Intersection_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(19, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road_Intersection_B"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(20, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road_ThirdStreed"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(21, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road_Turn_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(22, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Road_Turn_B"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(23, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Rock_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(24, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Tree_A"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(25, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
+                }
+                else if (tempMap[row, col].Contains("Tree_B"))
+                {
+                    string str = GetDataValue(tempMap[row, col], ":");
+                    int temp = Convert.ToInt32(str);
+                    GenerateMap.instance.GenerateBlock(26, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, temp);
+                    GenerateMap.instance.positionZ++;
                 }
                 else
-
-                if (tempMap[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
-                    Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName, col, row);
-                    //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
-                }
-                else
-
-                if (tempMap[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
-                {
-                    Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName, col, row);
-                    //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
+                    GenerateMap.instance.GenerateBlock(8, new Vector3(GenerateMap.instance.positionX, 0, GenerateMap.instance.positionZ), row, col, 0);
+                    GenerateMap.instance.positionZ++;
                 }
                 num++;
             }

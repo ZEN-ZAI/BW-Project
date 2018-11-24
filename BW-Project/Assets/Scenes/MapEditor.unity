@@ -223,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93296064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2755,7 +2755,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 225370656}
   m_HandleRect: {fileID: 225370655}
   m_Direction: 2
-  m_Value: 0.9999998
+  m_Value: 0.999999
   m_Size: 0.766636
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3379,17 +3379,42 @@ PrefabInstance:
     - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
         type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0.6886792
+      value: 0.3207547
       objectReference: {fileID: 0}
     - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
         type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0.6886792
+      value: 0.3207547
       objectReference: {fileID: 0}
     - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
         type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0.6886792
+      value: 0.3207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
+        type: 3}
+      propertyPath: near clip plane
+      value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587146015670830865, guid: 793981b157a301e4d9081c5f20c924de,
+        type: 3}
+      propertyPath: speed
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
+        type: 3}
+      propertyPath: far clip plane
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587146015670830860, guid: 793981b157a301e4d9081c5f20c924de,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 793981b157a301e4d9081c5f20c924de, type: 3}
@@ -5426,7 +5451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -38.049988}
+  m_AnchoredPosition: {x: 0, y: -38.049927}
   m_SizeDelta: {x: 1539.9, y: 326.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1259813355
@@ -6728,7 +6753,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803382024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6774,8 +6799,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803382024}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8516, y: -5, z: 6587}
-  m_LocalScale: {x: 18000, y: 1, z: 14000}
+  m_LocalPosition: {x: 273, y: -10, z: 269}
+  m_LocalScale: {x: 700, y: 1, z: 700}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7

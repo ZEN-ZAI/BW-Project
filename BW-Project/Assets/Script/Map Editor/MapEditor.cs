@@ -106,6 +106,8 @@ public class MapEditor : MonoBehaviour
 
     public void CreateMap()
     {
+        DeleteMap();
+
         tempNameBlock = new string[MapSize, MapSize];
 
         for (int i = 0; i < MapSize; i++)

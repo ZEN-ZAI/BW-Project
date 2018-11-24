@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class GenerateMap : MonoBehaviour
 {
-
     public GameObject[] block;
 
-    private int positionX;
+    public int positionX;
     //private int positionY;
-    private int positionZ;
+    public int positionZ;
 
     public static GenerateMap instance;
 
@@ -29,13 +28,13 @@ public class GenerateMap : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
-    public void Generate()
+    public void GenerateDefalut()
     {
         for (int i = 0; i < Map.instance.row; i++)
         {
             for (int j = 0; j < Map.instance.col; j++)
             {
-                GenerateBlock(new Vector3(positionX, 0, positionZ),i,j);
+                GenerateBlock(8,new Vector3(positionX, 0, positionZ),i,j,0);
                 positionZ++;
             }
             positionX++;
@@ -43,11 +42,12 @@ public class GenerateMap : MonoBehaviour
         }
     }
 
-    private void GenerateBlock(Vector3 position,int row,int col)
+    public void GenerateBlock(int indexBlock,Vector3 position,int row,int col,int rotate)
     {
-        GameObject blockTemp = Instantiate(block[0], gameObject.transform);
+        GameObject blockTemp = Instantiate(block[indexBlock], gameObject.transform);
         blockTemp.GetComponent<Tile>().row = row;
         blockTemp.GetComponent<Tile>().col = col;
+        blockTemp.transform.Rotate(new Vector3(0, rotate, 0));
         blockTemp.transform.localPosition = position;
         Map.instance.map[row, col] = blockTemp.GetComponent<Tile>();
     }
