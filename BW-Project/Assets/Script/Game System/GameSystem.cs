@@ -115,7 +115,7 @@ public class GameSystem : MonoBehaviour
     public void GameSetUp()
     {
         GenerateMap.instance.Generate();
-        NetworkSystem.instance.LoadMap();
+        NetworkSystem.instance.LoadMap();//
 
         if (GameData.instance.firstPlayer)
         {

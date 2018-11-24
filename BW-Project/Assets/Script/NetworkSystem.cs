@@ -218,7 +218,75 @@ public class NetworkSystem : MonoBehaviour {
         updateMap_isRuning = false;
     }
 
-    
+    private IEnumerator _LoadElement(string mapSize)
+    {
+        string[,] tempMap = new string[GameData.instance.mapSize, GameData.instance.mapSize];
+        loadMap_isRuning = true;
+
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", mapSize);
+
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + loadMap, form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+
+        if (itemsDataString == "")
+        {
+            Debug.Log("Connecting Error.");
+        }
+        else
+        {
+            Debug.Log("Load map.");
+            Debug.Log(itemsDataString);
+        }
+
+        tempData = itemsDataString.Split(';');
+        int num = 0;
+
+        for (int row = 0; row < Map.instance.row; row++)
+        {
+            for (int col = 0; col < Map.instance.col; col++)
+            {
+
+                tempMap[row, col] = tempData[num];
+
+                if (Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                {
+                    Map.instance.DestroyCharacter(col, row);
+                    Debug.Log("Destroy obj <x:" + col + " y:" + row + ">");
+                }
+
+                if (tempMap[row, col] == "Npc" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                {
+                    Spawner.instance.SpawnNPC(col, row);
+                    //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
+                }
+                else
+
+                if (tempMap[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                {
+                    Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName, col, row);
+                    //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
+                }
+                else
+
+                if (tempMap[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                {
+                    Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName, col, row);
+                    //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
+                }
+                num++;
+            }
+        }
+
+        loadMap_isRuning = false;
+    }
+
+
+
     private IEnumerator _GetData()
     {
         getData_isRuning = true;

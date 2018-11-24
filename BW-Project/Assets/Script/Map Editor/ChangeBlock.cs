@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,11 +72,7 @@ public class ChangeBlock : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null)
                 {
-                    if (hit.collider.gameObject.transform.localRotation.y >=90)
-                    {
-                        hit.collider.gameObject.transform.Rotate(Vector3.zero);
-                    }
-                    hit.collider.gameObject.transform.Rotate(new Vector3(0, hit.collider.gameObject.transform.localRotation.y+90, 0));
+                    hit.collider.gameObject.transform.Rotate(new Vector3(0, 90, 0));
                 }
             }
         }

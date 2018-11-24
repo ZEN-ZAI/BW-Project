@@ -2457,8 +2457,6 @@ MonoBehaviour:
   - {fileID: 965022868041914804, guid: c87fd66dc7b665b4aa6639e52797bc20, type: 3}
   - {fileID: 6488860595344304521, guid: 704a663f9913c594195d3815e9770dbd, type: 3}
   - {fileID: 6410846567319234105, guid: f4f54e6d95580b14d85e23d44e9e8494, type: 3}
-  dummyBlock: {fileID: 9047016008805780503, guid: 130170d5d76fe83478703b67f81a737a,
-    type: 3}
   loadMap_isRuning: 0
   rootMap: {fileID: 93296067}
   allBlock: []

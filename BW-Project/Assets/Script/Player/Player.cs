@@ -212,15 +212,17 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) || Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")))
         {
-
-            if (tempObjMouseOverObj != null)
+            if (hit.collider.GetComponent<Tile>() != null)
             {
-                tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
-            }
+                if (tempObjMouseOverObj != null)
+                {
+                    tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
+                }
 
-            tempObjMouseOverObj = hit.collider.gameObject;
-            hit.collider.GetComponent<Renderer>().sharedMaterial = aMouseOverMaterial;
-            //Debug.Log("Mouse Over: " + hit.collider.gameObject.name);
+                tempObjMouseOverObj = hit.collider.gameObject;
+                hit.collider.GetComponent<Renderer>().sharedMaterial = aMouseOverMaterial;
+                //Debug.Log("Mouse Over: " + hit.collider.gameObject.name);
+            }
         }
         else
         {
