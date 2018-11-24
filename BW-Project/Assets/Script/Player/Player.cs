@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
         {
             SetFrist();
         }
-        else if (GameData.instance.firstPlayer)
+        else if (!GameData.instance.firstPlayer)
         {
             SetSecond();
         }
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
+        ShowMouseOverObject();
         if (active == Playing && GameData.instance.myTurn) //  to self
         {
             active = (state)(Playing);
@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
 
 
         Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
-        GameData.instance.enemyEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
+        GameData.instance.myEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
         StartCoroutine(NetworkSystem.instance.UpdateCharacter());
         if (GameData.instance.firstPlayer)
         {
@@ -242,11 +242,12 @@ public class Player : MonoBehaviour
 
     public void Waiting()
     {
-        ShowMouseOverObject();
+        Debug.LogWarning("Wait");
     }
 
     public void StartTurn()
     {
+        Debug.LogWarning("StartTurn");
         GameData.instance.myEnergy = 5;
         GameData.instance.myTurn = true;
     }

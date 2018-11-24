@@ -963,25 +963,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e60e822fc7a2f8c4488e3c8d9241edaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitingPlayer: 1
-  mapSize: 35
+  waitingPlayer: 0
+  mapSize: 0
   online: 0
   firstPlayer: 0
-  roomID: 6
-  q: 1246677887
+  roomID: 
+  q: 
   K: 0
   state: 
-  myID: 1164123650
-  myName: 2
-  myCharacterName: Prayut
+  myID: 
+  myName: 
+  myCharacterName: 
   myAllPeople: 0
   myEnergy: 0
   myTurn: 0
-  enemyID: 1246677887
-  enemyName: 1
-  enemyCharacterName: Trump
+  enemyID: 
+  enemyName: 
+  enemyCharacterName: 
   enemyAllPeople: 0
-  enemyEnergy: 5
+  enemyEnergy: 0
   enemyTurn: 0
   leaderCharacter: {fileID: 0}
 --- !u!4 &563510684
@@ -1915,7 +1915,6 @@ MonoBehaviour:
   playerWin: 
   getDate: 0
   loadCharacter: 0
-  firstQueue: 0
 --- !u!1 &970216964
 GameObject:
   m_ObjectHideFlags: 0
