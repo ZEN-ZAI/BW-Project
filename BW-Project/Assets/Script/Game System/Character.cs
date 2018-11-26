@@ -14,15 +14,15 @@ public class Character : MonoBehaviour
 
     }
 
-    public void WalkToBlock(int newIndex_x, int newIndex_y)
+    public void WalkToBlock(int target_x, int target_y)
     {
 
-        Map.instance.MoveCharacter(x,y,newIndex_x, newIndex_y);
+        Map.instance.MoveCharacter(x,y, target_x, target_y);
         //transform.GetComponent<PlayerMotor>().MoveToPoint(Map.GetBlockPosition(index_x,index_y));
-        transform.SetPositionAndRotation(Map.instance.GetBlockPosition(newIndex_x, newIndex_y), Quaternion.identity);
+        transform.SetPositionAndRotation(Map.instance.GetBlockPosition(target_x, target_y), Quaternion.identity);
 
-        this.x = newIndex_x;
-        this.y = newIndex_y;
+        this.x = target_x;
+        this.y = target_y;
     }
 
     public void ChangeGroup(string playerName,string skinName)

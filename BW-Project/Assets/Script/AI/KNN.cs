@@ -98,17 +98,27 @@ public class NewData
                     if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.myID)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, GameData.instance.myID));
+                        if (result <= GameData.instance.K)
+                        {
+                            CompareDataset.Add(new DataSet(result, GameData.instance.myID));
+                        }
                     }
                     else if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.enemyID)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, GameData.instance.enemyID));
+                        if (result <= GameData.instance.K)
+                        {
+                            CompareDataset.Add(new DataSet(result, GameData.instance.enemyID));
+                        }
                     }
                     else if (Map.instance.map[i, j].character.GetComponent<Character>().group == "Npc")
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        CompareDataset.Add(new DataSet(result, "Npc"));
+
+                        if (result <= GameData.instance.K)
+                        {
+                            CompareDataset.Add(new DataSet(result, "Npc"));
+                        }
                     } 
                 }
             }

@@ -45,6 +45,12 @@ public class NetworkSystem : MonoBehaviour {
         StartCoroutine(_Enqueue(name));
     }
 
+    public void UpdateCharacter()
+    {
+        StartCoroutine(_UpdateCharacter());
+    }
+
+
     public IEnumerator DeleteRoom()
     {
         WWWForm form = new WWWForm();
@@ -68,7 +74,7 @@ public class NetworkSystem : MonoBehaviour {
     }
 
     public string tempUpdateCharecter;
-    public IEnumerator UpdateCharacter()
+    private IEnumerator _UpdateCharacter()
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -472,7 +478,7 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    public IEnumerator _UpdateColumn(string column, string statement)
+    private IEnumerator _UpdateColumn(string column, string statement)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);

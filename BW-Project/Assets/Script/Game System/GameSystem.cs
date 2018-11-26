@@ -78,6 +78,24 @@ public class GameSystem : MonoBehaviour
                 }
             }
 
+            if (GameData.instance.state == "move" && !GameData.instance.myTurn)
+            {
+                if (GameData.instance.q.Contains("from"))
+                {
+
+                    string tempFrom = GetDataValue(GameData.instance.q, "from:");
+                    string tempWhere = GetDataValue(GameData.instance.q, "where:");
+
+                    int tempFrom_x; int.TryParse(GetDataValue(tempFrom, "x:"), out tempFrom_x);
+                    int tempFrom_y; int.TryParse(GetDataValue(tempFrom, "y:"), out tempFrom_y);
+
+                    int tempWhere_x; int.TryParse(GetDataValue(tempFrom, "x:"), out tempWhere_x);
+                    int tempWhere_y; int.TryParse(GetDataValue(tempFrom, "y:"), out tempWhere_y);
+
+                    Map.instance.map[tempFrom_y, tempFrom_x].character.GetComponent<Character>().WalkToBlock(tempWhere_x, tempWhere_y);
+                }
+            }
+
             if (GameData.instance.state == "END")
             {
                 GameData.instance.myTurn = false;
@@ -91,22 +109,22 @@ public class GameSystem : MonoBehaviour
     {
         if (GameData.instance.mapSize == 25)
         {
-            StartCoroutine(NetworkSystem.instance.LoadElement("Small",done => 
-            {
-                if (done)
-                {
-                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
-                    setup = true;
-                    LoadingScene.instance.LoadingScreen(false);
-                    if (GameData.instance.firstPlayer)
-                    {
-                        Debug.LogWarning("first play enqueue");
-                        NetworkSystem.instance.Enqueue(GameData.instance.myID);
-                        NetworkSystem.instance.UpdateColumn("state", "playing");
-                        player.StartTurn();
-                    }
-                }
-            }));
+            StartCoroutine(NetworkSystem.instance.LoadElement("Small", done =>
+             {
+                 if (done)
+                 {
+                     StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
+                     setup = true;
+                     LoadingScene.instance.LoadingScreen(false);
+                     if (GameData.instance.firstPlayer)
+                     {
+                         Debug.LogWarning("first play enqueue");
+                         NetworkSystem.instance.Enqueue(GameData.instance.myID);
+                         NetworkSystem.instance.UpdateColumn("state", "playing");
+                         player.StartTurn();
+                     }
+                 }
+             }));
         }
         else if (GameData.instance.mapSize == 35)
         {
@@ -235,6 +253,13 @@ public class GameSystem : MonoBehaviour
         GameData.instance.enemyTurn = false;
 
         LoadingScene.instance.LoadScene("MatchMaking");
+    }
+
+    private string GetDataValue(string data, string index)
+    {
+        string value = data.Substring(data.IndexOf(index) + index.Length);
+        if (value.Contains(",")) value = value.Remove(value.IndexOf(","));
+        return value;
     }
 
 }

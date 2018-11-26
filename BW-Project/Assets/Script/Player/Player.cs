@@ -157,7 +157,11 @@ public class Player : MonoBehaviour
 
         Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
         GameData.instance.myEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
-        StartCoroutine(NetworkSystem.instance.UpdateCharacter());
+
+        NetworkSystem.instance.UpdateColumn("queue", "from:x:" + tempChar_x + "y:" + tempChar_y + ",where:x:" + target_x + "y:" + target_y);
+        NetworkSystem.instance.UpdateColumn("state","move");
+        NetworkSystem.instance.UpdateCharacter();
+
         if (GameData.instance.firstPlayer)
         {
             NetworkSystem.instance.UpdateColumn("player1_energy", GameData.instance.myEnergy.ToString());
@@ -262,7 +266,7 @@ public class Player : MonoBehaviour
         if (GameData.instance.myTurn)
         {
             KNN.instance.StartKNN();
-            StartCoroutine(NetworkSystem.instance.UpdateCharacter());
+            //StartCoroutine(NetworkSystem.instance.UpdateCharacter());
 
             GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myID);
             GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyID);
