@@ -31,7 +31,7 @@ public class CameraMove : MonoBehaviour
         }
         else
         {
-            Camera.main.nearClipPlane = 135;
+            Camera.main.nearClipPlane = 0;
         }
 
         if (Input.GetKey("w"))

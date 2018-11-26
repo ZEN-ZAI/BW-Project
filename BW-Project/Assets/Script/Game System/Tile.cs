@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+
     public int row;
     public int col;
 
@@ -15,6 +16,7 @@ public class Tile : MonoBehaviour
 
     void Update()
     {
+        //path finder
         if (visited)
         {
             tag = "Path";
@@ -22,6 +24,12 @@ public class Tile : MonoBehaviour
         else
         {
             tag = "Untagged";
+        }
+
+
+        if (HaveCharacter())
+        {
+
         }
     }
 

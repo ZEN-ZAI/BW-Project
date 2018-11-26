@@ -28,7 +28,7 @@ public class KNN : MonoBehaviour
 
     public void StartKNN()
     {
-        KNN_finish = false;
+        KNN_finish = false; Debug.LogWarning("KNN is Running");
         Random_K();
         NewDataSet();
         SetCompareDataset();
@@ -98,27 +98,18 @@ public class NewData
                     if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.myID)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        if (result <= GameData.instance.K)
-                        {
-                            CompareDataset.Add(new DataSet(result, GameData.instance.myID));
-                        }
+                        CompareDataset.Add(new DataSet(result, GameData.instance.myID));
                     }
                     else if (Map.instance.map[i, j].character.GetComponent<Character>().group == GameData.instance.enemyID)
                     {
                         int result = chebyshev(character.x, j, character.y, i);
-                        if (result <= GameData.instance.K)
-                        {
-                            CompareDataset.Add(new DataSet(result, GameData.instance.enemyID));
-                        }
+                        CompareDataset.Add(new DataSet(result, GameData.instance.myID));
                     }
                     else if (Map.instance.map[i, j].character.GetComponent<Character>().group == "Npc")
                     {
                         int result = chebyshev(character.x, j, character.y, i);
 
-                        if (result <= GameData.instance.K)
-                        {
-                            CompareDataset.Add(new DataSet(result, "Npc"));
-                        }
+                        CompareDataset.Add(new DataSet(result, GameData.instance.myID));
                     } 
                 }
             }
@@ -140,15 +131,15 @@ public class NewData
 
         for (int i = 0; i < k; i++)
         {
-            if (CompareDataset[k].group == GameData.instance.myName)
+            if (CompareDataset[k].group == GameData.instance.myName && CompareDataset[k].distance <=5)
             {
                 tempVoteP1++;
             }
-            else if (CompareDataset[k].group == GameData.instance.enemyID)
+            else if (CompareDataset[k].group == GameData.instance.enemyID && CompareDataset[k].distance <= 5)
             {
                 tempVoteP2++;
             }
-            else if (CompareDataset[k].group == "Npc")
+            else if (CompareDataset[k].group == "Npc" && CompareDataset[k].distance <= 5)
             {
                 tempVoteNpc++;
             }

@@ -111,7 +111,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 25fdde7a43c843648bb1008f7e2025a6, type: 2}
 --- !u!1 &10633869
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +416,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156220240}
   m_CullTransparentMesh: 0
+--- !u!1001 &183925258
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039727273, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773517137039427209, guid: 2d89b48b42b967349be00211cd8bd001,
+        type: 3}
+      propertyPath: m_Name
+      value: Building_A
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d89b48b42b967349be00211cd8bd001, type: 3}
 --- !u!1 &207462412
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,23 +1032,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e60e822fc7a2f8c4488e3c8d9241edaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitingPlayer: 0
-  mapSize: 0
+  waitingPlayer: 1
+  mapSize: 35
   online: 0
   firstPlayer: 0
-  roomID: 
-  q: 
+  roomID: 1
+  q: 12012217
   K: 0
-  state: 
-  myID: 
-  myName: 
-  myCharacterName: 
+  state: playing
+  myID: 12012217
+  myName: 22
+  myCharacterName: Prayut
   myAllPeople: 0
-  myEnergy: 0
-  myTurn: 0
-  enemyID: 
-  enemyName: 
-  enemyCharacterName: 
+  myEnergy: 5
+  myTurn: 1
+  enemyID: 344136311
+  enemyName: 11
+  enemyCharacterName: Trump
   enemyAllPeople: 0
   enemyEnergy: 0
   enemyTurn: 0
@@ -1298,7 +1367,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!54 &722241930
 Rigidbody:
@@ -1915,6 +1984,9 @@ MonoBehaviour:
   playerWin: 
   getDate: 0
   loadCharacter: 0
+  moveCharacter: 0
+  tempFromWhere: []
+  tempWhere: 
 --- !u!1 &970216964
 GameObject:
   m_ObjectHideFlags: 0

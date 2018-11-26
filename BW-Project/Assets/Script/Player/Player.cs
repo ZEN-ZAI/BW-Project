@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        ShowMouseOverObject();
         if (active == Playing && GameData.instance.myTurn) //  to self
         {
             active = (state)(Playing);
@@ -84,10 +83,15 @@ public class Player : MonoBehaviour
 
     public void Playing()
     {
-        if (!selectCharecter)
+        if (selectCharecter && tempObjMouseOverObj != null)
+        {
+            tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
+        }
+        else
         {
             ShowMouseOverObject();
         }
+
         if (selectCharecter && Input.GetMouseButton(1))
         {
             CancelSelectCharacter();
@@ -137,6 +141,24 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Waiting()
+    {
+        ShowMouseOverObject();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null)
+            {
+                tempObjSelectCharacter = hit.collider.gameObject;
+                CameraMove.instance.MoveToPoint(tempObjSelectCharacter.transform.position);
+                CameraZoom.instance.ZoomIn();
+            }
+        }
+    }
+
     private void CancelSelectCharacter()
     {
         selectCharecter = false;
@@ -158,7 +180,7 @@ public class Player : MonoBehaviour
         Debug.Log("Chebyshev: " + chebyshev(tempChar_x, target_y, tempChar_x, target_y));
         GameData.instance.myEnergy -= chebyshev(tempChar_x, target_x, tempChar_y, target_y);
 
-        NetworkSystem.instance.UpdateColumn("queue", "from:x:" + tempChar_x + "y:" + tempChar_y + ",where:x:" + target_x + "y:" + target_y);
+        NetworkSystem.instance.UpdateColumn("queue", "from:X:" + tempChar_x + ".Y:" + tempChar_y + ".|where:X:" + target_x + ".Y:" + target_y+".");
         NetworkSystem.instance.UpdateColumn("state","move");
         NetworkSystem.instance.UpdateCharacter();
 
@@ -244,10 +266,7 @@ public class Player : MonoBehaviour
         return result;
     }
 
-    public void Waiting()
-    {
-        Debug.LogWarning("Wait");
-    }
+
 
     public void StartTurn()
     {
@@ -265,8 +284,10 @@ public class Player : MonoBehaviour
     {
         if (GameData.instance.myTurn)
         {
+            GameData.instance.myTurn = false;
             KNN.instance.StartKNN();
-            //StartCoroutine(NetworkSystem.instance.UpdateCharacter());
+
+            NetworkSystem.instance.UpdateCharacter();
 
             GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myID);
             GameData.instance.enemyAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.enemyID);
@@ -284,7 +305,7 @@ public class Player : MonoBehaviour
 
             GameSystem.instance.NextQueue();
 
-            GameData.instance.myTurn = false;
+            //GameData.instance.myTurn = false;
             GameData.instance.myEnergy = 0;
         }
     }

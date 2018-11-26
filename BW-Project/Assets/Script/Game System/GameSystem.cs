@@ -13,6 +13,8 @@ public class GameSystem : MonoBehaviour
     public bool getDate;
     public bool loadCharacter;
 
+    public bool moveCharacter;
+
     void Awake()
     {
         if (instance == null)
@@ -39,13 +41,19 @@ public class GameSystem : MonoBehaviour
         if (!getDate)
         {
             getDate = true;
-            StartCoroutine(NetworkSystem.instance.GetData(done => { if (done) { getDate = false; } }));
-
-            if (GameData.instance.q == GameData.instance.enemyID)
+            StartCoroutine(NetworkSystem.instance.GetData(done =>
             {
-                GameData.instance.myTurn = false;
-                GameData.instance.enemyTurn = true;
-            }
+                if (done)
+                {
+                    getDate = false;
+
+                    if (GameData.instance.q == GameData.instance.enemyID)
+                    {
+                        GameData.instance.myTurn = false;
+                        GameData.instance.enemyTurn = true;
+                    }
+                }
+            }));
         }
         if (setup)
         {
@@ -68,29 +76,27 @@ public class GameSystem : MonoBehaviour
             {
                 //CheckEndGame();
 
-                if (player.active == player.Waiting)
-                {
-                    if (!loadCharacter)
-                    {
-                        loadCharacter = true;
-                        StartCoroutine(NetworkSystem.instance.LoadCharacter(done => { if (done) { loadCharacter = false; } }));
-                    }
-                }
+                
             }
 
-            if (GameData.instance.state == "move" && !GameData.instance.myTurn)
+            if (GameData.instance.state == "move" && !GameData.instance.myTurn && !moveCharacter)
             {
                 if (GameData.instance.q.Contains("from"))
                 {
+                    moveCharacter = true;
+                    tempFromWhere = GameData.instance.q.Split('|');
 
-                    string tempFrom = GetDataValue(GameData.instance.q, "from:");
-                    string tempWhere = GetDataValue(GameData.instance.q, "where:");
+                    Debug.LogWarning(tempFromWhere[0]);
+                    Debug.LogWarning(tempFromWhere[1]);
 
-                    int tempFrom_x; int.TryParse(GetDataValue(tempFrom, "x:"), out tempFrom_x);
-                    int tempFrom_y; int.TryParse(GetDataValue(tempFrom, "y:"), out tempFrom_y);
+                    int tempFrom_x; int.TryParse(GetDataValue(tempFromWhere[0], "X:"), out tempFrom_x);
+                    int tempFrom_y; int.TryParse(GetDataValue(tempFromWhere[0], "Y:"), out tempFrom_y);
 
-                    int tempWhere_x; int.TryParse(GetDataValue(tempFrom, "x:"), out tempWhere_x);
-                    int tempWhere_y; int.TryParse(GetDataValue(tempFrom, "y:"), out tempWhere_y);
+
+                    int tempWhere_x; int.TryParse(GetDataValue(tempFromWhere[1], "X:"), out tempWhere_x);
+                    int tempWhere_y; int.TryParse(GetDataValue(tempFromWhere[1], "Y:"), out tempWhere_y);
+
+                    Debug.LogWarning("From: " + tempFrom_x + " " + tempFrom_y + " Where: " + tempWhere_x + " " + tempWhere_y);
 
                     Map.instance.map[tempFrom_y, tempFrom_x].character.GetComponent<Character>().WalkToBlock(tempWhere_x, tempWhere_y);
                 }
@@ -104,6 +110,9 @@ public class GameSystem : MonoBehaviour
         }
 
     }
+
+    public string[] tempFromWhere;
+    public string tempWhere;
 
     private void SetUpMap()
     {
@@ -258,7 +267,7 @@ public class GameSystem : MonoBehaviour
     private string GetDataValue(string data, string index)
     {
         string value = data.Substring(data.IndexOf(index) + index.Length);
-        if (value.Contains(",")) value = value.Remove(value.IndexOf(","));
+        if (value.Contains(".")) value = value.Remove(value.IndexOf("."));
         return value;
     }
 
