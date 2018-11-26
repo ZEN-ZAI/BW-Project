@@ -3,47 +3,13 @@ guid: e17b4edd104e31c4589dd87c36abd4b9
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Floor9
-    100002: group5
-    100004: Rock_14
-    100006: Rock_14 1
-    100008: Rock_16
-    100010: Rock_18
-    100012: Rock_19
-    100014: Rock_20
-    100016: //RootNode
-    100018: transform12
-    100020: transform13
-    100022: transform14
-    100024: transform15
-    100026: transform16
-    100028: transform17
-    400000: Floor9
-    400002: group5
-    400004: Rock_14
-    400006: Rock_14 1
-    400008: Rock_16
-    400010: Rock_18
-    400012: Rock_19
-    400014: Rock_20
-    400016: //RootNode
-    400018: transform12
-    400020: transform13
-    400022: transform14
-    400024: transform15
-    400026: transform16
-    400028: transform17
-    2100000: phong8
-    2100002: lambert4
-    2300000: Rock_14
-    3300000: Rock_14
+    100000: //RootNode
+    400000: //RootNode
+    2100000: lambert4
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: Rock_14
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: 13_1
-    second: {fileID: 2800000, guid: e1aa9952482d3cd44aa81ef8b2edf4a4, type: 3}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0

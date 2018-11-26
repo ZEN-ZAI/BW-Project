@@ -42,6 +42,15 @@ public class Map : MonoBehaviour
         return new Vector3(map[index_y, index_x].transform.position.x, 6, map[index_y, index_x].transform.position.z);
     }
 
+    public Transform GetBlockPositionTranform(int index_x, int index_y)
+    {
+        //return map[index_y, index_x].transform.position;
+        Transform temp = map[index_y, index_x].transform;
+        temp.position = new Vector3( map[index_y, index_x].transform.position.x, 6, map[index_y, index_x].transform.position.z);
+        return temp;
+       // return new Transform(map[index_y, index_x].transform.position.x, 6, map[index_y, index_x].transform.position.z);
+    }
+
     public void MoveCharacter(int origin_x,int origin_y, int moveto_x,int moveto_y)
     {
         map[moveto_y, moveto_x].LinkCharacter(map[origin_y, origin_x].character);
