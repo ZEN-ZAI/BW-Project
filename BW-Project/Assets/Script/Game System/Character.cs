@@ -13,18 +13,9 @@ public class Character : MonoBehaviour
     
     private bool walking;
     public Vector3 target;
-    
-
-    void Start()
-    {
-    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower);
-        }
 
         if (walking)
         {
