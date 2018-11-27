@@ -10,6 +10,10 @@ public class CharacterStore : MonoBehaviour
     public GameObject kim;
     public GameObject prayut;
 
+    public GameObject trumpGuard;
+    public GameObject kimGuard;
+    public GameObject prayutGuard;
+
     public Sprite yourTeam;
     public Sprite enermyTeam;
     public Sprite npcTeam;

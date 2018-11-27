@@ -56,7 +56,7 @@ public class Character : MonoBehaviour
         if (walking)
         {
 
-            if (transform.position.y <= target.y+4)
+            if (transform.position == target)
             {
                 animator.SetTrigger("down");
                 animator.SetBool("idle", true);
@@ -76,9 +76,11 @@ public class Character : MonoBehaviour
     {
         animator.SetTrigger("jump");
         animator.SetBool("idle", false);
+
+        //transform.LookAt(Map.instance.GetBlockPositionTranform(target_x, target_y));
+
         target = Map.instance.GetBlockPosition(target_x, target_y);
-        Transform temp = Map.instance.GetBlockPositionTranform(target_x, target_y);
-        transform.LookAt(temp);
+        
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower);
         walking = true;
 

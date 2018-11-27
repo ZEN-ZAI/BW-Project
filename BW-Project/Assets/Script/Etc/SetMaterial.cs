@@ -6,6 +6,8 @@ public class SetMaterial : MonoBehaviour {
 
     public Material defaultMaterial;
 
+
+
     void Start()
     {
         if (gameObject.layer == LayerMask.GetMask("Tile"))
@@ -27,7 +29,10 @@ public class SetMaterial : MonoBehaviour {
         }
         else if (gameObject.layer == LayerMask.GetMask("Character"))
         {
-            FindObjectOfType<Renderer>().sharedMaterial = defaultMaterial;
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.mainTexture = defaultMaterial.mainTexture;
+            }
         }
     }
 
@@ -35,20 +40,32 @@ public class SetMaterial : MonoBehaviour {
     {
         if (material == "Prayut")
         {
-            defaultMaterial = CharacterStore.instance.prayut.GetComponent<Renderer>().sharedMaterial;
-            transform.GetComponent<Renderer>().sharedMaterial = CharacterStore.instance.prayut.GetComponent<Renderer>().sharedMaterial;
+            defaultMaterial = CharacterStore.instance.prayut.GetComponentInChildren<Renderer>().sharedMaterial;
+
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.mainTexture = CharacterStore.instance.prayut.GetComponentInChildren<Renderer>().sharedMaterial.mainTexture;
+            }
+
         }
         else if (material == "Trump")
         {
-            defaultMaterial = CharacterStore.instance.trump.GetComponent<Renderer>().sharedMaterial;
-            transform.GetComponent<Renderer>().sharedMaterial = CharacterStore.instance.trump.GetComponent<Renderer>().sharedMaterial;
+            defaultMaterial = CharacterStore.instance.trump.GetComponentInChildren<Renderer>().sharedMaterial;
+
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.mainTexture = CharacterStore.instance.trump.GetComponentInChildren<Renderer>().sharedMaterial.mainTexture;
+            }
         }
         else if (material == "Kim")
         {
-            defaultMaterial = CharacterStore.instance.kim.GetComponent<Renderer>().sharedMaterial;
-            transform.GetComponent<Renderer>().sharedMaterial = CharacterStore.instance.kim.GetComponent<Renderer>().sharedMaterial;
-        }
+            defaultMaterial = CharacterStore.instance.kim.GetComponentInChildren<Renderer>().sharedMaterial;
 
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.mainTexture = CharacterStore.instance.kim.GetComponentInChildren<Renderer>().sharedMaterial.mainTexture;
+            }
+        }
     }
 
     public void SetNewMaterial(Material material)
@@ -60,7 +77,10 @@ public class SetMaterial : MonoBehaviour {
         }
         else if (gameObject.layer == LayerMask.GetMask("Character"))
         {
-            FindObjectOfType<Renderer>().sharedMaterial = material;
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.mainTexture = material.mainTexture;
+            }
         }
     }
 }

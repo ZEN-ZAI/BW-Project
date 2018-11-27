@@ -52,7 +52,7 @@ public class CameraMove : MonoBehaviour
             Camera.main.transform.position = centerPoint;
         }
 
-        /*if (Camera.main.transform.position.y > clipPlane)
+        if (Camera.main.transform.position.y > clipPlane)
         {
             Camera.main.nearClipPlane = 135;
         }
@@ -60,7 +60,7 @@ public class CameraMove : MonoBehaviour
         {
             Camera.main.nearClipPlane = 0;
         }
-        */
+        
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, minClamp.x, maxClamp.x),
             Mathf.Clamp(transform.position.y, minClamp.y, maxClamp.y),
@@ -89,7 +89,7 @@ public class CameraMove : MonoBehaviour
             targetPosition, speedMoveToPoint * Time.deltaTime);
 
             distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
-            if (Vector3.Distance(Camera.main.transform.position, targetPosition) < 3)
+            if (Vector3.Distance(Camera.main.transform.position, targetPosition) < 5)
             {
                 moveToPoint = false;
             }

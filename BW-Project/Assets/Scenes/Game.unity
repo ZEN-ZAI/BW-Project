@@ -2636,10 +2636,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b504d33e268e8a4d816682bd01ffe3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 119, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
-  trump: {fileID: 118, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
-  kim: {fileID: 121, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
-  prayut: {fileID: 120, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
+  npc: {fileID: 118, guid: 810c6fb540c41e946a1b87776edfb02e, type: 3}
+  trump: {fileID: 118, guid: 7087bb3ccd5604f48bb123709d93faef, type: 3}
+  kim: {fileID: 121, guid: 3d1f373f496da8d43adb0afa39949689, type: 3}
+  prayut: {fileID: 120, guid: 1dd3e91f5db255d47920cfbf3dc5453b, type: 3}
+  trumpGuard: {fileID: 118, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
+  kimGuard: {fileID: 121, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
+  prayutGuard: {fileID: 120, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
   yourTeam: {fileID: 21300000, guid: 0b3b5353a4e36f24c802cbdc6aedcbff, type: 3}
   enermyTeam: {fileID: 21300000, guid: 4849ef1fa090e7c4cbf64215b1dc08d3, type: 3}
   npcTeam: {fileID: 21300000, guid: 8c6700cab5bc9904194eb2603cbf6edf, type: 3}
@@ -2845,7 +2848,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

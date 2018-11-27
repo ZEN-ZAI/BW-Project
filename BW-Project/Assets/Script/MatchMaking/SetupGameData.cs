@@ -89,12 +89,62 @@ public class SetupGameData : MonoBehaviour
             Spawn("Npc");
         }
 
+        SpawnLeader(GameData.instance.myID.ToString(), myleader_x, myleader_y);
+        SpawnLeader(GameData.instance.enemyID.ToString(), enermyleader_x, enermyleader_y);
+
         for (int i = 0; i < player; i++)
         {
-            Spawn(GameData.instance.myID.ToString());
-            Spawn(GameData.instance.enemyID.ToString());
+            SpawnClosed(GameData.instance.myID.ToString(), myleader_x, myleader_y);
+            SpawnClosed(GameData.instance.enemyID.ToString(), enermyleader_x, enermyleader_y);
         }
 
+    }
+
+    int myleader_x; int myleader_y;
+    int enermyleader_x; int enermyleader_y;
+
+    private void SpawnClosed(string name, int target_x, int target_y)
+    {
+
+        int x = Random.Range(target_x-5, target_x+5);
+        int y = Random.Range(target_y-5, target_y+5);
+
+
+        while (x < 0
+            || y < 0
+            || x > GameData.instance.mapSize
+            || y  > GameData.instance.mapSize
+            || map[y, x] == name || map[y, x] == "Npc")
+        {
+            Debug.Log("Error: Spawn Repeated");
+            x = Random.Range(target_x - 5, target_x + 5);
+            y = Random.Range(target_y - 5, target_y + 5);
+        }
+
+        map[y, x] = name;
+        allCharacter++;
+
+        Debug.Log("" + name + " spawn On <X:" + x + " Y:" + y + ">");
+    }
+
+    private void SpawnLeader(string name, int pos_x, int pos_y)
+    {
+
+        int x = Random.Range(0, GameData.instance.mapSize);
+        int y = Random.Range(0, GameData.instance.mapSize);
+
+        while (map[y, x] == "Npc")
+        {
+            Debug.Log("Error: Spawn Repeated");
+            x = Random.Range(0, GameData.instance.mapSize);
+            y = Random.Range(0, GameData.instance.mapSize);
+        }
+        pos_x = x;
+        pos_y = y;
+        map[y, x] = name+"Leader";
+        allCharacter++;
+
+        Debug.Log("" + name + " spawn On <X:" + x + " Y:" + y + ">");
     }
 
     private void Spawn(string name)
@@ -158,6 +208,16 @@ public class SetupGameData : MonoBehaviour
             Debug.Log(itemsDataString);
             MatchMakingSystem.instance.UpdateColumn("state","setup_spawn");
         }
+    }
+
+    private int chebyshev(int herox, int monx, int heroy, int mony)
+    {
+        int result;
+        if (Mathf.Abs(monx - herox) > Mathf.Abs(mony - heroy))
+            result = Mathf.Abs(monx - herox);
+        else result = Mathf.Abs(mony - heroy);
+
+        return result;
     }
 
 

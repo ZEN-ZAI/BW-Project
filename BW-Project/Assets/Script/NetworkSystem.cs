@@ -176,7 +176,21 @@ public class NetworkSystem : MonoBehaviour {
                     Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName, col, row);
                     //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
                 }
-                num++;
+                else
+
+                if (tempLoadCharacter[row, col] == GameData.instance.myID + "Leader" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                {
+                    Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.enemyCharacterName + "Leader", col, row);
+                    //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
+                }else
+
+                if (tempLoadCharacter[row, col] == GameData.instance.enemyID + "Leader" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                {
+                    Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName + "Leader", col, row);
+                    //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
+                }
+
+                    num++;
             }
         }
 

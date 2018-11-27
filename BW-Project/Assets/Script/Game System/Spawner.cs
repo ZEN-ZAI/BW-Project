@@ -90,8 +90,7 @@ public class Spawner : MonoBehaviour
         }
 
         //GameObject tempCharacter;
-
-        if (skinName == "Prayut")
+        if (skinName == "PrayutLeader")
         {
             GameObject tempCharacter = Instantiate(CharacterStore.instance.prayut, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
             Map.instance.map[y, x].LinkCharacter(tempCharacter);
@@ -100,7 +99,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
         }
-        else if (skinName == "Trump")
+        else if (skinName == "TrumpLeader")
         {
             GameObject tempCharacter = Instantiate(CharacterStore.instance.trump, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
             Map.instance.map[y, x].LinkCharacter(tempCharacter);
@@ -109,9 +108,37 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
         }
-        else if (skinName == "Kim")
+        else if (skinName == "KimLeader")
         {
             GameObject tempCharacter = Instantiate(CharacterStore.instance.kim, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
+        }
+        else
+        if (skinName == "Prayut")
+        {
+            GameObject tempCharacter = Instantiate(CharacterStore.instance.prayutGuard, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
+        }
+        else if (skinName == "Trump")
+        {
+            GameObject tempCharacter = Instantiate(CharacterStore.instance.trumpGuard, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
+        }
+        else if (skinName == "Kim")
+        {
+            GameObject tempCharacter = Instantiate(CharacterStore.instance.kimGuard, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
             Map.instance.map[y, x].LinkCharacter(tempCharacter);
             tempCharacter.GetComponent<Character>().x = x;
             tempCharacter.GetComponent<Character>().y = y;
@@ -132,10 +159,10 @@ public class Spawner : MonoBehaviour
 
         Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
     }
+
     public void SpawnCharacter(string playerName, string skinName, int x, int y)
     {
-
-        if (skinName == "Prayut")
+        if (skinName == "PrayutLeader")
         {
             GameObject tempCharacter = Instantiate(CharacterStore.instance.prayut, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
             Map.instance.map[y, x].LinkCharacter(tempCharacter);
@@ -144,7 +171,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
         }
-        else if (skinName == "Trump")
+        else if (skinName == "TrumpLeader")
         {
             GameObject tempCharacter = Instantiate(CharacterStore.instance.trump, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
             Map.instance.map[y, x].LinkCharacter(tempCharacter);
@@ -153,7 +180,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
         }
-        else if (skinName == "Kim")
+        else if (skinName == "KimLeader")
         {
             GameObject tempCharacter = Instantiate(CharacterStore.instance.kim, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
             Map.instance.map[y, x].LinkCharacter(tempCharacter);
@@ -163,8 +190,36 @@ public class Spawner : MonoBehaviour
             Map.instance.allCharacter++;
         }
         else
+        if (skinName == "Prayut")
         {
-            Debug.Log("Error : characterPlayerName in Spawner");
+            GameObject tempCharacter = Instantiate(CharacterStore.instance.prayutGuard, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
+        }
+        else if (skinName == "Trump")
+        {
+            GameObject tempCharacter = Instantiate(CharacterStore.instance.trumpGuard, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
+        }
+        else if (skinName == "Kim")
+        {
+            GameObject tempCharacter = Instantiate(CharacterStore.instance.kimGuard, Map.instance.GetBlockPosition(x, y), Quaternion.identity);
+            Map.instance.map[y, x].LinkCharacter(tempCharacter);
+            tempCharacter.GetComponent<Character>().x = x;
+            tempCharacter.GetComponent<Character>().y = y;
+            tempCharacter.GetComponent<Character>().group = playerName;
+            Map.instance.allCharacter++;
+        }
+        else
+        {
+            Debug.LogError("Error : characterPlayerName in Spawner");
         }
 
         Debug.Log("Character<" + playerName + "> spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
