@@ -23,7 +23,7 @@ public class PathFinder : MonoBehaviour
     private Map Map;
 
     public int maxLevelFind;
-
+    /*
     private int c_topLevelfind = 0;
     private int c_underLevelfind = 0;
     private int c_leftLevelfind = 0;
@@ -33,7 +33,7 @@ public class PathFinder : MonoBehaviour
     private int c_TRLevelfind = 0;
     private int c_ULLevelfind = 0;
     private int c_URLevelfind = 0;
-
+    */
     private int bfsLevel = 1;
     private int degreeToNextLevel = 0;
     private bool firstLoopPass;

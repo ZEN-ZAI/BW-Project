@@ -936,7 +936,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 563510684}
-  - component: {fileID: 563510683}
   m_Layer: 0
   m_Name: GameData
   m_TagString: Untagged
@@ -944,39 +943,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &563510683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 563510682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60e822fc7a2f8c4488e3c8d9241edaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitingPlayer: 1
-  mapSize: 35
-  online: 0
-  firstPlayer: 0
-  roomID: 1
-  q: 12012217
-  K: 0
-  state: playing
-  myID: 12012217
-  myName: 22
-  myCharacterName: Prayut
-  myAllPeople: 0
-  myEnergy: 5
-  myTurn: 1
-  enemyID: 344136311
-  enemyName: 11
-  enemyCharacterName: Trump
-  enemyAllPeople: 0
-  enemyEnergy: 0
-  enemyTurn: 0
-  leaderCharacter: {fileID: 0}
 --- !u!4 &563510684
 Transform:
   m_ObjectHideFlags: 0
@@ -1972,10 +1938,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectCharecter: 0
-  aMouseOverMaterial: {fileID: 2100000, guid: 93fdf19a958e4d24fbc2bac9934d2842, type: 2}
-  aMouseSelectMaterial: {fileID: 2100000, guid: ae2a8309347dbd345ae93e8546f91633,
-    type: 2}
   tempObjSelectCharacter: {fileID: 0}
+  tempObjMouseOverObj: {fileID: 0}
 --- !u!1001 &970968785
 PrefabInstance:
   m_ObjectHideFlags: 0

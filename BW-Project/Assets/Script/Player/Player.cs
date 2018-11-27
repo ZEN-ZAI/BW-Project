@@ -82,18 +82,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Material aMouseOverMaterial;
-    public Material aMouseSelectMaterial;
-
     public GameObject tempObjSelectCharacter;
-    private GameObject tempObjMouseOverObj;
+    public GameObject tempObjMouseOverObj;
 
     public void Playing()
     {
-
         if (selectCharecter && Input.GetMouseButton(1))
         {
             CancelSelectCharacter();
+        }
+        else
+        {
+            ShowMouseOverObject();
         }
 
         if (!selectCharecter && Input.GetMouseButtonDown(0))
@@ -153,13 +153,22 @@ public class Player : MonoBehaviour
                 CameraZoom.instance.ZoomIn();
             }
         }
+        else /*if(Physics.Raycast(ray, out hit, Mathf.Infinity))*/
+        {
+            if (tempObjSelectCharacter != null)
+            {
+                CancelSelectCharacter();
+            }
+        }
+
+        //ShowMouseOverObject();
     }
 
     private void CancelSelectCharacter()
     {
         selectCharecter = false;
         pathFinder.ResetPathBFS();
-        tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
+        tempObjSelectCharacter.GetComponent<SetMaterial>().UnHighlight();
         tempObjSelectCharacter = null;
         Debug.Log("select is false");
     }
@@ -196,7 +205,7 @@ public class Player : MonoBehaviour
 
     private void FirstSelectCharacter(RaycastHit hit)
     {
-        hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
+        hit.collider.GetComponent<SetMaterial>().HighlightOutline();
         tempObjSelectCharacter = hit.collider.gameObject;
 
         pathFinder.ResetPathBFS();
@@ -210,10 +219,11 @@ public class Player : MonoBehaviour
 
     private void NewSelectCharacter(RaycastHit hit)
     {
-        tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial(); Debug.Log("Set Default Material to tempCharacter");
+        tempObjSelectCharacter.GetComponent<SetMaterial>().UnHighlight();
+        Debug.Log("Set Default Material to tempCharacter");
 
         selectCharecter = true;
-        hit.collider.GetComponent<SetMaterial>().SetNewMaterial(aMouseSelectMaterial);
+        hit.collider.GetComponent<SetMaterial>().HighlightOutline();
         tempObjSelectCharacter = hit.collider.gameObject;
 
         pathFinder.ResetPathBFS();
@@ -222,6 +232,31 @@ public class Player : MonoBehaviour
                            GameData.instance.myEnergy);
 
         Debug.Log("New Select: " + hit.collider.gameObject.name);
+    }
+
+    private void ShowMouseOverObject()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<SetMaterial>() != null )
+        {
+            if (tempObjMouseOverObj != null)
+            {
+                tempObjMouseOverObj.GetComponent<SetMaterial>().UnHighlight();
+            }
+
+            tempObjMouseOverObj = hit.collider.gameObject;
+            tempObjMouseOverObj.GetComponent<SetMaterial>().Highlight();
+
+        }
+        else
+        {
+            if (tempObjMouseOverObj != null)
+            {
+                tempObjMouseOverObj.GetComponent<SetMaterial>().Highlight();
+            }
+        }
     }
 
     private int chebyshev(int herox, int monx, int heroy, int mony)

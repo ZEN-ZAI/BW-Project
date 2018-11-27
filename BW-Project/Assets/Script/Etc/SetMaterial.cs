@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetMaterial : MonoBehaviour {
+public class SetMaterial : MonoBehaviour
+{
 
     public Material defaultMaterial;
 
@@ -12,7 +13,7 @@ public class SetMaterial : MonoBehaviour {
         {
             defaultMaterial = transform.gameObject.GetComponent<Renderer>().sharedMaterial;
         }
-        else if(gameObject.layer == LayerMask.GetMask("Character"))
+        else if (gameObject.layer == LayerMask.GetMask("Character"))
         {
             defaultMaterial = FindObjectOfType<Renderer>().sharedMaterial;
         }
@@ -84,12 +85,55 @@ public class SetMaterial : MonoBehaviour {
 
     public void Highlight()
     {
-        GetComponent<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+        if (gameObject.GetComponent<Character>() != null)
+        {
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+            }
+        }
+        else
+        {
+            GetComponent<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+        }
+
+
     }
+
+
+    public void HighlightOutline()
+    {
+        if (gameObject.GetComponent<Character>() != null)
+        {
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.shader = Shader.Find("Outlined/UltimateOutline");
+            }
+        }
+        else
+        {
+            GetComponent<Renderer>().material.shader = Shader.Find("Outlined/UltimateOutline");
+        }
+
+
+    }
+
 
     public void UnHighlight()
     {
-        GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+        if (gameObject.GetComponent<Character>() != null)
+        {
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.shader = Shader.Find("Diffuse");
+            }
+        }
+        else
+        {
+            GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+        }
+
+
     }
 
 }

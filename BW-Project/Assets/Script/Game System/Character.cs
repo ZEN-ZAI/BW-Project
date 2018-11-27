@@ -93,24 +93,23 @@ public class Character : MonoBehaviour
         this.group = playerName;
         gameObject.GetComponent<SetMaterial>().SetNewMaterial(skinName);
     }
-
-    void OnMouseEnter()
-    {
-        //GetComponent<Renderer>().material.shader = Shader.Find("Outline");
-    }
-
+    
     void OnMouseOver()
     {
-        foreach (Material mat in FindObjectOfType<Renderer>().materials)
+        if (!Player.instance.selectCharecter)
         {
-            mat.shader = Shader.Find("Outlined/UltimateOutline");
+            foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+            {
+                mat.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+            }
         }
-
-       // GetComponentInChildren<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
     }
 
     void OnMouseExit()
     {
-        FindObjectOfType<Renderer>().material.shader = Shader.Find("Diffuse");
+        foreach (Material mat in FindObjectOfType<Renderer>().sharedMaterials)
+        {
+            mat.shader = Shader.Find("Diffuse");
+        }
     }
 }
