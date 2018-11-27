@@ -8,12 +8,27 @@ public class SetMaterial : MonoBehaviour {
 
     void Start()
     {
-        defaultMaterial = transform.gameObject.GetComponent<Renderer>().sharedMaterial;
+        if (gameObject.layer == LayerMask.GetMask("Tile"))
+        {
+            defaultMaterial = transform.gameObject.GetComponent<Renderer>().sharedMaterial;
+        }
+        else if(gameObject.layer == LayerMask.GetMask("Character"))
+        {
+            defaultMaterial = FindObjectOfType<Renderer>().sharedMaterial;
+        }
     }
 
     public void SetDefaultMaterial()
     {
-        transform.gameObject.GetComponent<Renderer>().sharedMaterial = defaultMaterial;
+
+        if (gameObject.layer == LayerMask.GetMask("Tile"))
+        {
+            transform.gameObject.GetComponent<Renderer>().sharedMaterial = defaultMaterial;
+        }
+        else if (gameObject.layer == LayerMask.GetMask("Character"))
+        {
+            FindObjectOfType<Renderer>().sharedMaterial = defaultMaterial;
+        }
     }
 
     public void SetNewMaterial(string material)
@@ -38,6 +53,14 @@ public class SetMaterial : MonoBehaviour {
 
     public void SetNewMaterial(Material material)
     {
-        transform.GetComponent<Renderer>().sharedMaterial = material;
+
+        if (gameObject.layer == LayerMask.GetMask("Tile"))
+        {
+            transform.GetComponent<Renderer>().sharedMaterial = material;
+        }
+        else if (gameObject.layer == LayerMask.GetMask("Character"))
+        {
+            FindObjectOfType<Renderer>().sharedMaterial = material;
+        }
     }
 }

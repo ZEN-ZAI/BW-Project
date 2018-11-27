@@ -14,6 +14,13 @@ public class Character : MonoBehaviour
     private bool walking;
     public Vector3 target;
 
+    public Animator animator;
+
+    private void Start()
+    {
+        transform.LookAt(new Vector3(350,0,-10));
+    }
+
     private void Update()
     {
 
@@ -22,6 +29,8 @@ public class Character : MonoBehaviour
 
             if (transform.position == target)
             {
+                animator.SetTrigger("down");
+                animator.SetBool("idle", true);
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 GameSystem.instance.moveCharacter = false;
                 NetworkSystem.instance.UpdateColumn("state", "playing");
@@ -36,7 +45,11 @@ public class Character : MonoBehaviour
 
     public void WalkToBlock(int target_x, int target_y)
     {
+        animator.SetTrigger("jump");
+        animator.SetBool("idle", false);
         target = Map.instance.GetBlockPosition(target_x, target_y);
+        Transform temp = Map.instance.GetBlockPositionTranform(target_x, target_y);
+        transform.LookAt(temp);
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower);
         walking = true;
 

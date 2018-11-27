@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 5864531268165836631}
   - component: {fileID: 3334703508384522031}
   - component: {fileID: 74055018160501481}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Road
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

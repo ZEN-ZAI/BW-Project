@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 8157606454297048525}
   - component: {fileID: 5476239422108931824}
   - component: {fileID: 7058766253927711074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Building_F
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

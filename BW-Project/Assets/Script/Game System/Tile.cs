@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            tag = "Untagged";
+            tag = "Tile";
         }
 
 

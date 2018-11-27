@@ -52,21 +52,19 @@ public class CameraMove : MonoBehaviour
             Camera.main.transform.position = centerPoint;
         }
 
-
-
-        if (Camera.main.transform.position.y > clipPlane)
+        /*if (Camera.main.transform.position.y > clipPlane)
         {
-            Camera.main.nearClipPlane = 300;
+            Camera.main.nearClipPlane = 135;
         }
         else
         {
             Camera.main.nearClipPlane = 0;
         }
-
-        /*transform.position = new Vector3(
+        */
+        transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, minClamp.x, maxClamp.x),
             Mathf.Clamp(transform.position.y, minClamp.y, maxClamp.y),
-            Mathf.Clamp(transform.position.z, minClamp.z, maxClamp.z));*/
+            Mathf.Clamp(transform.position.z, minClamp.z, maxClamp.z));
 
         if (Input.GetKey("w"))
         {

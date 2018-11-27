@@ -185,6 +185,7 @@ public class PathFinder : MonoBehaviour
         else
         {
             Map.instance.map[index_y, index_x].pathLevel = bfsLevel; //AddlevelPath
+
             Map.instance.map[index_y, index_x].GetComponent<Renderer>().sharedMaterial = aPathMaterial[bfsLevel - 1];
         }
     }

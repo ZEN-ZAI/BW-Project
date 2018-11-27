@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 3360184609941165932}
   - component: {fileID: 2049898396160280523}
   - component: {fileID: 8985417618488187033}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Road_Intersection_B
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            ShowMouseOverObject();
+            //ShowMouseOverObject();
         }
 
         if (selectCharecter && Input.GetMouseButton(1))
@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
 
     public void Waiting()
     {
-        ShowMouseOverObject();
+        //ShowMouseOverObject();
 
         if (Input.GetMouseButtonDown(0))
         {

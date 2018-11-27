@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 7287027975211112749}
   - component: {fileID: 6496393380961734510}
   - component: {fileID: 6164017363707877222}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MainFloor_Sand_Desert_A
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

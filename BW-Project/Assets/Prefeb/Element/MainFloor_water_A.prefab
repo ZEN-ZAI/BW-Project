@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 5924461654299969939}
   - component: {fileID: 7725131057810885802}
   - component: {fileID: 5974149455230173199}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MainFloor_water_A
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

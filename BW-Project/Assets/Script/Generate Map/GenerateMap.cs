@@ -51,6 +51,7 @@ public class GenerateMap : MonoBehaviour
         blockTemp.transform.Rotate(new Vector3(0, rotate, 0));
         blockTemp.transform.localPosition = position;
         Map.instance.map[row, col] = blockTemp.GetComponent<Tile>();
+        blockTemp.tag = "Tile";
     }
 
 }
