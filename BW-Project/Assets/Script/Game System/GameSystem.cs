@@ -62,9 +62,14 @@ public class GameSystem : MonoBehaviour
             //check turn
             if (GameData.instance.q == GameData.instance.myID && player.active == player.Waiting)
             {
-                player.StartTurn();
-                NetworkSystem.instance.LoadCharacter(done => { });
                 GameData.instance.enemyTurn = false;
+                NetworkSystem.instance.LoadCharacter(done =>
+                {
+                    if (done)
+                    {
+                        player.StartTurn();
+                    }
+                });
             }
             else if (GameData.instance.q == GameData.instance.enemyID)
             {
@@ -73,12 +78,20 @@ public class GameSystem : MonoBehaviour
             }
 
             //player Wait
-            if (GameData.instance.state == "playing")
+            if (GameData.instance.state == "playing" && setup)
             {
+                if (GameData.instance.leaderCharacter.GetComponent<Character>().group != GameData.instance.myID)
+                {
+                    NetworkSystem.instance.UpdateColumn("state", "END");
+                    playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
+                    Debug.Log(playerWin);
+                }
+
                 CheckEndGame();
 
-                
+
             }
+
 
             if (GameData.instance.state == "move" && !GameData.instance.myTurn && !moveCharacter)
             {
@@ -123,16 +136,24 @@ public class GameSystem : MonoBehaviour
              {
                  if (done)
                  {
-                     StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
-                     setup = true;
-                     LoadingScene.instance.LoadingScreen(false);
-                     if (GameData.instance.firstPlayer)
+                     StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 =>
                      {
-                         Debug.LogWarning("first play enqueue");
-                         NetworkSystem.instance.Enqueue(GameData.instance.myID);
-                         NetworkSystem.instance.UpdateColumn("state", "playing");
-                         player.StartTurn();
-                     }
+
+                         if (done2)
+                         {
+                             setup = true;
+                             LoadingScene.instance.LoadingScreen(false);
+                             if (GameData.instance.firstPlayer)
+                             {
+                                 Debug.LogWarning("first play enqueue");
+                                 NetworkSystem.instance.Enqueue(GameData.instance.myID);
+                                 NetworkSystem.instance.UpdateColumn("state", "playing");
+                                 player.StartTurn();
+                             }
+
+                         }
+                     }));
+
                  }
              }));
         }
@@ -142,16 +163,23 @@ public class GameSystem : MonoBehaviour
             {
                 if (done)
                 {
-                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
-                    setup = true;
-                    LoadingScene.instance.LoadingScreen(false);
-                    if (GameData.instance.firstPlayer)
+                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 =>
                     {
-                        Debug.LogWarning("first play enqueue");
-                        NetworkSystem.instance.Enqueue(GameData.instance.myID);
-                        NetworkSystem.instance.UpdateColumn("state", "playing");
-                        player.StartTurn();
-                    }
+
+                        if (done2)
+                        {
+                            setup = true;
+                            LoadingScene.instance.LoadingScreen(false);
+                            if (GameData.instance.firstPlayer)
+                            {
+                                Debug.LogWarning("first play enqueue");
+                                NetworkSystem.instance.Enqueue(GameData.instance.myID);
+                                NetworkSystem.instance.UpdateColumn("state", "playing");
+                                player.StartTurn();
+                            }
+
+                        }
+                    }));
                 }
             }));
         }
@@ -161,16 +189,23 @@ public class GameSystem : MonoBehaviour
             {
                 if (done)
                 {
-                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 => { }));
-                    setup = true;
-                    LoadingScene.instance.LoadingScreen(false);
-                    if (GameData.instance.firstPlayer)
+                    StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 =>
                     {
-                        Debug.LogWarning("first play enqueue");
-                        NetworkSystem.instance.Enqueue(GameData.instance.myID);
-                        NetworkSystem.instance.UpdateColumn("state", "playing");
-                        player.StartTurn();
-                    }
+
+                        if (done2)
+                        {
+                            setup = true;
+                            LoadingScene.instance.LoadingScreen(false);
+                            if (GameData.instance.firstPlayer)
+                            {
+                                Debug.LogWarning("first play enqueue");
+                                NetworkSystem.instance.Enqueue(GameData.instance.myID);
+                                NetworkSystem.instance.UpdateColumn("state", "playing");
+                                player.StartTurn();
+                            }
+
+                        }
+                    }));
                 }
             }));
         }
@@ -207,7 +242,6 @@ public class GameSystem : MonoBehaviour
 
     public void NextQueue()
     {
-        // อัพ queue ขึ้น room
         GameData.instance.q = GameData.instance.enemyID;
         NetworkSystem.instance.Enqueue(GameData.instance.q);
     }
@@ -231,6 +265,11 @@ public class GameSystem : MonoBehaviour
             }
         }
         return num;
+    }
+
+    public void LoadCharacter()
+    {
+        NetworkSystem.instance.LoadCharacter(done => { });
     }
 
     public void ResetClearData()

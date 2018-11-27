@@ -12,6 +12,10 @@ public class UserInterfaceLink : MonoBehaviour
     public Sprite playing;
     public Sprite waiting;
 
+    public Image flagMan;
+    public Sprite redFlag;
+    public Sprite blueFlag;
+
     public GameObject panelEND;
     public TextMeshProUGUI textEND;
 
@@ -53,15 +57,15 @@ public class UserInterfaceLink : MonoBehaviour
 
             if (GameSystem.instance.playerWin == GameData.instance.myID)
             {
-                textEND.text = "YOU WIN";
+                textEND.text = "YOU WIN !";
             }
             else if (GameSystem.instance.playerWin == GameData.instance.enemyID)
             {
-                textEND.text = "YOU LOSE";
+                textEND.text = "YOU LOSE !";
             }
             else
             {
-                textEND.text = "-DRAW-";
+                textEND.text = "- DRAW -";
             }
 
         }
@@ -110,5 +114,15 @@ public class UserInterfaceLink : MonoBehaviour
     public void SetColorK(Color color)
     {
         textKNN.color = color;
+    }
+
+    public void RedFlag()
+    {
+        flagMan.sprite = redFlag;
+    }
+
+    public void BlueFlag()
+    {
+        flagMan.sprite = blueFlag;
     }
 }

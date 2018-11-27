@@ -2,13 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
 
 public class KNN : MonoBehaviour
 {
-
     private List<NewData> newData = new List<NewData>();
+
 
     public bool KNN_finish;
     private int[] randomSet = new int[] { 3,4,5,7};
@@ -37,6 +36,7 @@ public class KNN : MonoBehaviour
     public void Random_K()
     {
         UserInterfaceLink.instance.SetColorK(Color.red);
+        UserInterfaceLink.instance.RedFlag();
         for (int i = 0; i < 10; i++)
         {
             StartCoroutine(Delay(done =>
@@ -61,6 +61,7 @@ public class KNN : MonoBehaviour
             }
         }
 
+        UserInterfaceLink.instance.BlueFlag();
         UserInterfaceLink.instance.SetColorK(Color.gray);
     }
 

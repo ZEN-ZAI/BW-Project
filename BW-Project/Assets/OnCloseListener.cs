@@ -13,6 +13,6 @@ public class OnCloseListener : MonoBehaviour
 
         // Randomize the background image color
 
-        GameSystem.instance.ResetClearData();
+        NetworkSystem.instance.DeleteRoom();
     }
 }

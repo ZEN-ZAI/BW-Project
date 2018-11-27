@@ -78,7 +78,8 @@ public class Character : MonoBehaviour
         animator.SetBool("idle", false);
 
         //transform.LookAt(Map.instance.GetBlockPositionTranform(target_x, target_y));
-
+        Quaternion rotation = Quaternion.LookRotation(Map.instance.GetBlockPosition(target_x, target_y), Vector3.down);
+        transform.rotation = rotation;
         target = Map.instance.GetBlockPosition(target_x, target_y);
         
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower);
