@@ -53,6 +53,7 @@ public class CameraZoom : MonoBehaviour
 
     public void ZoomIn()
     {
+        zoomIn = false;
         zoomIn = true;
         orthographicSizeOrigin = Camera.main.orthographicSize;
     }

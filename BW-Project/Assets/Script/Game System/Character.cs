@@ -94,4 +94,23 @@ public class Character : MonoBehaviour
         gameObject.GetComponent<SetMaterial>().SetNewMaterial(skinName);
     }
 
+    void OnMouseEnter()
+    {
+        //GetComponent<Renderer>().material.shader = Shader.Find("Outline");
+    }
+
+    void OnMouseOver()
+    {
+        foreach (Material mat in FindObjectOfType<Renderer>().materials)
+        {
+            mat.shader = Shader.Find("Outlined/UltimateOutline");
+        }
+
+       // GetComponentInChildren<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+    }
+
+    void OnMouseExit()
+    {
+        FindObjectOfType<Renderer>().material.shader = Shader.Find("Diffuse");
+    }
 }

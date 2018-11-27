@@ -6,8 +6,6 @@ public class SetMaterial : MonoBehaviour {
 
     public Material defaultMaterial;
 
-
-
     void Start()
     {
         if (gameObject.layer == LayerMask.GetMask("Tile"))
@@ -83,4 +81,15 @@ public class SetMaterial : MonoBehaviour {
             }
         }
     }
+
+    public void Highlight()
+    {
+        GetComponent<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+    }
+
+    public void UnHighlight()
+    {
+        GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+    }
+
 }

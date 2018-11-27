@@ -60,4 +60,18 @@ public class Tile : MonoBehaviour
         Destroy(character);
         character = null;
     }
+
+    void OnMouseOver()
+    {
+        GetComponent<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+    }
+
+    void OnMouseExit()
+    {
+        if (!Player.instance.selectCharecter)
+        {
+            GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+        }
+    }
+
 }

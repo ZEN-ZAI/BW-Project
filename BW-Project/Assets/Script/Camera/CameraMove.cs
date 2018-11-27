@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,6 +53,10 @@ public class CameraMove : MonoBehaviour
             Camera.main.transform.position = centerPoint;
         }
 
+    }
+
+    void FixedUpdate()
+    {
         if (Camera.main.transform.position.y > clipPlane)
         {
             Camera.main.nearClipPlane = 135;
@@ -60,7 +65,7 @@ public class CameraMove : MonoBehaviour
         {
             Camera.main.nearClipPlane = 0;
         }
-        
+
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, minClamp.x, maxClamp.x),
             Mathf.Clamp(transform.position.y, minClamp.y, maxClamp.y),
@@ -68,18 +73,22 @@ public class CameraMove : MonoBehaviour
 
         if (Input.GetKey("w"))
         {
+            moveToPoint = false;
             transform.Translate(Vector3.up * speed * Time.deltaTime);
         }
         if (Input.GetKey("d"))
         {
+            moveToPoint = false;
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
         if (Input.GetKey("s"))
         {
+            moveToPoint = false;
             transform.Translate(Vector3.down * speed * Time.deltaTime);
         }
         if (Input.GetKey("a"))
         {
+            moveToPoint = false;
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
 
@@ -88,17 +97,31 @@ public class CameraMove : MonoBehaviour
             Camera.main.transform.position = Vector3.LerpUnclamped(Camera.main.transform.position,
             targetPosition, speedMoveToPoint * Time.deltaTime);
 
-            distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
+            StartCoroutine(Delay(done =>
+            {
+                if (done)
+                {
+                    moveToPoint = false;
+                }
+            }));
+
+            /*distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
             if (Vector3.Distance(Camera.main.transform.position, targetPosition) < 5)
             {
                 moveToPoint = false;
-            }
+            }*/
         }
+    }
 
+    IEnumerator Delay(Action<bool> done)
+    {
+        yield return new WaitForSeconds(1.5f);
+        done(true);
     }
 
     public void MoveToPoint(Vector3 position)
     {
+        moveToPoint = false;
         moveToPoint = true;
         targetPosition = Clamp(position);
     }

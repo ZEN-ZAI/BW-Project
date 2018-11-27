@@ -235,13 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a6a0a3caedd7b4d8377ab1da0cfa47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aPathMaterial:
-  - {fileID: 2100000, guid: ba33f7abb7ecb7b45be7c371f16342b5, type: 2}
-  - {fileID: 2100000, guid: f195e78a453fc3840b59c128bcfd5ce2, type: 2}
-  - {fileID: 2100000, guid: 3afb08cb91c1e05429866215a6bb7be2, type: 2}
-  - {fileID: 2100000, guid: e38bf7b8d925c5b4aba665d495db0f8f, type: 2}
-  - {fileID: 2100000, guid: bc2dc76a2dda0ab42a58748d6a2413c0, type: 2}
-  - {fileID: 2100000, guid: 48ecff38e509afa428f00e0357d8ca60, type: 2}
   maxLevelFind: 0
 --- !u!114 &132136977
 MonoBehaviour:
@@ -1056,7 +1049,7 @@ MonoBehaviour:
   cameraMoveClamp: {x: 150, y: 175, z: 145}
   distance: 0
   clipPlane: 400
-  minClamp: {x: 200, y: 130, z: -220}
+  minClamp: {x: 200, y: 200, z: -220}
   maxClamp: {x: 710, y: 450, z: 220}
 --- !u!81 &668451117
 AudioListener:

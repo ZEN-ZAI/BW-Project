@@ -63,6 +63,7 @@ public class GameSystem : MonoBehaviour
             if (GameData.instance.q == GameData.instance.myID && player.active == player.Waiting)
             {
                 player.StartTurn();
+                NetworkSystem.instance.LoadCharacter(done => { });
                 GameData.instance.enemyTurn = false;
             }
             else if (GameData.instance.q == GameData.instance.enemyID)
@@ -74,7 +75,7 @@ public class GameSystem : MonoBehaviour
             //player Wait
             if (GameData.instance.state == "playing")
             {
-                //CheckEndGame();
+                CheckEndGame();
 
                 
             }

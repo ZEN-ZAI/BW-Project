@@ -62,7 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  group: 
+  group: Npc
   speed: 50
   jumpPower: 20000
   target: {x: 0, y: 0, z: 0}

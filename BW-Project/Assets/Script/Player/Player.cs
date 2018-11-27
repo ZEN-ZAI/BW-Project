@@ -11,6 +11,13 @@ public class Player : MonoBehaviour
     public delegate void state();
     public state active;
 
+    public static Player instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         pathFinder = FindObjectOfType<PathFinder>();
@@ -83,20 +90,11 @@ public class Player : MonoBehaviour
 
     public void Playing()
     {
-        if (selectCharecter && tempObjMouseOverObj != null)
-        {
-            tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
-        }
-        else
-        {
-            //ShowMouseOverObject();
-        }
 
         if (selectCharecter && Input.GetMouseButton(1))
         {
             CancelSelectCharacter();
         }
-
 
         if (!selectCharecter && Input.GetMouseButtonDown(0))
         {
@@ -143,8 +141,6 @@ public class Player : MonoBehaviour
 
     public void Waiting()
     {
-        //ShowMouseOverObject();
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -228,34 +224,6 @@ public class Player : MonoBehaviour
         Debug.Log("New Select: " + hit.collider.gameObject.name);
     }
 
-    private void ShowMouseOverObject()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) || Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")))
-        {
-            if (hit.collider.GetComponent<Tile>() != null || hit.collider.GetComponent<Character>() != null)
-            {
-                if (tempObjMouseOverObj != null)
-                {
-                    tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
-                }
-
-                tempObjMouseOverObj = hit.collider.gameObject;
-                hit.collider.GetComponent<Renderer>().sharedMaterial = aMouseOverMaterial;
-                //Debug.Log("Mouse Over: " + hit.collider.gameObject.name);
-            }
-        }
-        else
-        {
-            if (tempObjMouseOverObj != null)
-            {
-                tempObjMouseOverObj.GetComponent<SetMaterial>().SetDefaultMaterial();
-            }
-        }
-    }
-
     private int chebyshev(int herox, int monx, int heroy, int mony)
     {
         int result;
@@ -265,8 +233,6 @@ public class Player : MonoBehaviour
 
         return result;
     }
-
-
 
     public void StartTurn()
     {
