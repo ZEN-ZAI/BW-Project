@@ -11,7 +11,7 @@ public class KNN : MonoBehaviour
     private List<NewData> newData = new List<NewData>();
 
     public bool KNN_finish;
-    private int[] randomSet = new int[] { 2,3,4};
+    private int[] randomSet = new int[] { 3,4,5,7};
 
     public static KNN instance;
 
