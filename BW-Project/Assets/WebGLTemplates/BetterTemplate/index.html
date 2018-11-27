@@ -120,7 +120,20 @@
       }, 2000);
     }
   }
+  // Callback for the Unity OnClose event
+window.onbeforeunload = function(e) {
+
+    // These are the messages you're seeing in the gif
+    console.log("Calling OnClose from Browser!");
+    gameInstance.SendMessage("OnCloseObject", "OnClose");
+
+    // This never shows up correctly for me, but it does prompt
+    // the player to close their window with a dialogue box
+    //
+    var dialogText = "You game has been saved!  Would you like to continue unloading the page?";
+    e.returnValue = dialogText;
+    return dialogText;
+};
   </script>
 
 </html>
-

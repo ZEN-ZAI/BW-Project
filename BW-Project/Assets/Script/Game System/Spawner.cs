@@ -98,6 +98,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().y = y;
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
+            GameData.instance.leaderCharacter = tempCharacter;
         }
         else if (skinName == "TrumpLeader")
         {
@@ -107,6 +108,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().y = y;
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
+            GameData.instance.leaderCharacter = tempCharacter;
         }
         else if (skinName == "KimLeader")
         {
@@ -116,6 +118,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().y = y;
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
+            GameData.instance.leaderCharacter = tempCharacter;
         }
         else
         if (skinName == "Prayut")
@@ -170,6 +173,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().y = y;
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
+            GameData.instance.leaderCharacter = tempCharacter;
         }
         else if (skinName == "TrumpLeader")
         {
@@ -179,6 +183,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().y = y;
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
+            GameData.instance.leaderCharacter = tempCharacter;
         }
         else if (skinName == "KimLeader")
         {
@@ -188,6 +193,7 @@ public class Spawner : MonoBehaviour
             tempCharacter.GetComponent<Character>().y = y;
             tempCharacter.GetComponent<Character>().group = playerName;
             Map.instance.allCharacter++;
+            GameData.instance.leaderCharacter = tempCharacter;
         }
         else
         if (skinName == "Prayut")

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,15 +30,44 @@ public class KNN : MonoBehaviour
     public void StartKNN()
     {
         KNN_finish = false; Debug.LogWarning("KNN is Running");
-        Random_K();
         NewDataSet();
         SetCompareDataset();
     }
 
     public void Random_K()
     {
-        int ran = Random.Range(0, randomSet.Length);
-        GameData.instance.K = randomSet[ran];
+        UserInterfaceLink.instance.SetColorK(Color.red);
+        for (int i = 0; i < 10; i++)
+        {
+            StartCoroutine(Delay(done =>
+            {
+                if (done)
+                {
+                    int ran = UnityEngine.Random.Range(0, randomSet.Length);
+                    GameData.instance.K = randomSet[ran];
+                }
+            }
+                ));
+
+            if (i == 9)
+            {
+                StartCoroutine(Delay(done =>
+                {
+                    if (done)
+                    {
+                        UserInterfaceLink.instance.SetColorK(Color.red);
+                    }
+                }));
+            }
+        }
+
+        UserInterfaceLink.instance.SetColorK(Color.gray);
+    }
+
+    private IEnumerator Delay(Action<bool> done)
+    {
+        yield return new WaitForSeconds(0.25f);
+       done(true);
     }
 
     public void NewDataSet()
@@ -154,10 +184,6 @@ public class NewData
             character.ChangeGroup(GameData.instance.enemyID, GameData.instance.enemyCharacterName);
         }
         else if (tempVoteNpc > tempVoteP1 && tempVoteNpc > tempVoteP2)
-        {
-            //character.ChangeGroup("Npc");
-        }
-        else
         {
             //character.ChangeGroup("Npc");
         }

@@ -12,10 +12,11 @@ public class UserInterfaceLink : MonoBehaviour
     public Sprite playing;
     public Sprite waiting;
 
+    public GameObject panelEND;
+    public TextMeshProUGUI textEND;
+
     #region System Attribute
     public TextMeshProUGUI textKNN;
-    public TextMeshProUGUI textTime;
-    public TextMeshProUGUI textEnd;
     #endregion
 
     #region Player Attribute
@@ -32,6 +33,13 @@ public class UserInterfaceLink : MonoBehaviour
     public TextMeshProUGUI textTurnEnemy;
     #endregion
 
+    public static UserInterfaceLink instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Update()
     {
         UIUpdate();
@@ -39,20 +47,45 @@ public class UserInterfaceLink : MonoBehaviour
 
     private void UIUpdate()
     {
+        if (GameData.instance.state == "END")
+        {
+            panelEND.SetActive(true);
+
+            if (GameSystem.instance.playerWin == GameData.instance.myID)
+            {
+                textEND.text = "YOU WIN";
+            }
+            else if (GameSystem.instance.playerWin == GameData.instance.enemyID)
+            {
+                textEND.text = "YOU LOSE";
+            }
+            else
+            {
+                textEND.text = "-DRAW-";
+            }
+
+        }
+
         textKNN.text = "" + GameData.instance.K;
         textPlayerName.text = "" + GameData.instance.myName;
         textEnergyPlayer.text = "" + GameData.instance.myEnergy;
         textHowManyCharacterPlayer.text = "My people: " + GameData.instance.myAllPeople;
         textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
 
-        textTurnPlayer.text = "" + GameData.instance.myTurn.ToString();
-        textTurnEnemy.text = "" + GameData.instance.enemyTurn.ToString();
+        if (GameData.instance.myTurn)
+        {
+            textTurnPlayer.text = "Your Turn.";
+            textTurnEnemy.text = "Enemy Waiting";
+        }
+        else
+        {
+            textTurnPlayer.text = "Please Wait.";
+            textTurnEnemy.text = "Enemy Playing";
+        }
 
         textEnemyName.text = "" + GameData.instance.enemyName;
         textEnergyEnemy.text = "" + GameData.instance.enemyEnergy;
         textHowManyCharacterEnemy.text = "My people: " + GameData.instance.enemyAllPeople;
-
-        textEnd.text = "" + GameSystem.instance.playerWin;
 
         if (GameData.instance.myTurn)
         {
@@ -72,5 +105,10 @@ public class UserInterfaceLink : MonoBehaviour
         {
             statusPlayer2.sprite = waiting;
         }
+    }
+
+    public void SetColorK(Color color)
+    {
+        textKNN.color = color;
     }
 }

@@ -34,14 +34,14 @@ public class Player : MonoBehaviour
 
     public void SetFrist()
     {
-        GameData.instance.myEnergy = 5;
+        GameData.instance.myEnergy = 10;
         active = (state)(Playing);
         active();
     }
 
     public void SetSecond()
     {
-        GameData.instance.myEnergy = 6;
+        GameData.instance.myEnergy = 12;
         active = (state)(Waiting);
         active();
     }
@@ -271,8 +271,9 @@ public class Player : MonoBehaviour
 
     public void StartTurn()
     {
+        KNN.instance.Random_K();
         Debug.LogWarning("StartTurn");
-        GameData.instance.myEnergy = 5;
+        GameData.instance.myEnergy = 10;
         GameData.instance.myTurn = true;
     }
 
@@ -302,6 +303,15 @@ public class Player : MonoBehaviour
             {
                 NetworkSystem.instance.UpdateColumn("player2_people", GameData.instance.myAllPeople.ToString());
                 NetworkSystem.instance.UpdateColumn("player1_people", GameData.instance.enemyAllPeople.ToString());
+            }
+
+            if (GameData.instance.firstPlayer)
+            {
+                NetworkSystem.instance.UpdateColumn("player1_energy", "");
+            }
+            else
+            {
+                NetworkSystem.instance.UpdateColumn("player2_energy","");
             }
 
             GameSystem.instance.NextQueue();
