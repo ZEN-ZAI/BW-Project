@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Character : MonoBehaviour
 {
@@ -16,18 +18,45 @@ public class Character : MonoBehaviour
 
     public Animator animator;
 
+    public Canvas canvas;
+    public TextMeshProUGUI textPlayerName;
+    public Image tagTeam;
+
     private void Start()
     {
+        Tag();
         transform.LookAt(new Vector3(350,0,-10));
+    }
+
+    private void Tag()
+    {
+        if (group == GameData.instance.myID)
+        {
+            tagTeam.sprite = CharacterStore.instance.yourTeam;
+            textPlayerName.text = GameData.instance.myName;
+        }
+        else if (group == GameData.instance.enemyID)
+        {
+            tagTeam.sprite = CharacterStore.instance.enermyTeam;
+            textPlayerName.text = GameData.instance.enemyName;
+        }
+        else if (group == "Npc")
+        {
+            tagTeam.sprite = CharacterStore.instance.npcTeam;
+            textPlayerName.text = "NPC";
+        }
+        canvas.transform.LookAt(Camera.main.transform);
+
     }
 
     private void Update()
     {
+        Tag();
 
         if (walking)
         {
 
-            if (transform.position == target)
+            if (transform.position.y <= target.y+4)
             {
                 animator.SetTrigger("down");
                 animator.SetBool("idle", true);

@@ -2640,6 +2640,9 @@ MonoBehaviour:
   trump: {fileID: 118, guid: 59cbf3c59cc448d479b85536efccabbd, type: 3}
   kim: {fileID: 121, guid: e4750e2235e98f942a8ea25fbbe00ce1, type: 3}
   prayut: {fileID: 120, guid: f3e59da2669304c4789a7b494ec69b71, type: 3}
+  yourTeam: {fileID: 21300000, guid: 0b3b5353a4e36f24c802cbdc6aedcbff, type: 3}
+  enermyTeam: {fileID: 21300000, guid: 4849ef1fa090e7c4cbf64215b1dc08d3, type: 3}
+  npcTeam: {fileID: 21300000, guid: 8c6700cab5bc9904194eb2603cbf6edf, type: 3}
 --- !u!4 &1305297084
 Transform:
   m_ObjectHideFlags: 0

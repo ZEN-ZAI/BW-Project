@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterStore : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class CharacterStore : MonoBehaviour
     public GameObject trump;
     public GameObject kim;
     public GameObject prayut;
+
+    public Sprite yourTeam;
+    public Sprite enermyTeam;
+    public Sprite npcTeam;
 
     public static CharacterStore instance;
 
