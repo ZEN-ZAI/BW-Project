@@ -8,7 +8,7 @@ public class GameSystem : MonoBehaviour
     public string playerWin;
     public static GameSystem instance;
 
-    private bool setup;
+    public bool setup;
 
     public bool getDate;
     public bool loadCharacter;
@@ -47,11 +47,11 @@ public class GameSystem : MonoBehaviour
                 {
                     getDate = false;
 
-                    if (GameData.instance.q == GameData.instance.enemyID)
+                    /*if (GameData.instance.q == GameData.instance.enemyID)
                     {
                         GameData.instance.myTurn = false;
                         GameData.instance.enemyTurn = true;
-                    }
+                    }*/
                 }
             }));
         }
@@ -60,18 +60,28 @@ public class GameSystem : MonoBehaviour
 
 
             //check turn
-            if (GameData.instance.q == GameData.instance.myID && player.active == player.Waiting)
+            if (GameData.instance.q == GameData.instance.myID/* && player.active == player.Waiting*/)
             {
                 GameData.instance.enemyTurn = false;
+                loadCharacter = true;
                 NetworkSystem.instance.LoadCharacter(done =>
                 {
                     if (done)
                     {
+                        loadCharacter = false;
+                        if (GameData.instance.leaderCharacter != null && 
+                            GameData.instance.leaderCharacter.GetComponent<Character>().group != GameData.instance.myID)
+                        {
+                            NetworkSystem.instance.UpdateColumn("state", "END");
+                            playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
+                            UserInterfaceLink.instance.textEND.text = "YOU LOSE! Your leader is gone.";
+                            Debug.Log(playerWin);
+                        }
                         player.StartTurn();
                     }
                 });
             }
-            else if (GameData.instance.q == GameData.instance.enemyID)
+            if (GameData.instance.q == GameData.instance.enemyID)
             {
                 GameData.instance.myTurn = false;
                 GameData.instance.enemyTurn = true;
@@ -80,20 +90,10 @@ public class GameSystem : MonoBehaviour
             //player Wait
             if (GameData.instance.state == "playing" && setup)
             {
-                if (GameData.instance.leaderCharacter.GetComponent<Character>().group != GameData.instance.myID)
-                {
-                    NetworkSystem.instance.UpdateColumn("state", "END");
-                    playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
-                    Debug.Log(playerWin);
-                }
-
-                CheckEndGame();
-
-
             }
 
 
-            if (GameData.instance.state == "move" && !GameData.instance.myTurn && !moveCharacter)
+            if (GameData.instance.state == "move" && !moveCharacter)
             {
                 if (GameData.instance.q.Contains("from"))
                 {
@@ -118,6 +118,7 @@ public class GameSystem : MonoBehaviour
 
             if (GameData.instance.state == "END")
             {
+                CheckEndGame();
                 GameData.instance.myTurn = false;
                 GameData.instance.enemyTurn = false;
             }
@@ -151,6 +152,17 @@ public class GameSystem : MonoBehaviour
                                  player.StartTurn();
                              }
 
+                             if (GameData.instance.firstPlayer)
+                             {
+                                 NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.myID).ToString());
+                                 NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                             }
+                             else
+                             {
+                                 NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.myID).ToString());
+                                 NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                             }
+
                          }
                      }));
 
@@ -176,6 +188,17 @@ public class GameSystem : MonoBehaviour
                                 NetworkSystem.instance.Enqueue(GameData.instance.myID);
                                 NetworkSystem.instance.UpdateColumn("state", "playing");
                                 player.StartTurn();
+                            }
+
+                            if (GameData.instance.firstPlayer)
+                            {
+                                NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.myID).ToString());
+                                NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                            }
+                            else
+                            {
+                                NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.myID).ToString());
+                                NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.enemyID).ToString());
                             }
 
                         }
@@ -204,6 +227,17 @@ public class GameSystem : MonoBehaviour
                                 player.StartTurn();
                             }
 
+                            if (GameData.instance.firstPlayer)
+                            {
+                                NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.myID).ToString());
+                                NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                            }
+                            else
+                            {
+                                NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.myID).ToString());
+                                NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                            }
+
                         }
                     }));
                 }
@@ -211,31 +245,32 @@ public class GameSystem : MonoBehaviour
         }
     }
 
-
-    private void CheckEndGame()
+    public void CheckEndGame()
     {
-        int num = CalculatePeople("Npc");
-
-        if (num == 0)
+        if (!loadCharacter)
         {
+            GameData.instance.myAllPeople = CalculatePeople(GameData.instance.myID);
+            GameData.instance.enemyAllPeople = CalculatePeople(GameData.instance.enemyID);
 
-            if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
+            if (CalculatePeople("Npc") == 0)
             {
-                playerWin = "Player<" + GameData.instance.myID + "> : WIN";
-                Debug.Log(playerWin);
-            }
-            else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
-            {
-                playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
-                Debug.Log(playerWin);
-            }
-            else
-            {
-                playerWin = "- Draw -";
-                Debug.Log(playerWin);
-            }
 
-            NetworkSystem.instance.UpdateColumn("state", "END");
+                if (GameData.instance.myAllPeople > GameData.instance.enemyAllPeople)
+                {
+                    playerWin = "Player<" + GameData.instance.myID + "> : WIN";
+                    UserInterfaceLink.instance.textEND.text = "YOU WIN!";
+                }
+                else if (GameData.instance.enemyAllPeople > GameData.instance.myAllPeople)
+                {
+                    playerWin = "Player<" + GameData.instance.enemyID + "> : WIN";
+                    UserInterfaceLink.instance.textEND.text = "YOU LOSE!";
+                }
+                else if (GameData.instance.enemyAllPeople == GameData.instance.myAllPeople)
+                {
+                    UserInterfaceLink.instance.textEND.text = "- DRAW -";
+                }
+                NetworkSystem.instance.UpdateColumn("state", "END");
+            }
         }
     }
 

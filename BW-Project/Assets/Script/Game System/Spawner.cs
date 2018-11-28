@@ -65,7 +65,7 @@ public class Spawner : MonoBehaviour
             x = Random.Range(0, Map.instance.col);
             y = Random.Range(0, Map.instance.row);
         }
-
+        CharacterStore.instance.npc.GetComponent<Character>().group = "Npc";
         Spawn(CharacterStore.instance.npc, x,y);
 
         Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");
@@ -158,6 +158,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnNPC(int x,int y)
     {
+        CharacterStore.instance.npc.GetComponent<Character>().group = "Npc";
         Spawn(CharacterStore.instance.npc, x, y);
 
         Debug.Log("NPC spawn On :" + Map.instance.map[y, x].name + " <X:" + x + " Y:" + y + ">");

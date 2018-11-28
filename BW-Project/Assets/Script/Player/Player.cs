@@ -178,7 +178,7 @@ public class Player : MonoBehaviour
         int tempChar_x = tempObjSelectCharacter.GetComponent<Character>().x; int target_x = hit.collider.GetComponent<Tile>().col;
         int tempChar_y = tempObjSelectCharacter.GetComponent<Character>().y; int target_y = hit.collider.GetComponent<Tile>().row;
 
-        tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
+        //tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
         tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
 
 
@@ -289,6 +289,7 @@ public class Player : MonoBehaviour
             GameData.instance.myTurn = false;
             KNN.instance.StartKNN();
 
+            //GameSystem.instance.CheckEndGame();
             NetworkSystem.instance.UpdateCharacter();
 
             GameData.instance.myAllPeople = GameSystem.instance.CalculatePeople(GameData.instance.myID);

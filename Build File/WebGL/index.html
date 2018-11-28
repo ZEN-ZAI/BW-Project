@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>BW-Project</title>
+    <title>BrainWash</title>
     <style>
       html {
         box-sizing: border-box;
@@ -34,7 +34,6 @@
           max-width: 100vw;
           max-height: 70vh;
       }
-
       .progress {
           margin: 1.5em;
           border: 1px solid white;
@@ -47,7 +46,6 @@
           height: 1em;
           transform-origin: top left;
       }
-
       #loader {
         position: absolute;
         left: 0;
@@ -59,7 +57,6 @@
         align-items: center;
         justify-content: center;
       }
-
       .spinner,
       .spinner:after {
         border-radius: 50%;
@@ -86,7 +83,6 @@
           transform: rotate(360deg);
         }
       }
-
     </style>
   </head>
 
@@ -102,6 +98,21 @@
   <script src="Build/UnityLoader.js"></script>
   <script>
   var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
+
+  window.onbeforeunload = function(e) {
+
+    // These are the messages you're seeing in the gif
+    console.log("Calling OnClose from Browser!");
+    gameInstance.SendMessage("OnCloseObject", "OnClose");
+
+    // This never shows up correctly for me, but it does prompt
+    // the player to close their window with a dialogue box
+    //
+    var dialogText = "You want to leave the room?";
+    e.returnValue = dialogText;
+    return dialogText;
+};
+
   function UnityProgress(gameInstance, progress) {
     if (!gameInstance.Module) {
       return;
@@ -120,20 +131,6 @@
       }, 2000);
     }
   }
-  // Callback for the Unity OnClose event
-window.onbeforeunload = function(e) {
-
-    // These are the messages you're seeing in the gif
-    console.log("Calling OnClose from Browser!");
-    gameInstance.SendMessage("OnCloseObject", "OnClose");
-
-    // This never shows up correctly for me, but it does prompt
-    // the player to close their window with a dialogue box
-    //
-    var dialogText = "You game has been saved!  Would you like to continue unloading the page?";
-    e.returnValue = dialogText;
-    return dialogText;
-};
   </script>
 
 </html>

@@ -449,34 +449,26 @@ public class NetworkSystem : MonoBehaviour {
 
         string itemsDataString = www.downloadHandler.text;
 
-        if (itemsDataString == "")
+        Debug.Log(itemsDataString);
+
+        GameData.instance.q = GetDataValue(itemsDataString, "queue:");
+        GameData.instance.state = GetDataValue(itemsDataString, "state:");
+
+        int tempInt;
+        if (GameData.instance.firstPlayer)
         {
-            Debug.LogError("Connecting Error, GetData");
+
+            int.TryParse(GetDataValue(itemsDataString, "player2_energy:"), out tempInt);
+            GameData.instance.enemyEnergy = tempInt;
         }
         else
         {
-            Debug.Log(itemsDataString);
-
-            GameData.instance.q = GetDataValue(itemsDataString, "queue:");
-            GameData.instance.state = GetDataValue(itemsDataString, "state:");
-
-            int tempInt;
-            if (GameData.instance.firstPlayer)
-            {
-
-                int.TryParse(GetDataValue(itemsDataString, "player2_energy:"), out tempInt);
-                GameData.instance.enemyEnergy = tempInt;
-            }
-            else
-            {
-                int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
-                GameData.instance.enemyEnergy = tempInt;
-            }
-
-            yield return new WaitForSeconds(1);
-            done(true);
-
+            int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
+            GameData.instance.enemyEnergy = tempInt;
         }
+
+        yield return new WaitForSeconds(1);
+        done(true);
     }
 
     public IEnumerator _Enqueue(string playerName)

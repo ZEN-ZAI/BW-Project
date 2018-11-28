@@ -16,6 +16,8 @@ public class UserInterfaceLink : MonoBehaviour
     public Sprite redFlag;
     public Sprite blueFlag;
 
+    public TextMeshProUGUI allNpc;
+
     public GameObject panelEND;
     public TextMeshProUGUI textEND;
 
@@ -55,19 +57,10 @@ public class UserInterfaceLink : MonoBehaviour
         {
             panelEND.SetActive(true);
 
-            if (GameSystem.instance.playerWin == GameData.instance.myID)
-            {
-                textEND.text = "YOU WIN !";
-            }
-            else if (GameSystem.instance.playerWin == GameData.instance.enemyID)
-            {
-                textEND.text = "YOU LOSE !";
-            }
-            else
-            {
-                textEND.text = "- DRAW -";
-            }
-
+        }
+        if (GameSystem.instance.setup && !GameSystem.instance.loadCharacter)
+        {
+            allNpc.text = "" + GameSystem.instance.CalculatePeople("Npc");
         }
 
         textKNN.text = "" + GameData.instance.K;

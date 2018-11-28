@@ -51,13 +51,17 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        Tag();
+        if (GameData.instance.myID != null)
+        {
+            Tag();
+        }
 
         if (walking)
         {
 
-            if (transform.position == target)
+            if (transform.position.y <= target.y+5)
             {
+                transform.LookAt(new Vector3(350, 0, -10));
                 animator.SetTrigger("down");
                 animator.SetBool("idle", true);
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -77,9 +81,8 @@ public class Character : MonoBehaviour
         animator.SetTrigger("jump");
         animator.SetBool("idle", false);
 
-        //transform.LookAt(Map.instance.GetBlockPositionTranform(target_x, target_y));
-        Quaternion rotation = Quaternion.LookRotation(Map.instance.GetBlockPosition(target_x, target_y), Vector3.down);
-        transform.rotation = rotation;
+        transform.LookAt(Map.instance.GetBlockPositionTranform(target_x, target_y));
+
         target = Map.instance.GetBlockPosition(target_x, target_y);
         
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower);
