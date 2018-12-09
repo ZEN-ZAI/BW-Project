@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
         if (walking)
         {
 
-            if (transform.position.y <= target.y+5)
+            if (transform.position == target)
             {
                 transform.LookAt(new Vector3(350, 0, -10));
                 animator.SetTrigger("down");

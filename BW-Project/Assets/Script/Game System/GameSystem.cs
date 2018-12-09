@@ -60,10 +60,11 @@ public class GameSystem : MonoBehaviour
 
 
             //check turn
-            if (GameData.instance.q == GameData.instance.myID/* && player.active == player.Waiting*/)
+            if (GameData.instance.q == GameData.instance.myID && player.active == player.Waiting)
             {
                 GameData.instance.enemyTurn = false;
                 loadCharacter = true;
+                player.StartTurn();
                 NetworkSystem.instance.LoadCharacter(done =>
                 {
                     if (done)
@@ -77,10 +78,10 @@ public class GameSystem : MonoBehaviour
                             UserInterfaceLink.instance.textEND.text = "YOU LOSE! Your leader is gone.";
                             Debug.Log(playerWin);
                         }
-                        player.StartTurn();
                     }
                 });
             }
+            else
             if (GameData.instance.q == GameData.instance.enemyID)
             {
                 GameData.instance.myTurn = false;

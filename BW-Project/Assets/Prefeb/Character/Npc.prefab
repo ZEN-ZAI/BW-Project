@@ -64,7 +64,7 @@ MonoBehaviour:
   y: 0
   group: Npc
   speed: 50
-  jumpPower: 20000
+  jumpPower: 5000
   target: {x: 0, y: 0, z: 0}
   animator: {fileID: 3873506968900841597}
   canvas: {fileID: 3794938517900593892}

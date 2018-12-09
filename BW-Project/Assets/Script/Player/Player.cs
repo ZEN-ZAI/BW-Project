@@ -271,10 +271,11 @@ public class Player : MonoBehaviour
 
     public void StartTurn()
     {
+        GameData.instance.myTurn = true;
         KNN.instance.Random_K();
         Debug.LogWarning("StartTurn");
         GameData.instance.myEnergy = 10;
-        GameData.instance.myTurn = true;
+        
     }
 
     public void UesSkill()

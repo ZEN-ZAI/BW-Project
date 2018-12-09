@@ -6,6 +6,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4570644507961150655}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &492093250089660533 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400016, guid: 962e5e9acba37c5419280fe530de4ced,
+    type: 3}
+  m_PrefabInstance: {fileID: 492093250089265893}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &492093250079874949 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 962e5e9acba37c5419280fe530de4ced,
+    type: 3}
+  m_PrefabInstance: {fileID: 492093250089265893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &120
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +70,7 @@ MonoBehaviour:
   y: 0
   group: 
   speed: 50
-  jumpPower: 20000
+  jumpPower: 5000
   target: {x: 0, y: 0, z: 0}
   animator: {fileID: 492093250079874949}
   canvas: {fileID: 3410177796615548771}
@@ -106,18 +118,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.078533955, y: 0.17086652, z: 0.082032815}
   m_Center: {x: -0.00008922935, y: 0.08125162, z: 0.00007058144}
---- !u!4 &492093250089660533 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400016, guid: 962e5e9acba37c5419280fe530de4ced,
-    type: 3}
-  m_PrefabInstance: {fileID: 492093250089265893}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &492093250079874949 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 962e5e9acba37c5419280fe530de4ced,
-    type: 3}
-  m_PrefabInstance: {fileID: 492093250089265893}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2818278664620704925
 GameObject:
   m_ObjectHideFlags: 0

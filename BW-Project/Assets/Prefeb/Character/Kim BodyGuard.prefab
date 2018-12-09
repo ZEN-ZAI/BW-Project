@@ -6,6 +6,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 390433027037518304}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3442141717037106196 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400016, guid: 962e5e9acba37c5419280fe530de4ced,
+    type: 3}
+  m_PrefabInstance: {fileID: 3442141717036981892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3442141717029596132 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 962e5e9acba37c5419280fe530de4ced,
+    type: 3}
+  m_PrefabInstance: {fileID: 3442141717036981892}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &121
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +70,7 @@ MonoBehaviour:
   y: 0
   group: 
   speed: 50
-  jumpPower: 20000
+  jumpPower: 5000
   target: {x: 0, y: 0, z: 0}
   animator: {fileID: 3442141717029596132}
   canvas: {fileID: 3810192465305677673}
@@ -340,18 +352,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!4 &3442141717037106196 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400016, guid: 962e5e9acba37c5419280fe530de4ced,
-    type: 3}
-  m_PrefabInstance: {fileID: 3442141717036981892}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &3442141717029596132 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 962e5e9acba37c5419280fe530de4ced,
-    type: 3}
-  m_PrefabInstance: {fileID: 3442141717036981892}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6637535797047123599
 GameObject:
   m_ObjectHideFlags: 0
