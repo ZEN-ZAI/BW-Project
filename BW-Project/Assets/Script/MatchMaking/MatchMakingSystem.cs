@@ -151,23 +151,30 @@ public class MatchMakingSystem : MonoBehaviour {
 
         Debug.Log(tempStr);
 
-        
-
-        if (GameData.instance.firstPlayer)
+        if (tempStr == "")
         {
-            Debug.Log("Wait player2.");
-            GameData.instance.enemyID = GetDataValue(tempStr, "player2_ID:");
-            GameData.instance.enemyName = GetDataValue(tempStr, "player2_name:");
-            GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player2_character:");
+            Debug.Log("Connecting Error.");
+            StartCoroutine(GetData(url));
         }
-        else if (!GameData.instance.firstPlayer)
+        else
         {
-            GameData.instance.enemyID = GetDataValue(tempStr, "player1_ID:");
-            GameData.instance.enemyName = GetDataValue(tempStr, "player1_name:");
-            GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player1_character:");
-        }
 
-        GameData.instance.state = GetDataValue(tempStr, "state:");
+            if (GameData.instance.firstPlayer)
+            {
+                Debug.Log("Wait player2.");
+                GameData.instance.enemyID = GetDataValue(tempStr, "player2_ID:");
+                GameData.instance.enemyName = GetDataValue(tempStr, "player2_name:");
+                GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player2_character:");
+            }
+            else if (!GameData.instance.firstPlayer)
+            {
+                GameData.instance.enemyID = GetDataValue(tempStr, "player1_ID:");
+                GameData.instance.enemyName = GetDataValue(tempStr, "player1_name:");
+                GameData.instance.enemyCharacterName = GetDataValue(tempStr, "player1_character:");
+            }
+
+            GameData.instance.state = GetDataValue(tempStr, "state:");
+        }
     }
 
     IEnumerator DeleteRoom(string url)
@@ -213,7 +220,9 @@ public class MatchMakingSystem : MonoBehaviour {
 
         if (www.downloadHandler.text == "")
         {
-            Debug.Log("Connecting Error, Can't update column");
+            Debug.LogError("Connecting Error, Can't update column" + column +" | "+ statement);
+            StartCoroutine(_UpdateColumn(column, statement));
+
         }
         else
         {

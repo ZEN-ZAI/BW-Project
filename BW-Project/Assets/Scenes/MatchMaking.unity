@@ -2961,6 +2961,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc085d4d4b35ad4b9780139c5b5eab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trump: {fileID: 21300000, guid: 381e06f849fc1064788587aee36ff90c, type: 3}
+  Prayut: {fileID: 21300000, guid: 01d025259964eda4e96adb01bb86d48a, type: 3}
+  Kim: {fileID: 21300000, guid: 2cdd03c250ba978429a3a669625e2528, type: 3}
 --- !u!4 &892290407
 Transform:
   m_ObjectHideFlags: 0

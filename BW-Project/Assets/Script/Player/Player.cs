@@ -49,41 +49,95 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (active == Playing && GameData.instance.myTurn) //  to self
-        {
-            active = (state)(Playing);
-            active();
-        }
-        else if (active == Playing && !GameData.instance.myTurn) // Playing to Waiting
-        {
-            active = (state)(Waiting);
-            active();
-        }
-        else if (active == Waiting && !GameData.instance.myTurn) // to self
-        {
-            active = (state)(Waiting);
-            active();
-        }
-        else if (active == Waiting && GameData.instance.myTurn) // Waiting to Playing
-        {
-            active = (state)(Playing);
-            active();
-        }
-        else if (active == Waiting && GameData.instance.state == "END") // Waiting to end
-        {
-            active = (state)(Waiting);
-            active();
-        }
+
+         if (active == Playing && GameData.instance.myTurn) //  to self
+         {
+             active = (state)(Playing);
+             active();
+         }
+         else if (active == Playing && !GameData.instance.myTurn) // Playing to Waiting
+         {
+             active = (state)(Waiting);
+             active();
+         }
+         else if (active == Waiting && !GameData.instance.myTurn) // to self
+         {
+             active = (state)(Waiting);
+             active();
+         }
+         else if (active == Waiting && GameData.instance.myTurn) // Waiting to Playing
+         {
+             active = (state)(Playing);
+             active();
+         }
+         else if (active == Waiting && GameData.instance.state == "END") // Waiting to end
+         {
+             active = (state)(Waiting);
+             active();
+         }
 
 
-        if (active == Playing && GameData.instance.myEnergy == 0)
+        if (GameData.instance.myTurn && GameData.instance.myEnergy == 0)
         {
+            CancelSelectCharacter();
             EndTurn();
         }
     }
 
     public GameObject tempObjSelectCharacter;
     public GameObject tempObjMouseOverObj;
+    /*
+    public void Playing()
+    {
+        if (GameData.instance.myTurn && !selectCharecter)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
+                    hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
+                {
+                    FirstSelectCharacter(hit);
+
+                    CameraMove.instance.MoveToPoint(tempObjSelectCharacter.transform.position);
+                    CameraZoom.instance.ZoomIn();
+                }
+            }
+        }
+        else if (GameData.instance.myTurn && selectCharecter)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Tile")) && hit.collider.GetComponent<Tile>() != null
+                    && hit.collider.GetComponent<Tile>().pathLevel > 0)
+                {
+                    SelectToMove(hit);
+                    CancelSelectCharacter();
+                }
+                else if (Physics.Raycast(ray, out hit, LayerMask.GetMask("Character")) && hit.collider.gameObject.GetComponent<Character>() != null &&
+                    hit.collider.gameObject.GetComponent<Character>().group == GameData.instance.myID)
+                {
+                    NewSelectCharacter(hit);
+
+                    CameraMove.instance.MoveToPoint(tempObjSelectCharacter.transform.position);
+                    CameraZoom.instance.ZoomIn();
+                }
+                else
+                {
+                    if (tempObjSelectCharacter != null)
+                    {
+                        CancelSelectCharacter();
+                    }
+                }
+            }
+        }
+    }
+    */
 
     public void Playing()
     {
@@ -168,7 +222,7 @@ public class Player : MonoBehaviour
     {
         selectCharecter = false;
         pathFinder.ResetPathBFS();
-        tempObjSelectCharacter.GetComponent<SetMaterial>().UnHighlight();
+        //tempObjSelectCharacter.GetComponent<SetMaterial>().UnHighlight();
         tempObjSelectCharacter = null;
         Debug.Log("select is false");
     }
@@ -178,7 +232,7 @@ public class Player : MonoBehaviour
         int tempChar_x = tempObjSelectCharacter.GetComponent<Character>().x; int target_x = hit.collider.GetComponent<Tile>().col;
         int tempChar_y = tempObjSelectCharacter.GetComponent<Character>().y; int target_y = hit.collider.GetComponent<Tile>().row;
 
-        //tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
+        tempObjSelectCharacter.GetComponent<Character>().WalkToBlock(hit.collider.GetComponent<Tile>().col, hit.collider.GetComponent<Tile>().row);
         tempObjSelectCharacter.GetComponent<SetMaterial>().SetDefaultMaterial();
 
 
@@ -318,7 +372,7 @@ public class Player : MonoBehaviour
 
             GameSystem.instance.NextQueue();
 
-            //GameData.instance.myTurn = false;
+            GameData.instance.myTurn = false;
             GameData.instance.myEnergy = 0;
         }
     }

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkSystem : MonoBehaviour {
+public class NetworkSystem : MonoBehaviour
+{
 
     private string username = "zenzai";
     private string password = "541459%server";
@@ -103,7 +104,7 @@ public class NetworkSystem : MonoBehaviour {
 
         form.AddField("map", tempUpdateCharecter);
 
-        UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap ,form);
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + updateMap, form);
         yield return www.SendWebRequest();
 
         string itemsDataString = www.downloadHandler.text;
@@ -163,34 +164,33 @@ public class NetworkSystem : MonoBehaviour {
                 {
                     Spawner.instance.SpawnNPC(col, row);
                     //Debug.Log("Load npc <x:" + col + " y:" + row + ">");
-                }else
+                }
+                else
 
-                if(tempLoadCharacter[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if (tempLoadCharacter[row, col] == GameData.instance.myID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName, col, row);
                     //Debug.Log("Load myPeople <x:" + col + " y:" + row + ">");
-                }else
+                }
+                else
 
-                if(tempLoadCharacter[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                if (tempLoadCharacter[row, col] == GameData.instance.enemyID && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName, col, row);
                     //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
                 }
-                else
-
-                if (tempLoadCharacter[row, col] == GameData.instance.myID + "Leader" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                else if (tempLoadCharacter[row, col] == GameData.instance.myID + "Leader" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
-                    Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.enemyCharacterName + "Leader", col, row);
+                    Spawner.instance.SpawnCharacter(GameData.instance.myID, GameData.instance.myCharacterName + "Leader", col, row);
                     //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
-                }else
-
-                if (tempLoadCharacter[row, col] == GameData.instance.enemyID + "Leader" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
+                }
+                else if (tempLoadCharacter[row, col] == GameData.instance.enemyID + "Leader" && !Map.instance.map[row, col].GetComponent<Tile>().HaveCharacter())
                 {
                     Spawner.instance.SpawnCharacter(GameData.instance.enemyID, GameData.instance.enemyCharacterName + "Leader", col, row);
                     //Debug.Log("Load enemy <x:" + col + " y:" + row + ">");
                 }
 
-                    num++;
+                num++;
             }
         }
 
@@ -214,13 +214,14 @@ public class NetworkSystem : MonoBehaviour {
         if (itemsDataString == "")
         {
             Debug.Log("Connecting Error.");
+            StartCoroutine(LoadElement(nameRoom, done));
         }
         else
         {
             Debug.Log("Load Element.");
-            
+
         }
-        itemsDataString = itemsDataString.Remove(itemsDataString.Length-1);
+        itemsDataString = itemsDataString.Remove(itemsDataString.Length - 1);
         Debug.Log(itemsDataString);
 
         tempData = itemsDataString.Split(';');
@@ -451,24 +452,40 @@ public class NetworkSystem : MonoBehaviour {
 
         Debug.Log(itemsDataString);
 
-        GameData.instance.q = GetDataValue(itemsDataString, "queue:");
-        GameData.instance.state = GetDataValue(itemsDataString, "state:");
-
-        int tempInt;
-        if (GameData.instance.firstPlayer)
+        if (itemsDataString == "")
         {
-
-            int.TryParse(GetDataValue(itemsDataString, "player2_energy:"), out tempInt);
-            GameData.instance.enemyEnergy = tempInt;
+            Debug.Log("Connecting Error.");
+            StartCoroutine(GetData(done));
         }
         else
         {
-            int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
-            GameData.instance.enemyEnergy = tempInt;
-        }
+            Debug.Log("Load Element.");
 
-        yield return new WaitForSeconds(1);
-        done(true);
+            GameData.instance.q = GetDataValue(itemsDataString, "queue:");
+            GameData.instance.state = GetDataValue(itemsDataString, "state:");
+
+            int tempInt;
+            if (GameData.instance.firstPlayer)
+            {
+                if (GetDataValue(itemsDataString, "player2_energy:") != "")
+                {
+                    int.TryParse(GetDataValue(itemsDataString, "player2_energy:"), out tempInt);
+                    GameData.instance.enemyEnergy = tempInt;
+                }
+            }
+            else
+            {
+
+                if (GetDataValue(itemsDataString, "player1_energy:") != "")
+                {
+                    int.TryParse(GetDataValue(itemsDataString, "player1_energy:"), out tempInt);
+                    GameData.instance.enemyEnergy = tempInt;
+                }
+            }
+
+            yield return new WaitForSeconds(1);
+            done(true);
+        }
     }
 
     public IEnumerator _Enqueue(string playerName)
@@ -507,7 +524,7 @@ public class NetworkSystem : MonoBehaviour {
 
     }
 
-    private IEnumerator Delay(int sec,Action<bool> done)
+    private IEnumerator Delay(int sec, Action<bool> done)
     {
         yield return new WaitForSeconds(1);
         done(true);
