@@ -7,9 +7,14 @@ using UnityEngine.Networking;
 
 public class SetupGameData : MonoBehaviour
 {
+    public static SetupGameData instance;
+
     public InputField inputField_PlayerName;
     public TMP_Dropdown dropdown;
     public GameObject waitingScreen;
+
+    public InputField inputField_MapCustomName;
+    public InputField inputField_MapCustomSize;
 
     public string[,] map;
     public int allCharacter;
@@ -41,19 +46,34 @@ public class SetupGameData : MonoBehaviour
         
         if (dropdown.value == 0)
         {
+            inputField_MapCustomName.gameObject.SetActive(false);
+            inputField_MapCustomSize.gameObject.SetActive(false);
             NewMap(25);
         }
         else if (dropdown.value == 1)
         {
-            NewMap(35);
+            inputField_MapCustomName.gameObject.SetActive(false);
+            inputField_MapCustomSize.gameObject.SetActive(false);
+            NewMap(30);
         }
         else if (dropdown.value == 2)
         {
+            inputField_MapCustomName.gameObject.SetActive(false);
+            inputField_MapCustomSize.gameObject.SetActive(false);
             NewMap(50);
         }
         else if (dropdown.value == 3)
         {
-            NewMap(100);
+            inputField_MapCustomName.gameObject.SetActive(true);
+            inputField_MapCustomSize.gameObject.SetActive(true);
+
+            if (inputField_MapCustomSize.text != "")
+            {
+                int temp;
+                int.TryParse(inputField_MapCustomSize.text,out temp);
+                NewMap(temp);
+
+            }
         }
 
         //for P1

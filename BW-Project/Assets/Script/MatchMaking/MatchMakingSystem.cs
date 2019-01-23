@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MatchMakingSystem : MonoBehaviour {
+public class MatchMakingSystem : MonoBehaviour
+{
 
     private string username = "zenzai";
     private string password = "541459%server";
@@ -28,9 +29,19 @@ public class MatchMakingSystem : MonoBehaviour {
         {
             StartCoroutine(TimeDelayConnect());
         }
+
     }
 
-    public void StopMatchMaking()
+    public void OpenMapEditor()
+    {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            Application.ExternalEval("window.open(\"http://www.brainwashgame.com/MapEditor\",\"_blank\")");
+            return;
+        }
+    }
+
+        public void StopMatchMaking()
     {
         GameData.instance.waitingPlayer = false;
         StopAllCoroutines();
@@ -39,30 +50,44 @@ public class MatchMakingSystem : MonoBehaviour {
 
     public void MatchMaking()
     {
+        StartCoroutine(NetworkSystem.instance.CheckTable(SetupGameData.instance.inputField_MapCustomName.text, have =>
+         {
 
-        if (GameData.instance.myCharacterName == "")
-        {
-            Debug.Log("Please select character.");
-            return;
-        }
+             if (!have)
+             {
+                 return;
+             }
+             else if (have)
+             {
 
-        if (GameData.instance.myName == "null" || GameData.instance.myName == "Npc")
-        {
-            Debug.Log("You can't use name 'null', Please enter new name.");
-            return;
-        }
+                 if (GameData.instance.myCharacterName == "")
+                 {
+                     Debug.Log("Please select character.");
+                     return;
+                 }
 
-        if (GameData.instance.myName == "")
-        {
-            Debug.Log("Please enter name.");
-            return;
-        }
+                 if (GameData.instance.myName == "null" || GameData.instance.myName == "Npc")
+                 {
+                     Debug.Log("You can't use name 'null', Please enter new name.");
+                     return;
+                 }
 
-        GameData.instance.waitingPlayer = true;
+                 if (GameData.instance.myName == "")
+                 {
+                     Debug.Log("Please enter name.");
+                     return;
+                 }
 
-        Debug.Log("Player: "+GameData.instance.myName+" Select: "+ GameData.instance.myCharacterName);
+                 GameData.instance.waitingPlayer = true;
 
-        StartCoroutine(MatchMaking(database_IP+matchMaking));
+                 Debug.Log("Player: " + GameData.instance.myName + " Select: " + GameData.instance.myCharacterName);
+
+                 StartCoroutine(MatchMaking(database_IP + matchMaking));
+
+             }
+
+
+         }));
     }
 
     IEnumerator MatchMaking(string url)
@@ -75,7 +100,7 @@ public class MatchMakingSystem : MonoBehaviour {
         form.AddField("selectCharacter", GameData.instance.myCharacterName);
         form.AddField("mapSize", GameData.instance.mapSize);
 
-        UnityWebRequest www = UnityWebRequest.Post(url,form);
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
         if (www.downloadHandler.text == "")
         {
@@ -84,7 +109,7 @@ public class MatchMakingSystem : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Connecting Succeeded, "+ www.downloadHandler.text);
+            Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
         }
 
         string tempStr = www.downloadHandler.text;
@@ -193,7 +218,7 @@ public class MatchMakingSystem : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Connecting Succeeded, "+ www.downloadHandler.text);
+            Debug.Log("Connecting Succeeded, " + www.downloadHandler.text);
             delay = false;
             GameData.instance.roomID = "";
         }
@@ -201,10 +226,10 @@ public class MatchMakingSystem : MonoBehaviour {
 
     public void UpdateColumn(string column, string state)
     {
-        StartCoroutine(_UpdateColumn(column,state));
+        StartCoroutine(_UpdateColumn(column, state));
     }
 
-    private IEnumerator _UpdateColumn(string column,string statement)
+    private IEnumerator _UpdateColumn(string column, string statement)
     {
         WWWForm form = new WWWForm();
         form.AddField("username", username);
@@ -220,7 +245,7 @@ public class MatchMakingSystem : MonoBehaviour {
 
         if (www.downloadHandler.text == "")
         {
-            Debug.LogError("Connecting Error, Can't update column" + column +" | "+ statement);
+            Debug.LogError("Connecting Error, Can't update column" + column + " | " + statement);
             StartCoroutine(_UpdateColumn(column, statement));
 
         }

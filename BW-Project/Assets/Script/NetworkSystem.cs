@@ -438,6 +438,31 @@ public class NetworkSystem : MonoBehaviour
         done(true);
     }
 
+    public IEnumerator CheckTable(string nameTable,Action<bool> have)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", nameTable);
+
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + loadMap, form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+
+        if (itemsDataString == "")
+        {
+            Debug.Log("No have this table: "+ nameTable);
+            have(false);
+        }
+        else
+        {
+            Debug.Log("Have this table: " + nameTable);
+            have(true);
+
+        }
+    }
+
     public IEnumerator GetData(Action<bool> done)
     {
         WWWForm form = new WWWForm();

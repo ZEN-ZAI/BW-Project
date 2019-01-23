@@ -130,10 +130,14 @@ public class GameSystem : MonoBehaviour
     public string[] tempFromWhere;
     public string tempWhere;
 
+    private string nameMapMedium;
+    private string nameMapLarge;
+
     private void SetUpMap()
     {
         if (GameData.instance.mapSize == 25)
         {
+
             StartCoroutine(NetworkSystem.instance.LoadElement("Small", done =>
              {
                  if (done)
@@ -170,9 +174,24 @@ public class GameSystem : MonoBehaviour
                  }
              }));
         }
-        else if (GameData.instance.mapSize == 35)
+        else if (GameData.instance.mapSize == 30)
         {
-            StartCoroutine(NetworkSystem.instance.LoadElement("Medium", done =>
+            int rnd = Random.Range(0, 3);
+            
+            if (rnd == 0)
+            {
+                nameMapMedium = "Medium";
+            }
+            else if (rnd == 1)
+            {
+                nameMapMedium = "MediumV2";
+            }
+            else if (rnd == 2)
+            {
+                nameMapMedium = "MediumV3";
+            }
+
+            StartCoroutine(NetworkSystem.instance.LoadElement(nameMapMedium, done =>
             {
                 if (done)
                 {
@@ -209,7 +228,18 @@ public class GameSystem : MonoBehaviour
         }
         else if (GameData.instance.mapSize == 50)
         {
-            StartCoroutine(NetworkSystem.instance.LoadElement("Large", done =>
+            int rnd = Random.Range(0, 2);
+
+            if (rnd == 0)
+            {
+                nameMapLarge = "Large";
+            }
+            else if (rnd == 1)
+            {
+                nameMapLarge = "LargeV2";
+            }
+
+            StartCoroutine(NetworkSystem.instance.LoadElement(nameMapLarge, done =>
             {
                 if (done)
                 {
