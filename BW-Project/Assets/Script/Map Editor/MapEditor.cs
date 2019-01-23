@@ -74,12 +74,40 @@ public class MapEditor : MonoBehaviour
 
     public void CreateRoom()
     {
-        StartCoroutine(CreateRoom(url + createRoom));
+        if (inputField_roomName.text == "Large" &&
+            inputField_roomName.text == "LargeV2" &&
+            inputField_roomName.text == "Medium" &&
+            inputField_roomName.text == "MediumV2" &&
+            inputField_roomName.text == "MediumV3" &&
+            inputField_roomName.text == "Small" &&
+            inputField_roomName.text == "room")
+        {
+            inputField_roomName.text = "";
+            Debug.Log("Can't create this name.");
+        }
+        else
+        {
+            StartCoroutine(CreateRoom(url + createRoom));
+        }
     }
 
     public void DeleteRoom()
     {
-        StartCoroutine(DeleteRoom(url + deleteRoom));
+        if (inputField_roomName.text == "Large" &&
+            inputField_roomName.text == "LargeV2" &&
+            inputField_roomName.text == "Medium" &&
+            inputField_roomName.text == "MediumV2" &&
+            inputField_roomName.text == "MediumV3" &&
+            inputField_roomName.text == "Small" &&
+            inputField_roomName.text == "room")
+        {
+            inputField_roomName.text = "";
+            Debug.Log("Can't delete this table.");
+        }
+        else
+        {
+            StartCoroutine(DeleteRoom(url + deleteRoom));
+        }
     }
 
     public void LoadMap()
@@ -114,7 +142,7 @@ public class MapEditor : MonoBehaviour
         {
             for (int j = 0; j < MapSize; j++)
             {
-                GenerateBlock(block[8], new Vector3(positionX, 0, positionZ), i, j,0);
+                GenerateBlock(block[8], new Vector3(positionX, 0, positionZ), i, j, 0);
                 positionZ++;
             }
             positionX++;
@@ -130,7 +158,7 @@ public class MapEditor : MonoBehaviour
         blockTemp.transform.Rotate(new Vector3(0, rotate, 0));
         blockTemp.transform.localPosition = position;
         blockTemp.name = block.name.Replace("(Clone)", "").Trim();
-        tempNameBlock[row, col] = blockTemp.name+":" +rotate;
+        tempNameBlock[row, col] = blockTemp.name + ":" + rotate;
     }
 
     public string tempMap;
@@ -149,10 +177,10 @@ public class MapEditor : MonoBehaviour
         {
             for (int j = 0; j < MapSize; j++)
             {
-                
+
                 if (tempNameBlock[i, j] != null)
                 {
-                    tempMap += ""+ tempNameBlock[i, j] + "|";
+                    tempMap += "" + tempNameBlock[i, j] + "|";
                     //Debug.Log("<"+i+":"+j+ "> "+map[i, j].GetComponent<Tile>().nameBuilding + ":" + map[i, j].transform.rotation.y);
                 }
                 num++;

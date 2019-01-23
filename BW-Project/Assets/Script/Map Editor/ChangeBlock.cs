@@ -23,13 +23,13 @@ public class ChangeBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             mode.text = "Mode: Create";
             createMode = true;
             rotateMode = false;
         }
-        else if (Input.GetKeyDown(KeyCode.F2))
+        else if (Input.GetKeyDown(KeyCode.F3))
         {
             mode.text = "Mode: Rotate";
             createMode = false;
