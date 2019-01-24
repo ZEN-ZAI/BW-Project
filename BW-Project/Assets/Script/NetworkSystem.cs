@@ -51,7 +51,6 @@ public class NetworkSystem : MonoBehaviour
         StartCoroutine(_UpdateCharacter());
     }
 
-
     public IEnumerator DeleteRoom()
     {
         WWWForm form = new WWWForm();
@@ -81,7 +80,15 @@ public class NetworkSystem : MonoBehaviour
         form.AddField("username", username);
         form.AddField("password", password);
         form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("mapSize", GameData.instance.mapSize);
+
+        if (SetupGameData.instance.dropdown.value == 3)
+        {
+            form.AddField("mapSize", GameData.instance.mapSize + ":" + GameData.instance.mapName);
+        }
+        else
+        {
+            form.AddField("mapSize", GameData.instance.mapSize);
+        }
 
         tempUpdateCharecter = null;
 
@@ -438,30 +445,6 @@ public class NetworkSystem : MonoBehaviour
         done(true);
     }
 
-    public IEnumerator CheckTable(string nameTable,Action<bool> have)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("username", username);
-        form.AddField("password", password);
-        form.AddField("room_id", nameTable);
-
-        UnityWebRequest www = UnityWebRequest.Post(database_IP + loadMap, form);
-        yield return www.SendWebRequest();
-
-        string itemsDataString = www.downloadHandler.text;
-
-        if (itemsDataString == "")
-        {
-            Debug.Log("No have this table: "+ nameTable);
-            have(false);
-        }
-        else
-        {
-            Debug.Log("Have this table: " + nameTable);
-            have(true);
-
-        }
-    }
 
     public IEnumerator GetData(Action<bool> done)
     {

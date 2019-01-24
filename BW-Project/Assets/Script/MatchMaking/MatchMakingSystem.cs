@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -34,60 +35,95 @@ public class MatchMakingSystem : MonoBehaviour
 
     public void OpenMapEditor()
     {
-        if (Application.platform == RuntimePlatform.WebGLPlayer)
-        {
-            Application.ExternalEval("window.open(\"http://www.brainwashgame.com/MapEditor\",\"_blank\")");
-            return;
-        }
+
+        Application.OpenURL("http://www.brainwashgame.com/MapEditor/");
     }
 
-        public void StopMatchMaking()
+    public void StopMatchMaking()
     {
         GameData.instance.waitingPlayer = false;
         StopAllCoroutines();
         StartCoroutine(DeleteRoom(database_IP + deleteRoom));
     }
 
+    bool canMatch;
     public void MatchMaking()
     {
-        StartCoroutine(NetworkSystem.instance.CheckTable(SetupGameData.instance.inputField_MapCustomName.text, have =>
-         {
 
-             if (!have)
-             {
-                 return;
-             }
-             else if (have)
+        if (SetupGameData.instance.dropdown.value == 3)
+        {
+            GameData.instance.waitingPlayer = true;
+            StartCoroutine(CheckTable(SetupGameData.instance.inputField_MapCustomName.text, have =>
              {
 
-                 if (GameData.instance.myCharacterName == "")
+                 if (have == false)
                  {
-                     Debug.Log("Please select character.");
+                     GameData.instance.waitingPlayer = false;
+                     canMatch = false;
+                     Debug.Log("Not have this map.");
                      return;
                  }
-
-                 if (GameData.instance.myName == "null" || GameData.instance.myName == "Npc")
+                 else if (have)
                  {
-                     Debug.Log("You can't use name 'null', Please enter new name.");
-                     return;
+                     canMatch = true;
+                     GameData.instance.mapName = SetupGameData.instance.inputField_MapCustomName.text;
+
+                     //StartCoroutine(TestLoadElement(GameData.instance.mapName,GameData.instance.mapSize));
+
+                     if (GameData.instance.myCharacterName == "")
+                     {
+                         Debug.Log("Please select character.");
+                     }
+
+                     if (GameData.instance.myName == "null" || GameData.instance.myName == "Npc")
+                     {
+                         Debug.Log("You can't use name 'null', Please enter new name.");
+                     }
+
+                     if (GameData.instance.myName == "")
+                     {
+                         Debug.Log("Please enter name.");
+                     }
+
+                     GameData.instance.waitingPlayer = true;
+
+                     Debug.Log("Player: " + GameData.instance.myName + " Select: " + GameData.instance.myCharacterName);
+
+                     StartCoroutine(MatchMaking(database_IP + matchMaking));
                  }
 
-                 if (GameData.instance.myName == "")
-                 {
-                     Debug.Log("Please enter name.");
-                     return;
-                 }
 
-                 GameData.instance.waitingPlayer = true;
+             }));
+        }
+        else
+        {
 
-                 Debug.Log("Player: " + GameData.instance.myName + " Select: " + GameData.instance.myCharacterName);
+            if (GameData.instance.myCharacterName == "")
+            {
+                Debug.Log("Please select character.");
+                return;
+            }
 
-                 StartCoroutine(MatchMaking(database_IP + matchMaking));
+            if (GameData.instance.myName == "null" || GameData.instance.myName == "Npc")
+            {
+                Debug.Log("You can't use name 'null', Please enter new name.");
+                return;
+            }
 
-             }
+            if (GameData.instance.myName == "")
+            {
+                Debug.Log("Please enter name.");
+                return;
+            }
 
+            GameData.instance.waitingPlayer = true;
 
-         }));
+            Debug.Log("Player: " + GameData.instance.myName + " Select: " + GameData.instance.myCharacterName);
+
+            StartCoroutine(MatchMaking(database_IP + matchMaking));
+
+        }
+
     }
 
     IEnumerator MatchMaking(string url)
@@ -98,7 +134,15 @@ public class MatchMakingSystem : MonoBehaviour
         form.AddField("playerName", GameData.instance.myName);
         form.AddField("playerID", GameData.instance.myID);
         form.AddField("selectCharacter", GameData.instance.myCharacterName);
-        form.AddField("mapSize", GameData.instance.mapSize);
+
+        if (SetupGameData.instance.dropdown.value == 3)
+        {
+            form.AddField("mapSize", GameData.instance.mapSize + ":" + GameData.instance.mapName);
+        }
+        else
+        {
+            form.AddField("mapSize", GameData.instance.mapSize);
+        }
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
@@ -130,6 +174,49 @@ public class MatchMakingSystem : MonoBehaviour
             GameData.instance.firstPlayer = false;
         }
 
+    }
+
+    public string[] tempData;
+
+    private int tempSize;
+    private int tempMultiple;
+    IEnumerator CheckTable(string nameTable, Action<bool> have)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+        form.AddField("room_id", nameTable);
+
+        UnityWebRequest www = UnityWebRequest.Post(database_IP + "/LoadMap.php", form);
+        yield return www.SendWebRequest();
+
+        string itemsDataString = www.downloadHandler.text;
+
+        itemsDataString = itemsDataString.Remove(itemsDataString.Length - 1);
+        Debug.Log(itemsDataString);
+
+        tempData = itemsDataString.Split(';');
+
+        tempSize = 0;
+
+        if (itemsDataString == "")
+        {
+            Debug.Log("No have this table: " + nameTable);
+            have(false);
+        }
+        else
+        {
+            Debug.Log("Have this table: " + nameTable);
+            while (tempSize != tempData.Length)
+            {
+                tempMultiple++;
+                tempSize = tempMultiple * tempMultiple;
+            }
+
+            GameData.instance.mapSize = tempMultiple;
+            have(true);
+
+        }
     }
 
     IEnumerator CreateRoom(string url)
@@ -224,6 +311,7 @@ public class MatchMakingSystem : MonoBehaviour
         }
     }
 
+
     public void UpdateColumn(string column, string state)
     {
         StartCoroutine(_UpdateColumn(column, state));
@@ -246,7 +334,7 @@ public class MatchMakingSystem : MonoBehaviour
         if (www.downloadHandler.text == "")
         {
             Debug.LogError("Connecting Error, Can't update column" + column + " | " + statement);
-            StartCoroutine(_UpdateColumn(column, statement));
+            //StartCoroutine(_UpdateColumn(column, statement));
 
         }
         else

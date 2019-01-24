@@ -7,6 +7,7 @@ public class GameData : MonoBehaviour
     //MatchMaking
     public bool waitingPlayer;
     public int mapSize;
+    public string mapName;
     //
 
     public bool online;

@@ -135,10 +135,46 @@ public class GameSystem : MonoBehaviour
 
     private void SetUpMap()
     {
+
+        StartCoroutine(NetworkSystem.instance.LoadElement(GameData.instance.mapName, done =>
+        {
+            if (done)
+            {
+                StartCoroutine(NetworkSystem.instance.LoadCharacter(done2 =>
+                {
+
+                    if (done2)
+                    {
+                        setup = true;
+                        LoadingScene.instance.LoadingScreen(false);
+                        if (GameData.instance.firstPlayer)
+                        {
+                            Debug.LogWarning("first play enqueue");
+                            NetworkSystem.instance.Enqueue(GameData.instance.myID);
+                            NetworkSystem.instance.UpdateColumn("state", "playing");
+                            player.StartTurn();
+                        }
+
+                        if (GameData.instance.firstPlayer)
+                        {
+                            NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.myID).ToString());
+                            NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                        }
+                        else
+                        {
+                            NetworkSystem.instance.UpdateColumn("player2_people", CalculatePeople(GameData.instance.myID).ToString());
+                            NetworkSystem.instance.UpdateColumn("player1_people", CalculatePeople(GameData.instance.enemyID).ToString());
+                        }
+
+                    }
+                }));
+
+            }
+        }));
+        /*
         if (GameData.instance.mapSize == 25)
         {
-
-            StartCoroutine(NetworkSystem.instance.LoadElement("Small", done =>
+            StartCoroutine(NetworkSystem.instance.LoadElement(GameData.instance.mapName, done =>
              {
                  if (done)
                  {
@@ -176,22 +212,8 @@ public class GameSystem : MonoBehaviour
         }
         else if (GameData.instance.mapSize == 30)
         {
-            int rnd = Random.Range(0, 3);
-            
-            if (rnd == 0)
-            {
-                nameMapMedium = "Medium";
-            }
-            else if (rnd == 1)
-            {
-                nameMapMedium = "MediumV2";
-            }
-            else if (rnd == 2)
-            {
-                nameMapMedium = "MediumV3";
-            }
 
-            StartCoroutine(NetworkSystem.instance.LoadElement(nameMapMedium, done =>
+            StartCoroutine(NetworkSystem.instance.LoadElement(GameData.instance.mapName, done =>
             {
                 if (done)
                 {
@@ -228,18 +250,8 @@ public class GameSystem : MonoBehaviour
         }
         else if (GameData.instance.mapSize == 50)
         {
-            int rnd = Random.Range(0, 2);
 
-            if (rnd == 0)
-            {
-                nameMapLarge = "Large";
-            }
-            else if (rnd == 1)
-            {
-                nameMapLarge = "LargeV2";
-            }
-
-            StartCoroutine(NetworkSystem.instance.LoadElement(nameMapLarge, done =>
+            StartCoroutine(NetworkSystem.instance.LoadElement(GameData.instance.mapName, done =>
             {
                 if (done)
                 {
@@ -273,7 +285,7 @@ public class GameSystem : MonoBehaviour
                     }));
                 }
             }));
-        }
+        }*/
     }
 
     public void CheckEndGame()

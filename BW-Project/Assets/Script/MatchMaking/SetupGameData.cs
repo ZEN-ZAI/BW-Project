@@ -22,6 +22,19 @@ public class SetupGameData : MonoBehaviour
 
     private bool spawed;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+
+        }
+        //DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         int temp = Random.seed = (int)System.DateTime.Now.Ticks;
@@ -47,33 +60,36 @@ public class SetupGameData : MonoBehaviour
         if (dropdown.value == 0)
         {
             inputField_MapCustomName.gameObject.SetActive(false);
-            inputField_MapCustomSize.gameObject.SetActive(false);
+            //inputField_MapCustomSize.gameObject.SetActive(false);
+            GameData.instance.mapName = "Small";
             NewMap(25);
         }
         else if (dropdown.value == 1)
         {
             inputField_MapCustomName.gameObject.SetActive(false);
-            inputField_MapCustomSize.gameObject.SetActive(false);
+            //inputField_MapCustomSize.gameObject.SetActive(false);
+            GameData.instance.mapName = "Medium";
             NewMap(30);
         }
         else if (dropdown.value == 2)
         {
             inputField_MapCustomName.gameObject.SetActive(false);
-            inputField_MapCustomSize.gameObject.SetActive(false);
+            //inputField_MapCustomSize.gameObject.SetActive(false);
+            GameData.instance.mapName = "LargeV2";
             NewMap(50);
         }
         else if (dropdown.value == 3)
         {
             inputField_MapCustomName.gameObject.SetActive(true);
-            inputField_MapCustomSize.gameObject.SetActive(true);
+            //inputField_MapCustomSize.gameObject.SetActive(true);
 
-            if (inputField_MapCustomSize.text != "")
+            /*if (inputField_MapCustomSize.text != "")
             {
                 int temp;
                 int.TryParse(inputField_MapCustomSize.text,out temp);
                 NewMap(temp);
 
-            }
+            }*/
         }
 
         //for P1
@@ -85,6 +101,7 @@ public class SetupGameData : MonoBehaviour
         }
 
         //for P2
+
         if (GameData.instance.state == "setup_spawn")
         {
             StopAllCoroutines();
@@ -193,7 +210,15 @@ public class SetupGameData : MonoBehaviour
         form.AddField("username", "zenzai");
         form.AddField("password", "541459%server");
         form.AddField("room_id", GameData.instance.roomID);
-        form.AddField("mapSize", GameData.instance.mapSize);
+
+        if (SetupGameData.instance.dropdown.value == 3)
+        {
+            form.AddField("mapSize", GameData.instance.mapSize + ":" + GameData.instance.mapName);
+        }
+        else
+        {
+            form.AddField("mapSize", GameData.instance.mapSize);
+        }
 
         int num = 0;
         for (int i = 0; i < GameData.instance.mapSize; i++)

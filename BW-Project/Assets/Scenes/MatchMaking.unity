@@ -3474,6 +3474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8e0facdfb8e774eafdf2d5e733d41e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempData: []
 --- !u!114 &892290405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6265,6 +6266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitingPlayer: 0
   mapSize: 0
+  mapName: 
   online: 0
   firstPlayer: 0
   roomID: 
@@ -6559,7 +6561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1858228546
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6581,8 +6583,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -367.4, y: -155.00003}
-  m_SizeDelta: {x: 395, y: 68.3}
+  m_AnchoredPosition: {x: -457.4, y: -155.00003}
+  m_SizeDelta: {x: 575, y: 68.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1858228547
 MonoBehaviour:

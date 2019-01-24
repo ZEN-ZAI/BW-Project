@@ -615,10 +615,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 2
-  cloudProjectId: 4c26223a-ba3b-4699-93cc-97a874a6a607
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: BW-Project
-  organizationId: zenzai
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
