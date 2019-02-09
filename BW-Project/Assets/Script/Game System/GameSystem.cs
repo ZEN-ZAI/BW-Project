@@ -347,7 +347,7 @@ public class GameSystem : MonoBehaviour
 
     public void LoadCharacter()
     {
-        NetworkSystem.instance.LoadCharacter(done => { });
+        StartCoroutine(NetworkSystem.instance.LoadCharacter(done => { }));
     }
 
     public void ResetClearData()
